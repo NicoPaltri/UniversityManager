@@ -42,4 +42,10 @@ public class UniversityManager {
         }
 
     }
+
+    public static int getTotalExamsWeight(List<Exam> exams) {
+        return exams.stream()
+                .mapToInt(Exam::getWeight)
+                .sum();
+    }
 }

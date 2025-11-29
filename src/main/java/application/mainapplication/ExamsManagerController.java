@@ -1,15 +1,13 @@
 package application.mainapplication;
 
+import application.FXMLUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,29 +36,27 @@ public class ExamsManagerController {
     public CategoryAxis timeAxisInLineChart;
     public NumberAxis gradeAxisInLineChart;
 
+    public PieChart pieChartTotalExam;
+
     public Button addButton;
     public Button removeButton;
 
     private final XYChart.Series<String, Number> gradesSeries = new XYChart.Series<>();
     private final XYChart.Series<String, Number> weightedAverageSeries = new XYChart.Series<>();
-    private final ObservableList<Exam> exams = FXCollections.observableArrayList();
+    private final ObservableList<Exam> exams = FXMLUtils.getEmptyObservableList();
 
     public void initialize() {
         rightBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
         leftBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
         VBox.setVgrow(examTable, Priority.ALWAYS);
 
-        colName.prefWidthProperty().bind(examTable.widthProperty().multiply(0.50));
-        colWeight.prefWidthProperty().bind(examTable.widthProperty().multiply(0.10));
-        colGrade.prefWidthProperty().bind(examTable.widthProperty().multiply(0.10));
-        colDate.prefWidthProperty().bind(examTable.widthProperty().multiply(0.30));
-
-        examTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        FXMLUtils.setUpStandardExamTable(examTable,colName,colWeight,colGrade,colDate);
 
         //--------------------------------------------------------------------------------
 
         //1. collego la lista e la table
-        linkTableViewAndList(exams);
+        FXMLUtils.linkTableViewAndObservableList(exams,
+                examTable,colName,colWeight,colGrade,colDate);
 
         //2 nomino la serie dei voti e la collego al grafico
         gradesSeries.setName("Voti");
@@ -75,10 +71,22 @@ public class ExamsManagerController {
     }
 
     private void updateDatas() {
-        UniversityManager universityManager = new UniversityManager();
+        FXMLUtils.commonUpdateDatas(exams);
 
-        exams.setAll(universityManager.getObservableListFromDB());
+        //CONTROLLER SPECIFIC UPDATES
 
+        //line chart update
+        updateLineChart();
+
+        //pie chart update
+        updatePieChartProgress();
+    }
+
+    private void updateLineChart() {
+        updateSeriesInLineChart();
+    }
+
+    private void updateSeriesInLineChart() {
         updateGradesSeries();
         updateWeightedAverageSeries();
     }
@@ -110,13 +118,16 @@ public class ExamsManagerController {
         }
     }
 
-    private void linkTableViewAndList(ObservableList<Exam> exams) {
-        colName.setCellValueFactory(c -> c.getValue().nameProperty());
-        colWeight.setCellValueFactory(c -> c.getValue().weightProperty());
-        colGrade.setCellValueFactory(c -> c.getValue().gradeProperty());
-        colDate.setCellValueFactory(c -> c.getValue().dateProperty());
+    private void updatePieChartProgress() {
+        final int max = 180;
+        int filled = UniversityManager.getTotalExamsWeight(exams);
 
-        examTable.setItems(exams);
+        ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
+                new PieChart.Data("Filled", filled),
+                new PieChart.Data("Remaining", max - filled)
+        );
+
+        pieChartTotalExam.setData(data);
     }
 
     public void addExamButtonOnAction(ActionEvent actionEvent) {

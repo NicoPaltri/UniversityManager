@@ -1,5 +1,6 @@
 package application.removebuttonapplication;
 
+import application.FXMLUtils;
 import dbmanager.DBManageDB;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -26,20 +27,18 @@ public class RemoveButtonController {
     private final ObservableList<Exam> exams = FXCollections.observableArrayList();
 
     public void initialize() {
-        // Tabella responsiva (best practice)
-        colName.prefWidthProperty().bind(examTable.widthProperty().multiply(0.50));
-        colWeight.prefWidthProperty().bind(examTable.widthProperty().multiply(0.10));
-        colGrade.prefWidthProperty().bind(examTable.widthProperty().multiply(0.10));
-        colDate.prefWidthProperty().bind(examTable.widthProperty().multiply(0.30));
+        // Tabella responsiva
+        FXMLUtils.setUpStandardExamTable(examTable, colName, colWeight, colGrade, colDate);
 
-        examTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        // Collego tabella e lista
+        FXMLUtils.linkTableViewAndObservableList(exams,
+                examTable,colName,colWeight,colGrade,colDate);
 
         // Disable del bottone quando nulla è selezionato
         deleteButton.disableProperty().bind(
                 examTable.getSelectionModel().selectedItemProperty().isNull()
         );
 
-        linkTableViewAndList(exams);
         updateDatas();
     }
 
@@ -57,21 +56,10 @@ public class RemoveButtonController {
         updateDatas();
     }
 
-
-    private void linkTableViewAndList(ObservableList<Exam> exams) {
-        colName.setCellValueFactory(c -> c.getValue().nameProperty());
-        colWeight.setCellValueFactory(c -> c.getValue().weightProperty());
-        colGrade.setCellValueFactory(c -> c.getValue().gradeProperty());
-        colDate.setCellValueFactory(c -> c.getValue().dateProperty());
-
-        examTable.setItems(exams);
-    }
-
     private void updateDatas() {
-        UniversityManager universityManager = new UniversityManager();
+        FXMLUtils.commonUpdateDatas(exams);
 
-        exams.setAll(universityManager.getObservableListFromDB());
-
+        //CONTROLLER SPECIFIC UPDATES
         Platform.runLater(() -> examTable.getSelectionModel().clearSelection());
     }
 }

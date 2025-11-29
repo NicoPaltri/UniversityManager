@@ -34,13 +34,7 @@ public class AddButtonController {
                                 monthInputField.getText() +
                                 dayInputField.getText();
 
-            nameInputField.setText("");
-            weightInputField.setText("");
-            gradeInputField.setText("");
-
-            dayInputField.setText("");
-            monthInputField.setText("");
-            yearInputField.setText("");
+            setEveryFieldToBlank();
 
             Exam exam = examFactory.createExam(name, weight, grade, completeDate);
 
@@ -49,5 +43,15 @@ public class AddButtonController {
         } catch (NumberFormatException e) {
             System.out.println("Errore nel format di grade/weight.");
         }
+    }
+
+    private void setEveryFieldToBlank(){
+        nameInputField.setText("");
+        weightInputField.setText("");
+        gradeInputField.setText("");
+
+        dayInputField.setText("");
+        monthInputField.setText("");
+        yearInputField.setText("");
     }
 }
