@@ -10,10 +10,21 @@ import java.io.IOException;
 public class ExamsManagerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ExamsManagerApplication.class.getResource("/universitymanager/UniversityManager.fxml"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                ExamsManagerApplication.class.getResource("/stages/MainStage.fxml")
+        );
+
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+
+        //css
+        scene.getStylesheets().add(
+                ExamsManagerApplication.class.getResource("/styles/main_stage.css").toExternalForm()
+        );
+
+        stage.setTitle("UniversityManager");
         stage.setScene(scene);
         stage.show();
     }
+
 }

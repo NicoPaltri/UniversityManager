@@ -57,9 +57,8 @@ public class RemoveButtonController {
     }
 
     private void updateDatas() {
-        FXMLUtils.commonUpdateDatas(exams);
+        FXMLUtils.commonUpdateDatas(exams,examTable);
 
         //CONTROLLER SPECIFIC UPDATES
-        Platform.runLater(() -> examTable.getSelectionModel().clearSelection());
     }
 }

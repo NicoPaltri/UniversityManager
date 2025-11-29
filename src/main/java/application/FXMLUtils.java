@@ -1,5 +1,6 @@
 package application;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -41,13 +42,19 @@ public class FXMLUtils {
         examTable.setItems(exams);
     }
 
-    public static void commonUpdateDatas(ObservableList<Exam> exams) {
+    public static void commonUpdateDatas(ObservableList<Exam> exams, TableView<Exam> examTable) {
         updateList(exams);
+
+        clearTableSelection(examTable);
     }
 
     private static void updateList(ObservableList<Exam> exams) {
         UniversityManager universityManager = new UniversityManager();
 
         exams.setAll(universityManager.getObservableListFromDB());
+    }
+
+    public static void clearTableSelection(TableView<Exam> examTable) {
+        Platform.runLater(() -> examTable.getSelectionModel().clearSelection());
     }
 }

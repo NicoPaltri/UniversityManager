@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.Priority?>
+<BorderPane fx:id="mainPane"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="application.mainapplication.ExamsManagerController">
+
+    <!-- RIGHT SIDE -->
+    <right>
+        <VBox fx:id="rightBox" spacing="20" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+
+            <children>
+
+                <!-- ===== LINE CHART BOX ===== -->
+                <VBox fx:id="lineChartBox" styleClass="chart-container">
+                    <padding><Insets top="15" bottom="15" left="15" right="15"/></padding>
+                    <children>
+
+                        <LineChart fx:id="lineChart" animated="false">
+
+                            <xAxis>
+                                <CategoryAxis fx:id="timeAxisInLineChart" side="BOTTOM" />
+                            </xAxis>
+
+                            <yAxis>
+                                <NumberAxis fx:id="gradeAxisInLineChart"
+                                            autoRanging="false"
+                                            lowerBound="17"
+                                            upperBound="31"
+                                            tickUnit="1"
+                                            side="LEFT"/>
+                            </yAxis>
+
+                        </LineChart>
+
+                    </children>
+
+                    <VBox.vgrow>
+                        ALWAYS
+                    </VBox.vgrow>
+
+
+                </VBox>
+
+
+                <!-- ===== PIE CHART BOX ===== -->
+                <VBox fx:id="pieChartBox" styleClass="chart-container">
+                    <padding><Insets top="15" bottom="15" left="15" right="15"/></padding>
+
+                    <children>
+                        <PieChart fx:id="pieChartTotalExam" />
+                    </children>
+
+                    <VBox.vgrow>
+                        ALWAYS
+                    </VBox.vgrow>
+                </VBox>
+
+            </children>
+
+        </VBox>
+    </right>
+
+    <!-- LEFT SIDE (unchanged) -->
+    <left>
+        <VBox fx:id="leftBox" spacing="10" BorderPane.alignment="CENTER">
+            <children>
+
+                <TableView fx:id="examTable">
+                    <VBox.margin>
+                        <Insets bottom="10" left="20" right="20" top="20" />
+                    </VBox.margin>
+
+                    <columns>
+                        <TableColumn fx:id="colName" text="Name" />
+                        <TableColumn fx:id="colWeight" text="W" />
+                        <TableColumn fx:id="colGrade" text="G" />
+                        <TableColumn fx:id="colDate" text="Date" />
+                    </columns>
+                </TableView>
+
+                <Button fx:id="addButton" maxWidth="Infinity" onAction="#addExamButtonOnAction" text="Aggiungi">
+                    <VBox.margin>
+                        <Insets bottom="2" left="20" right="20" top="10" />
+                    </VBox.margin>
+                </Button>
+
+                <Button fx:id="removeButton" maxWidth="Infinity" onAction="#removeButtonOnAction" text="Rimuovi">
+                    <VBox.margin>
+                        <Insets bottom="20" left="20" right="20" top="2" />
+                    </VBox.margin>
+                </Button>
+
+            </children>
+        </VBox>
+    </left>
+
+</BorderPane>

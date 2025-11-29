@@ -50,28 +50,34 @@ public class ExamsManagerController {
         leftBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
         VBox.setVgrow(examTable, Priority.ALWAYS);
 
-        FXMLUtils.setUpStandardExamTable(examTable,colName,colWeight,colGrade,colDate);
+        FXMLUtils.setUpStandardExamTable(examTable, colName, colWeight, colGrade, colDate);
 
         //--------------------------------------------------------------------------------
 
         //1. collego la lista e la table
         FXMLUtils.linkTableViewAndObservableList(exams,
-                examTable,colName,colWeight,colGrade,colDate);
+                examTable, colName, colWeight, colGrade, colDate);
 
-        //2 nomino la serie dei voti e la collego al grafico
+        //2 setto le regole del line chart
+        timeAxisInLineChart.setGapStartAndEnd(false);
+        timeAxisInLineChart.setAnimated(false);
+        lineChart.setAnimated(false);
+
+
+        //3 nomino la serie dei voti e la collego al grafico
         gradesSeries.setName("Voti");
         lineChart.getData().add(gradesSeries);
 
-        //3 nomino la serie della media ponderata e la collego al grafico
+        //4 nomino la serie della media ponderata e la collego al grafico
         weightedAverageSeries.setName("Media ponderata");
         lineChart.getData().add(weightedAverageSeries);
 
-        //4 aggiorno i dati
+        //5 aggiorno i dati
         updateDatas();
     }
 
     private void updateDatas() {
-        FXMLUtils.commonUpdateDatas(exams);
+        FXMLUtils.commonUpdateDatas(exams, examTable);
 
         //CONTROLLER SPECIFIC UPDATES
 
@@ -131,7 +137,7 @@ public class ExamsManagerController {
     }
 
     public void addExamButtonOnAction(ActionEvent actionEvent) {
-        openNewWindow("Aggiungi esame", "/universitymanager/AddExamView.fxml", "/styles/add_exam.css",
+        openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml", "/styles/add_exam.css",
                 () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
@@ -142,7 +148,7 @@ public class ExamsManagerController {
     }
 
     public void removeButtonOnAction(ActionEvent actionEvent) {
-        openNewWindow("Rimuovi esame", "/universitymanager/RemoveExamView.fxml", "/styles/remove_exam.css",
+        openNewWindow("Rimuovi esame", "/stages/RemoveExamStage.fxml", "/styles/remove_exam.css",
                 () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
