@@ -6,6 +6,7 @@ module universitymanager {
     requires org.xerial.sqlitejdbc;
     requires java.desktop;
     requires javafx.base;
+    requires commons.math3;
 
     opens application.mainapplication to javafx.fxml;
     exports application.mainapplication;

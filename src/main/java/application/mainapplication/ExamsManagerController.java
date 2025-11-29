@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +21,7 @@ import universitymanager.Exam;
 import universitymanager.UniversityManager;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class ExamsManagerController {
 
@@ -36,15 +38,29 @@ public class ExamsManagerController {
     public LineChart<String, Number> lineChart;
     public CategoryAxis timeAxisInLineChart;
     public NumberAxis gradeAxisInLineChart;
+    public VBox lineChartBox;
 
     public PieChart pieChartTotalExam;
+    public VBox pieChartBox;
 
     public Button addButton;
     public Button removeButton;
 
+    public Label aritmethicMeanLabel;
+    public Label weightedMeanLabel;
+    public Label medianLabel;
+
+    public Label modeLabel;
+    public Label standardDeviationLabel;
+    public Label varianceLabel;
+    public Label weightedMeanLastFiveExamsLabel;
+
     private final XYChart.Series<String, Number> gradesSeries = new XYChart.Series<>();
     private final XYChart.Series<String, Number> weightedAverageSeries = new XYChart.Series<>();
     private final ObservableList<Exam> exams = FXMLUtils.getEmptyObservableList();
+
+    private static final DecimalFormat formatter = new DecimalFormat("0.00");
+
 
     public void initialize() {
         rightBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
@@ -60,20 +76,25 @@ public class ExamsManagerController {
                 examTable, colName, colWeight, colGrade, colDate);
 
         //2 setto le regole del line chart
+        lineChart.setAnimated(false);
+        
         timeAxisInLineChart.setGapStartAndEnd(false);
         timeAxisInLineChart.setAnimated(false);
-        lineChart.setAnimated(false);
+        
+        lineChartBox.prefHeightProperty().bind(rightBox.heightProperty().multiply(0.45));
 
-
-        //3 nomino la serie dei voti e la collego al grafico
+        //3 setto le regole per il pie chart
+        pieChartBox.prefHeightProperty().bind(rightBox.heightProperty().multiply(0.45));
+        
+        //4 nomino la serie dei voti e la collego al grafico
         gradesSeries.setName("Voti");
         lineChart.getData().add(gradesSeries);
 
-        //4 nomino la serie della media ponderata e la collego al grafico
+        //5 nomino la serie della media ponderata e la collego al grafico
         weightedAverageSeries.setName("Media ponderata");
         lineChart.getData().add(weightedAverageSeries);
 
-        //5 aggiorno i dati
+        //6 aggiorno i dati
         updateDatas();
     }
 
@@ -87,6 +108,9 @@ public class ExamsManagerController {
 
         //pie chart update
         updatePieChartProgress();
+
+        //update labels
+        updateLabels();
     }
 
     private void updateLineChart() {
@@ -135,6 +159,29 @@ public class ExamsManagerController {
         );
 
         pieChartTotalExam.setData(data);
+    }
+
+    private void updateLabels() {
+        double arithmeticMean = UniversityManager.getArithmeticMeanFromExamList(exams);
+        aritmethicMeanLabel.setText(formatter.format(arithmeticMean));
+
+        double weightedMean = UniversityManager.getWeightedMeanFromExamList(exams);
+        weightedMeanLabel.setText(formatter.format(weightedMean));
+
+        double median = UniversityManager.getMedianFromExamList(exams);
+        medianLabel.setText(formatter.format(median));
+
+        int mode = UniversityManager.getModeFromExamList(exams);
+        modeLabel.setText(formatter.format(mode));
+
+        double standardDeviation = UniversityManager.getStandardDeviationFromExamList(exams);
+        standardDeviationLabel.setText(formatter.format(standardDeviation));
+
+        double variance = UniversityManager.getVarianceFromExamList(exams);
+        varianceLabel.setText(formatter.format(variance));
+
+        double weightedMeanLastFiveExams = UniversityManager.getWeightedMeanOfLastFiveExamsFromList(exams);
+        weightedMeanLastFiveExamsLabel.setText(formatter.format(weightedMeanLastFiveExams));
     }
 
     public void addExamButtonOnAction(ActionEvent actionEvent) {

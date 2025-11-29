@@ -1,113 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.Priority?>
-<BorderPane fx:id="mainPane"
-            xmlns="http://javafx.com/javafx/23.0.1"
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="application.mainapplication.ExamsManagerController">
 
-    <!-- RIGHT SIDE -->
-    <right>
-        <VBox fx:id="rightBox" spacing="20" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets top="20" bottom="20" left="20" right="20"/>
-            </padding>
-
-            <children>
-
-                <!-- ===== LINE CHART BOX ===== -->
-                <VBox fx:id="lineChartBox" styleClass="chart-container">
-                    <padding><Insets top="15" bottom="15" left="15" right="15"/></padding>
-                    <children>
-
-                        <LineChart fx:id="lineChart" animated="false">
-
-                            <xAxis>
-                                <CategoryAxis fx:id="timeAxisInLineChart" side="BOTTOM" />
-                            </xAxis>
-
-                            <yAxis>
-                                <NumberAxis fx:id="gradeAxisInLineChart"
-                                            autoRanging="false"
-                                            lowerBound="17"
-                                            upperBound="31"
-                                            tickUnit="1"
-                                            side="LEFT"/>
-                            </yAxis>
-
-                        </LineChart>
-
-                    </children>
-
-                    <VBox.vgrow>
-                        ALWAYS
-                    </VBox.vgrow>
-
-
-                </VBox>
-
-
-                <!-- ===== PIE CHART BOX ===== -->
-                <VBox fx:id="pieChartBox" styleClass="chart-container">
-                    <padding><Insets top="15" bottom="15" left="15" right="15"/></padding>
-
-                    <children>
-                        <PieChart fx:id="pieChartTotalExam" />
-                    </children>
-
-                    <VBox.vgrow>
-                        ALWAYS
-                    </VBox.vgrow>
-                </VBox>
-
-            </children>
-
-        </VBox>
-    </right>
-
-    <!-- LEFT SIDE (unchanged) -->
+    <!-- ========================= LEFT SIDE ========================= -->
     <left>
-        <VBox fx:id="leftBox" spacing="10" BorderPane.alignment="CENTER">
+        <VBox fx:id="leftBox" spacing="10">
             <children>
 
                 <TableView fx:id="examTable">
                     <VBox.margin>
-                        <Insets bottom="10" left="20" right="20" top="20" />
+                        <Insets top="20" right="20" bottom="10" left="20"/>
                     </VBox.margin>
 
                     <columns>
-                        <TableColumn fx:id="colName" text="Name" />
-                        <TableColumn fx:id="colWeight" text="W" />
-                        <TableColumn fx:id="colGrade" text="G" />
-                        <TableColumn fx:id="colDate" text="Date" />
+                        <TableColumn fx:id="colName" text="Name"/>
+                        <TableColumn fx:id="colWeight" text="W"/>
+                        <TableColumn fx:id="colGrade" text="G"/>
+                        <TableColumn fx:id="colDate" text="Date"/>
                     </columns>
                 </TableView>
 
-                <Button fx:id="addButton" maxWidth="Infinity" onAction="#addExamButtonOnAction" text="Aggiungi">
+                <Button fx:id="addButton" text="Aggiungi" maxWidth="Infinity"
+                        onAction="#addExamButtonOnAction">
                     <VBox.margin>
-                        <Insets bottom="2" left="20" right="20" top="10" />
+                        <Insets top="10" right="20" bottom="2" left="20"/>
                     </VBox.margin>
                 </Button>
 
-                <Button fx:id="removeButton" maxWidth="Infinity" onAction="#removeButtonOnAction" text="Rimuovi">
+                <Button fx:id="removeButton" text="Rimuovi" maxWidth="Infinity"
+                        onAction="#removeButtonOnAction">
                     <VBox.margin>
-                        <Insets bottom="20" left="20" right="20" top="2" />
+                        <Insets top="2" right="20" bottom="20" left="20"/>
                     </VBox.margin>
                 </Button>
 
             </children>
         </VBox>
     </left>
+
+
+    <!-- ========================= RIGHT SIDE ========================= -->
+    <right>
+        <VBox fx:id="rightBox" spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <children>
+
+                <!-- ====================== FASCIA 1 ====================== -->
+                <HBox spacing="20" VBox.vgrow="ALWAYS">
+
+                    <!-- Pie Chart Box -->
+                    <VBox fx:id="pieChartBox" styleClass="chart-container" HBox.hgrow="ALWAYS">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <children>
+                            <PieChart fx:id="pieChartTotalExam"/>
+                        </children>
+                    </VBox>
+
+                    <!-- Line Chart Box -->
+                    <VBox fx:id="lineChartBox" styleClass="chart-container" HBox.hgrow="ALWAYS">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <children>
+                            <LineChart fx:id="lineChart" animated="false">
+
+                                <xAxis>
+                                    <CategoryAxis fx:id="timeAxisInLineChart"/>
+                                </xAxis>
+
+                                <yAxis>
+                                    <NumberAxis fx:id="gradeAxisInLineChart"
+                                                lowerBound="17"
+                                                upperBound="31"
+                                                tickUnit="1"
+                                                autoRanging="false"/>
+                                </yAxis>
+
+                            </LineChart>
+                        </children>
+                    </VBox>
+                </HBox>
+
+
+                <!-- ====================== FASCIA 2 ====================== -->
+                <HBox spacing="20">
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="aritmethicMeanLabel" styleClass="stat-value"/>
+                            <Label text="Media" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="weightedMeanLabel" styleClass="stat-value"/>
+                            <Label text="Media ponderata" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="medianLabel" styleClass="stat-value"/>
+                            <Label text="Mediana" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+                </HBox>
+
+
+                <!-- ====================== FASCIA 3 ====================== -->
+                <HBox spacing="20">
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="modeLabel" styleClass="stat-value"/>
+                            <Label text="Moda" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="standardDeviationLabel" styleClass="stat-value"/>
+                            <Label text="Deviazione standard" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="varianceLabel" styleClass="stat-value"/>
+                            <Label text="Varianza" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                        <children>
+                            <Label fx:id="weightedMeanLastFiveExamsLabel" styleClass="stat-value"/>
+                            <Label text="Media ponderata (ultimi 5)" styleClass="stat-title"/>
+                        </children>
+                    </VBox>
+                </HBox>
+
+            </children>
+        </VBox>
+    </right>
 
 </BorderPane>

@@ -1,38 +1,16 @@
-/* ==========================================================
-   ======================= GENERALE ==========================
-   ========================================================== */
+/* ===================== GENERALE ====================== */
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", sans-serif;
 }
 
 
-/* ==========================================================
-   ====================== TOP TITLE BAR ======================
-   ========================================================== */
+/* ===================== TABLEVIEW ===================== */
 
-#topVBox {
-    -fx-background-color: linear-gradient(to bottom, #3f6ad8, #1f3d7a);
-}
-
-#topLabel {
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}
-
-
-/* ==========================================================
-   ======================== TABLEVIEW ========================
-   ========================================================== */
-
-/* Contenitore principale */
 .table-view {
     -fx-background-radius: 10;
-    -fx-background-insets: 0;
-    -fx-border-radius: 10;
 }
 
-/* Header completamente colorato */
 .table-view .column-header-background,
 .table-view .nested-column-header,
 .table-view .column-header,
@@ -40,153 +18,85 @@
     -fx-background-color: linear-gradient(to bottom, #0353A4, #0466C8);
 }
 
-/* Arrotondare SOLO gli angoli superiori */
 .table-view .column-header-background {
     -fx-background-radius: 10 10 0 0;
-    -fx-background-insets: 0;
 }
 
-/* Testo intestazioni */
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-/* Righe & Celle */
 .table-row-cell {
     -fx-padding: 6 4;
     -fx-cell-size: 32px;
 }
 
-/* Separatori Tabella */
 .table-cell {
     -fx-border-color: white transparent white transparent;
     -fx-border-width: 0 1 0 0;
 }
 
-.table-row-cell:filled:selected .table-cell,
-.table-row-cell:filled:hover .table-cell {
-    -fx-border-color: white transparent white transparent;
-    -fx-border-width: 0 1 0 0;
-}
 
+/* ==================== CHART CONTAINERS ===================== */
 
-/* ==========================================================
-   ======================== FORM FIELDS ======================
-   ========================================================== */
-
-/* Contenitori grandi */
-.field-container {
-    -fx-background-color: rgba(189,224,254,1);
-    -fx-background-radius: 10;
-    -fx-padding: 10 14;
-}
-
-/* Contenitori piccoli (date) */
-.date-container {
-    -fx-background-color: rgba(255,252,242,1);
-    -fx-background-radius: 8;
-}
-
-
-/* ---------- TEXTFIELDS ---------- */
-
-.text-field {
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
-    -fx-border-color: #bbbbbb;
-}
-
-.text-field:focused {
-    -fx-border-color: #4a6cf7;
-    -fx-background-color: white;
-}
-
-
-/* ==========================================================
-   ======================== BUTTON ===========================
-   ========================================================== */
-
-.confirm-button {
-    -fx-background-color: #ef233c;
-    -fx-text-fill: white;
-    -fx-padding: 10 22;
-    -fx-background-radius: 10;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-}
-
-.confirm-button:hover {
-    -fx-background-color: #c1121f;
-}
-
-.confirm-button:pressed {
-    -fx-background-color: #780000;
-}
-
-
-/* ==========================================================
-   ===================== CHART CONTAINERS ====================
-   ========================================================== */
-
-/* Box grafici (linechart + piechart) */
 .chart-container {
-    -fx-background-color: rgba(189,224,254,1);
-    -fx-background-radius: 10;
-    -fx-padding: 10 14;
+    -fx-background-color: #d0e6fb; /* più chiaro */
+    -fx-background-radius: 12;
+    -fx-padding: 15;
 }
 
 
-/* ==========================================================
-   ======================= LINE CHART =========================
-   ========================================================== */
+/* ====================== STATISTIC BOXES ====================== */
 
-/* Linea serie 0 (Voti) */
+.stat-box {
+    -fx-background-color: #f2f5ff;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+    -fx-alignment: center;
+}
+
+.stat-title {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+    -fx-padding: 4 0 0 0;
+}
+
+.stat-value {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0353A4;
+}
+
+
+/* ======================== LINE CHART ======================== */
+
 .default-color0.chart-series-line {
-    -fx-stroke: #ef233c; /* rosso */
+    -fx-stroke: #ef233c;
     -fx-stroke-width: 2px;
 }
 
-/* Simboli serie 0 */
-.default-color0.chart-line-symbol {
-    -fx-background-color: #ef233c, white;
-}
-
-/* Linea serie 1 (Media) */
 .default-color1.chart-series-line {
-    -fx-stroke: #0466C8; /* blu */
+    -fx-stroke: #0466C8;
     -fx-stroke-width: 2px;
 }
 
-/* Simboli serie 1 */
-.default-color1.chart-line-symbol {
-    -fx-background-color: #0466C8, white;
-}
-
-/* Background e griglia */
 .chart-plot-background {
     -fx-background-color: transparent;
 }
 
-.chart-horizontal-grid-lines {
-    -fx-stroke: rgba(0,0,0,0.1);
-}
-
+.chart-horizontal-grid-lines,
 .chart-vertical-grid-lines {
     -fx-stroke: rgba(0,0,0,0.1);
 }
 
 
-/* ==========================================================
-   ========================== PIE CHART =======================
-   ========================================================== */
+/* ======================== PIE CHART ========================= */
 
-/* Parte piena */
 .chart-pie.data0 {
-    -fx-pie-color: #ff9f1c; /* arancione */
+    -fx-pie-color: #ff9f1c;
 }
 
-/* Parte restante */
 .chart-pie.data1 {
-    -fx-pie-color: #e0e0e0; /* grigio */
+    -fx-pie-color: #e0e0e0;
 }
