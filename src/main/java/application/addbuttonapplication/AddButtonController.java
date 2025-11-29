@@ -23,16 +23,16 @@ public class AddButtonController {
 
     public void confirmButtonOnAction(ActionEvent actionEvent) {
         try {
-            String name = nameInputField.getText();
+            String name = nameInputField.getText().trim();
             int weight = Integer.parseInt(weightInputField.getText());
             int grade = Integer.parseInt(gradeInputField.getText());
 
-            String day = dayInputField.getText();
-            String month = monthInputField.getText();
-            String year = yearInputField.getText();
-            String completeDate = yearInputField.getText() +
-                                monthInputField.getText() +
-                                dayInputField.getText();
+            String day = dayInputField.getText().trim();
+            String month = monthInputField.getText().trim();
+            String year = yearInputField.getText().trim();
+            String completeDate = yearInputField.getText().trim() +
+                                monthInputField.getText().trim() +
+                                dayInputField.getText().trim();
 
             setEveryFieldToBlank();
 
