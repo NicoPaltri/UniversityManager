@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import universitymanager.Exam;
 import universitymanager.UniversityManager;
@@ -165,6 +166,7 @@ public class ExamsManagerController {
 
             Scene scene = new Scene(root);
 
+            //css
             scene.getStylesheets().add(
                     getClass().getResource(cssPath).toExternalForm()
             );
@@ -172,6 +174,10 @@ public class ExamsManagerController {
             Stage stage = new Stage();
             stage.setTitle(windowName);
             stage.setScene(scene);
+
+            //blocco la finestra principale
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(mainPane.getScene().getWindow());
 
             //Callback: cosa fare quando la finestra viene chiusa
             stage.setOnHidden(e -> {

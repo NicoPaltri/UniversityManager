@@ -15,7 +15,7 @@ public class ExamsManagerApplication extends Application {
                 ExamsManagerApplication.class.getResource("/stages/MainStage.fxml")
         );
 
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 563);
 
         //css
         scene.getStylesheets().add(
