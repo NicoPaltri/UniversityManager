@@ -1,0 +1,61 @@
+/* ==== GENERALE ==== */
+
+.root {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* Top title box */
+#topVBox {
+    -fx-background-color: linear-gradient(to bottom, #3f6ad8, #1f3d7a);
+}
+
+#topLabel {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/* ==== FIELD CONTAINERS ==== */
+
+.field-container {
+    -fx-background-color: rgba(0,0,0,0.06);
+    -fx-background-radius: 10;
+    -fx-padding: 10 14;
+}
+
+.date-container {
+    -fx-background-color: rgba(0,0,0,0.07);
+    -fx-background-radius: 8;
+}
+
+/* ==== TEXTFIELDS ==== */
+
+.text-field {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #bbbbbb;
+}
+
+.text-field:focused {
+    -fx-border-color: #4a6cf7;
+    -fx-background-color: white;
+}
+
+/* ==== BUTTON ==== */
+
+.confirm-button {
+    -fx-background-color: #70e000;
+    -fx-text-fill: white;
+    -fx-padding: 10 22;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #28b000;
+}
+
+.confirm-button:pressed {
+    -fx-background-color: #008000;
+}

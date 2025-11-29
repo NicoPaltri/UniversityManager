@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="application.addbuttonapplication.AddButtonController"
+            prefWidth="650" prefHeight="450">
+
+    <!--- TOP -->
+    <top>
+        <VBox fx:id="topVBox" alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="20" left="0" right="0"/>
+            </padding>
+            <children>
+                <Label fx:id="topLabel" text="Inserisci un nuovo esame">
+                    <font><Font size="32"/></font>
+                </Label>
+            </children>
+        </VBox>
+    </top>
+
+    <!--- CENTER -->
+    <center>
+        <GridPane fx:id="centerGridPane" hgap="10" vgap="18" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets left="40" right="40" top="20" bottom="20"/>
+            </padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" minWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <children>
+
+                <!-- NOME -->
+                <Label text="Nome" GridPane.rowIndex="0"/>
+
+                <HBox fx:id="nameBox" spacing="10" alignment="CENTER_LEFT"
+                      GridPane.columnIndex="1" GridPane.rowIndex="0"
+                      styleClass="field-container">
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5"/>
+                    </padding>
+                    <children>
+                        <TextField fx:id="nameInputField" promptText="Nome esame"
+                                   HBox.hgrow="ALWAYS"/>
+                    </children>
+                </HBox>
+
+                <!-- PESO -->
+                <Label text="Peso" GridPane.rowIndex="1"/>
+
+                <HBox fx:id="weightBox" spacing="10" alignment="CENTER_LEFT"
+                      GridPane.columnIndex="1" GridPane.rowIndex="1"
+                      styleClass="field-container">
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5"/>
+                    </padding>
+                    <children>
+                        <TextField fx:id="weightInputField" promptText="Peso" prefWidth="80"/>
+                    </children>
+                </HBox>
+
+                <!-- VOTO -->
+                <Label text="Voto" GridPane.rowIndex="2"/>
+
+                <HBox fx:id="gradeBox" spacing="10" alignment="CENTER_LEFT"
+                      GridPane.columnIndex="1" GridPane.rowIndex="2"
+                      styleClass="field-container">
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5"/>
+                    </padding>
+                    <children>
+                        <TextField fx:id="gradeInputField" promptText="Voto" prefWidth="80"/>
+                    </children>
+                </HBox>
+
+                <!-- DATA -->
+                <Label text="Data" GridPane.rowIndex="3"/>
+
+                <HBox fx:id="dateBox" spacing="12" alignment="CENTER_LEFT"
+                      GridPane.columnIndex="1" GridPane.rowIndex="3">
+
+                    <!-- GIORNO -->
+                    <HBox fx:id="dayBox" alignment="CENTER" styleClass="date-container">
+                        <padding>
+                            <Insets top="5" bottom="5" left="5" right="5"/>
+                        </padding>
+                        <children>
+                            <TextField fx:id="dayInputField" promptText="gg"
+                                       prefColumnCount="2" maxWidth="60"/>
+                        </children>
+                    </HBox>
+
+                    <!-- MESE -->
+                    <HBox fx:id="monthBox" alignment="CENTER" styleClass="date-container">
+                        <padding>
+                            <Insets top="5" bottom="5" left="5" right="5"/>
+                        </padding>
+                        <children>
+                            <TextField fx:id="monthInputField" promptText="mm"
+                                       prefColumnCount="2" maxWidth="60"/>
+                        </children>
+                    </HBox>
+
+                    <!-- ANNO -->
+                    <HBox fx:id="yearBox" alignment="CENTER" styleClass="date-container">
+                        <padding>
+                            <Insets top="5" bottom="5" left="5" right="5"/>
+                        </padding>
+                        <children>
+                            <TextField fx:id="yearInputField" promptText="aaaa"
+                                       prefColumnCount="4" maxWidth="90"/>
+                        </children>
+                    </HBox>
+
+                </HBox>
+
+            </children>
+        </GridPane>
+    </center>
+
+    <!--- BOTTOM -->
+    <bottom>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="25" left="0" right="0"/>
+            </padding>
+            <children>
+                <Button fx:id="addButton" text="Conferma" onAction="#confirmButtonOnAction"
+                        styleClass="confirm-button"/>
+            </children>
+        </HBox>
+    </bottom>
+
+</BorderPane>
