@@ -107,17 +107,10 @@
 
 /* Contenitori grandi */
 .field-container {
-    -fx-background-color: rgba(189,224,254,1);
+    -fx-background-color: rgba(132,161,196,1);
     -fx-background-radius: 10;
     -fx-padding: 10 14;
 }
-
-/* Contenitori piccoli (date) */
-.date-container {
-    -fx-background-color: rgba(255,252,242,1);
-    -fx-background-radius: 8;
-}
-
 
 /* ---------- TEXTFIELDS ---------- */
 
