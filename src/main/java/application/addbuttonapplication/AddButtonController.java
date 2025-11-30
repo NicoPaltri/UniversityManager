@@ -1,6 +1,10 @@
 package application.addbuttonapplication;
 
+import application.FXMLUtils;
+import customexceptions.dateexception.FutureDateException;
 import customexceptions.dateexception.InvalidDateFormatException;
+import customexceptions.examformatexception.GradeFormatException;
+import customexceptions.examformatexception.WeightFormatException;
 import dbmanager.DBManageDB;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -31,21 +35,26 @@ public class AddButtonController {
             String month = monthInputField.getText().trim();
             String year = yearInputField.getText().trim();
             String completeDate = yearInputField.getText().trim() +
-                                monthInputField.getText().trim() +
-                                dayInputField.getText().trim();
-
-            setEveryFieldToBlank();
+                    monthInputField.getText().trim() +
+                    dayInputField.getText().trim();
 
             Exam exam = examFactory.createExam(name, weight, grade, completeDate);
+
+            setEveryFieldToBlank();
 
             DBManageDB.insertExam(exam);
 
         } catch (NumberFormatException e) {
             System.out.println("Errore nel format di grade/weight.");
+        } catch (WeightFormatException |
+                 GradeFormatException |
+                 FutureDateException |
+                 InvalidDateFormatException e) {
+            FXMLUtils.errorAlert(e.getMessage());
         }
     }
 
-    private void setEveryFieldToBlank(){
+    private void setEveryFieldToBlank() {
         nameInputField.setText("");
         weightInputField.setText("");
         gradeInputField.setText("");

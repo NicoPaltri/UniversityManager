@@ -2,6 +2,8 @@ package universitymanager;
 
 import customexceptions.dateexception.FutureDateException;
 import customexceptions.dateexception.InvalidDateFormatException;
+import customexceptions.examformatexception.GradeFormatException;
+import customexceptions.examformatexception.WeightFormatException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,13 +29,13 @@ public class ExamFactory {
 
     private void isWeightOk(String name, int weight) {
         if (weight < 3 || weight > 15) {
-            throw new RuntimeException("Weight in [" + name + "] not ok (rules >= 3 and <= 15)");
+            throw new WeightFormatException(name);
         }
     }
 
     private void isGradeOk(String name, int grade) {
         if (grade > 33 || grade < 18) {
-            throw new RuntimeException("Grade in [" + name + "] not ok (rules >= 18 and <= 33)");
+            throw new GradeFormatException(name);
         }
     }
 
