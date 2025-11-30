@@ -45,6 +45,7 @@ public class ExamsManagerController {
 
     public PieChart pieChartTotalExam;
     public VBox pieChartBox;
+    public Label pieChartLabel;
 
     public Button addButton;
     public Button removeButton;
@@ -178,6 +179,8 @@ public class ExamsManagerController {
 
         double filledPercentage = filled / max * 100;
         double remainingPercentage = 100 - filledPercentage;
+
+        pieChartLabel.setText(formatter.format(filledPercentage) + "%");
 
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
                 new PieChart.Data("Filled (" + formatter.format(filledPercentage) + "%)", filled),

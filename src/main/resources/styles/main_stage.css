@@ -243,6 +243,14 @@
     -fx-pie-color: #e0e0e0;
 }
 
+.piechart-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-padding: 8 0 0 0;
+    -fx-text-fill: #ff9f1c;   /* colore default, puoi sovrascriverlo dal controller */
+}
 
 /* ==========================================================
    ===================== STATISTIC BOXES =====================

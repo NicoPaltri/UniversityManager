@@ -55,18 +55,33 @@
                 <HBox fx:id="chartsRow1" spacing="20" VBox.vgrow="ALWAYS">
 
                     <!-- PIE CHART BOX (30%) -->
-                    <VBox fx:id="pieChartBox" styleClass="chart-container"
-                          HBox.hgrow="ALWAYS">
+                    <VBox fx:id="pieChartBox"
+                          styleClass="chart-container"
+                          HBox.hgrow="ALWAYS"
+                          alignment="CENTER">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
+
                         <children>
+
                             <PieChart fx:id="pieChartTotalExam"
                                       legendVisible="false">
                                 <VBox.vgrow>ALWAYS</VBox.vgrow>
                             </PieChart>
+
+                            <Label fx:id="pieChartLabel"
+                                   text="Progress"
+                                   styleClass="piechart-title">
+                                <VBox.margin>
+                                    <Insets top="12"/>
+                                </VBox.margin>
+                            </Label>
+
                         </children>
                     </VBox>
+
+
 
                     <!-- LINE CHART BOX (70%) -->
                     <VBox fx:id="lineChartBox" styleClass="chart-container"
