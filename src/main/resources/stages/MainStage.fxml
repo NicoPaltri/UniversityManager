@@ -25,14 +25,14 @@
                     </columns>
                 </TableView>
 
-                <Button fx:id="addButton" text="Aggiungi" maxWidth="Infinity"
+                <Button fx:id="addButton" focusTraversable="false" text="Aggiungi" maxWidth="Infinity"
                         onAction="#addExamButtonOnAction">
                     <VBox.margin>
                         <Insets top="10" right="20" bottom="2" left="20"/>
                     </VBox.margin>
                 </Button>
 
-                <Button fx:id="removeButton" text="Rimuovi" maxWidth="Infinity"
+                <Button fx:id="removeButton" focusTraversable="false" text="Rimuovi" maxWidth="Infinity"
                         onAction="#removeButtonOnAction">
                     <VBox.margin>
                         <Insets top="2" right="20" bottom="20" left="20"/>
