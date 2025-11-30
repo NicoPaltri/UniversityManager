@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -34,6 +35,8 @@ public class ExamsManagerController {
     public TableColumn<Exam, Number> colWeight;
     public TableColumn<Exam, Number> colGrade;
     public TableColumn<Exam, String> colDate;
+
+    public HBox chartsRow1;
 
     public LineChart<String, Number> lineChart;
     public CategoryAxis timeAxisInLineChart;
@@ -63,40 +66,60 @@ public class ExamsManagerController {
 
 
     public void initialize() {
-        rightBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
+        // LEFT: 40% fisso, RIGHT: tutto il resto
         leftBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
+        rightBox.prefWidthProperty().bind(
+                mainPane.widthProperty().subtract(leftBox.widthProperty())
+        );
+
         VBox.setVgrow(examTable, Priority.ALWAYS);
 
         FXMLUtils.setUpStandardExamTable(examTable, colName, colWeight, colGrade, colDate);
-
-        //--------------------------------------------------------------------------------
-
-        //1. collego la lista e la table
         FXMLUtils.linkTableViewAndObservableList(exams,
                 examTable, colName, colWeight, colGrade, colDate);
 
-        //2 setto le regole del line chart
+        // ---- LINE CHART SETTINGS ----
         lineChart.setAnimated(false);
-        
         timeAxisInLineChart.setGapStartAndEnd(false);
         timeAxisInLineChart.setAnimated(false);
-        
-        lineChartBox.prefHeightProperty().bind(rightBox.heightProperty().multiply(0.45));
 
-        //3 setto le regole per il pie chart
-        pieChartBox.prefHeightProperty().bind(rightBox.heightProperty().multiply(0.45));
-        
-        //4 nomino la serie dei voti e la collego al grafico
+        // proporzione 70/30 tra lineChartBox e pieChartBox nella fascia superiore
+        chartsRow1.widthProperty().addListener((obs, oldW, newW) -> {
+            double w = newW.doubleValue();
+            lineChartBox.setPrefWidth(w * 0.70);
+            pieChartBox.setPrefWidth(w * 0.30);
+        });
+
+        // i grafici riempiono i rispettivi box
+        VBox.setVgrow(lineChartBox, Priority.ALWAYS);
+        VBox.setVgrow(pieChartBox, Priority.ALWAYS);
+        VBox.setVgrow(lineChart, Priority.ALWAYS);
+        VBox.setVgrow(pieChartTotalExam, Priority.ALWAYS);
+
+        lineChart.prefWidthProperty().bind(lineChartBox.widthProperty());
+        lineChart.prefHeightProperty().bind(lineChartBox.heightProperty());
+
+        pieChartTotalExam.prefWidthProperty().bind(pieChartBox.widthProperty());
+        pieChartTotalExam.prefHeightProperty().bind(pieChartBox.heightProperty());
+
+        // ---- LABELS: niente troncamenti ----
+        aritmethicMeanLabel.setWrapText(true);
+        weightedMeanLabel.setWrapText(true);
+        medianLabel.setWrapText(true);
+        modeLabel.setWrapText(true);
+        standardDeviationLabel.setWrapText(true);
+        varianceLabel.setWrapText(true);
+        weightedMeanLastFiveExamsLabel.setWrapText(true);
+
+        // ---- SERIE LINE CHART ----
         gradesSeries.setName("Voti");
-        lineChart.getData().add(gradesSeries);
-
-        //5 nomino la serie della media ponderata e la collego al grafico
         weightedAverageSeries.setName("Media ponderata");
-        lineChart.getData().add(weightedAverageSeries);
+        lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
 
-        //6 aggiorno i dati
+        // ---- DATI INIZIALI ----
         updateDatas();
     }
+
 
     private void updateDatas() {
         FXMLUtils.commonUpdateDatas(exams, examTable);
@@ -150,12 +173,15 @@ public class ExamsManagerController {
     }
 
     private void updatePieChartProgress() {
-        final int max = 180;
-        int filled = UniversityManager.getTotalExamsWeight(exams);
+        final double max = 180;
+        double filled = UniversityManager.getTotalExamsWeight(exams);
+
+        double filledPercentage = filled / max * 100;
+        double remainingPercentage = 100 - filledPercentage;
 
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
-                new PieChart.Data("Filled", filled),
-                new PieChart.Data("Remaining", max - filled)
+                new PieChart.Data("Filled (" + formatter.format(filledPercentage) + "%)", filled),
+                new PieChart.Data("Remaining (" + formatter.format(remainingPercentage) + "%)", max - filled)
         );
 
         pieChartTotalExam.setData(data);
@@ -172,7 +198,7 @@ public class ExamsManagerController {
         medianLabel.setText(formatter.format(median));
 
         int mode = UniversityManager.getModeFromExamList(exams);
-        modeLabel.setText(formatter.format(mode));
+        modeLabel.setText(String.valueOf(mode));
 
         double standardDeviation = UniversityManager.getStandardDeviationFromExamList(exams);
         standardDeviationLabel.setText(formatter.format(standardDeviation));

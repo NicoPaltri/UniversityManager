@@ -1,16 +1,37 @@
-/* ===================== GENERALE ====================== */
+/* ==========================================================
+   ======================= GENERALE ==========================
+   ========================================================== */
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", sans-serif;
 }
 
 
-/* ===================== TABLEVIEW ===================== */
+/* ==========================================================
+   ====================== TOP TITLE BAR ======================
+   ========================================================== */
+
+#topVBox {
+    -fx-background-color: linear-gradient(to bottom, #3f6ad8, #1f3d7a);
+}
+
+#topLabel {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/* ==========================================================
+   ======================== TABLEVIEW ========================
+   ========================================================== */
 
 .table-view {
     -fx-background-radius: 10;
+    -fx-background-insets: 0;
+    -fx-border-radius: 10;
 }
 
+/* Header colorato */
 .table-view .column-header-background,
 .table-view .nested-column-header,
 .table-view .column-header,
@@ -18,62 +39,174 @@
     -fx-background-color: linear-gradient(to bottom, #0353A4, #0466C8);
 }
 
+/* Arrotondare SOLO sopra */
 .table-view .column-header-background {
     -fx-background-radius: 10 10 0 0;
+    -fx-background-insets: 0;
 }
 
+/* Testo intestazioni */
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.table-row-cell {
-    -fx-padding: 6 4;
-    -fx-cell-size: 32px;
-}
-
+/* Celle → separatore bianco destro */
 .table-cell {
     -fx-border-color: white transparent white transparent;
     -fx-border-width: 0 1 0 0;
 }
 
+/* Righe base */
+.table-row-cell {
+    -fx-padding: 6 4;
+    -fx-cell-size: 32px;
+}
 
-/* ==================== CHART CONTAINERS ===================== */
+/* Zebra standard */
+.table-row-cell:odd {
+    -fx-background-color: rgba(0,0,0,0.02);
+}
+
+.table-row-cell:even {
+    -fx-background-color: transparent;
+}
+
+
+/* ==========================================================
+   =========== DISABILITA HOVER E FOCUS VISIVI  ==============
+   ========================================================== */
+
+/* Hover → NON deve cambiare nulla */
+.table-row-cell:hover {
+    -fx-background-color: inherit !important;
+}
+
+.table-row-cell:odd:hover {
+    -fx-background-color: rgba(0,0,0,0.02) !important;
+}
+
+.table-row-cell:even:hover {
+    -fx-background-color: transparent !important;
+}
+
+/* Focus row blu → disabilitato */
+.table-view:focused .table-row-cell:focused,
+.table-row-cell:focused {
+    -fx-background-color: transparent !important;
+    -fx-background-insets: 0 !important;
+    -fx-background-radius: 0 !important;
+}
+
+/* Focus blu anche sulle celle → disabilitato */
+.table-view:focused .table-row-cell:focused .table-cell,
+.table-row-cell:focused .table-cell {
+    -fx-background-color: transparent !important;
+}
+
+
+/* ==========================================================
+   =============== DISABILITA COMPLETAMENTE SELECTED ==========
+   ========================================================== */
+
+/* Dispari selezionate → colore della zebra */
+.table-row-cell:odd:selected,
+.table-row-cell:odd:selected:hover,
+.table-row-cell:odd:focused:selected,
+.table-view:focused .table-row-cell:odd:selected,
+.table-view:focused .table-row-cell:odd:selected:hover {
+    -fx-background-color: rgba(0,0,0,0.02) !important;
+}
+
+/* Pari selezionate → trasparente */
+.table-row-cell:even:selected,
+.table-row-cell:even:selected:hover,
+.table-row-cell:even:focused:selected,
+.table-view:focused .table-row-cell:even:selected,
+.table-view:focused .table-row-cell:even:selected:hover {
+    -fx-background-color: transparent !important;
+}
+
+/* Celle della riga selezionata: mantieni separatori + testo normale */
+.table-row-cell:selected .table-cell,
+.table-view:focused .table-row-cell:selected .table-cell {
+    -fx-border-color: white transparent white transparent !important;
+    -fx-border-width: 0 1 0 0 !important;
+    -fx-text-fill: -fx-text-inner-color !important;
+}
+
+
+/* ==========================================================
+   ======================== FORM FIELDS ======================
+   ========================================================== */
+
+.field-container {
+    -fx-background-color: rgba(189,224,254,1);
+    -fx-background-radius: 10;
+    -fx-padding: 10 14;
+}
+
+.date-container {
+    -fx-background-color: rgba(255,252,242,1);
+    -fx-background-radius: 8;
+}
+
+.text-field {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #bbbbbb;
+}
+
+.text-field:focused {
+    -fx-border-color: #4a6cf7;
+    -fx-background-color: white;
+}
+
+
+/* ==========================================================
+   ======================== BUTTON ===========================
+   ========================================================== */
+
+.confirm-button {
+    -fx-background-color: #ef233c;
+    -fx-text-fill: white;
+    -fx-padding: 10 22;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #c1121f;
+}
+
+.confirm-button:pressed {
+    -fx-background-color: #780000;
+}
+
+
+/* ==========================================================
+   ===================== CHART CONTAINERS ====================
+   ========================================================== */
 
 .chart-container {
-    -fx-background-color: #d0e6fb; /* più chiaro */
+    -fx-background-color: #dce8ff;
     -fx-background-radius: 12;
-    -fx-padding: 15;
+    -fx-padding: 10;
 }
 
 
-/* ====================== STATISTIC BOXES ====================== */
-
-.stat-box {
-    -fx-background-color: #f2f5ff;
-    -fx-background-radius: 12;
-    -fx-padding: 12;
-    -fx-alignment: center;
-}
-
-.stat-title {
-    -fx-font-size: 12px;
-    -fx-text-fill: #333;
-    -fx-padding: 4 0 0 0;
-}
-
-.stat-value {
-    -fx-font-size: 26px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #0353A4;
-}
-
-
-/* ======================== LINE CHART ======================== */
+/* ==========================================================
+   ======================= LINE CHART =========================
+   ========================================================== */
 
 .default-color0.chart-series-line {
     -fx-stroke: #ef233c;
     -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #ef233c, white;
 }
 
 .default-color1.chart-series-line {
@@ -81,17 +214,26 @@
     -fx-stroke-width: 2px;
 }
 
+.default-color1.chart-line-symbol {
+    -fx-background-color: #0466C8, white;
+}
+
 .chart-plot-background {
     -fx-background-color: transparent;
 }
 
-.chart-horizontal-grid-lines,
+.chart-horizontal-grid-lines {
+    -fx-stroke: rgba(0,0,0,0.1);
+}
+
 .chart-vertical-grid-lines {
     -fx-stroke: rgba(0,0,0,0.1);
 }
 
 
-/* ======================== PIE CHART ========================= */
+/* ==========================================================
+   ========================== PIE CHART =======================
+   ========================================================== */
 
 .chart-pie.data0 {
     -fx-pie-color: #ff9f1c;
@@ -99,4 +241,31 @@
 
 .chart-pie.data1 {
     -fx-pie-color: #e0e0e0;
+}
+
+
+/* ==========================================================
+   ===================== STATISTIC BOXES =====================
+   ========================================================== */
+
+.stat-box {
+    -fx-background-color: #f5f7ff;
+    -fx-background-radius: 12;
+    -fx-padding: 15;
+    -fx-alignment: center;
+    -fx-min-width: 120;
+}
+
+.stat-value {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0353A4;
+    -fx-wrap-text: true;
+    -fx-text-overrun: clip;
+}
+
+.stat-title {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555;
+    -fx-padding: 6 0 0 0;
 }

@@ -4,7 +4,6 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -14,12 +13,10 @@
     <left>
         <VBox fx:id="leftBox" spacing="10">
             <children>
-
                 <TableView fx:id="examTable">
                     <VBox.margin>
                         <Insets top="20" right="20" bottom="10" left="20"/>
                     </VBox.margin>
-
                     <columns>
                         <TableColumn fx:id="colName" text="Name"/>
                         <TableColumn fx:id="colWeight" text="W"/>
@@ -41,7 +38,6 @@
                         <Insets top="2" right="20" bottom="20" left="20"/>
                     </VBox.margin>
                 </Button>
-
             </children>
         </VBox>
     </left>
@@ -55,22 +51,34 @@
             </padding>
             <children>
 
-                <!-- ====================== FASCIA 1 ====================== -->
-                <HBox spacing="20" VBox.vgrow="ALWAYS">
+                <!-- ===== FASCIA 1: GRAFICI ===== -->
+                <HBox fx:id="chartsRow1" spacing="20" VBox.vgrow="ALWAYS">
 
-                    <!-- Pie Chart Box -->
-                    <VBox fx:id="pieChartBox" styleClass="chart-container" HBox.hgrow="ALWAYS">
-                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                    <!-- PIE CHART BOX (30%) -->
+                    <VBox fx:id="pieChartBox" styleClass="chart-container"
+                          HBox.hgrow="ALWAYS">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
                         <children>
-                            <PieChart fx:id="pieChartTotalExam"/>
+                            <PieChart fx:id="pieChartTotalExam"
+                                      legendVisible="false">
+                                <VBox.vgrow>ALWAYS</VBox.vgrow>
+                            </PieChart>
                         </children>
                     </VBox>
 
-                    <!-- Line Chart Box -->
-                    <VBox fx:id="lineChartBox" styleClass="chart-container" HBox.hgrow="ALWAYS">
-                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                    <!-- LINE CHART BOX (70%) -->
+                    <VBox fx:id="lineChartBox" styleClass="chart-container"
+                          HBox.hgrow="ALWAYS">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
                         <children>
-                            <LineChart fx:id="lineChart" animated="false">
+                            <LineChart fx:id="lineChart"
+                                       animated="false"
+                                       createSymbols="true">
+                                <VBox.vgrow>ALWAYS</VBox.vgrow>
 
                                 <xAxis>
                                     <CategoryAxis fx:id="timeAxisInLineChart"/>
@@ -83,30 +91,29 @@
                                                 tickUnit="1"
                                                 autoRanging="false"/>
                                 </yAxis>
-
                             </LineChart>
                         </children>
                     </VBox>
+
                 </HBox>
 
-
-                <!-- ====================== FASCIA 2 ====================== -->
+                <!-- ===== FASCIA 2: MEDIA / MEDIA PONDERATA / MEDIANA ===== -->
                 <HBox spacing="20">
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="meanBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="aritmethicMeanLabel" styleClass="stat-value"/>
                             <Label text="Media" styleClass="stat-title"/>
                         </children>
                     </VBox>
 
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="weightedMeanBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="weightedMeanLabel" styleClass="stat-value"/>
                             <Label text="Media ponderata" styleClass="stat-title"/>
                         </children>
                     </VBox>
 
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="medianBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="medianLabel" styleClass="stat-value"/>
                             <Label text="Mediana" styleClass="stat-title"/>
@@ -114,31 +121,30 @@
                     </VBox>
                 </HBox>
 
-
-                <!-- ====================== FASCIA 3 ====================== -->
+                <!-- ===== FASCIA 3: MODA / DEV.STD / VAR / MEDIA 5 ESAMI ===== -->
                 <HBox spacing="20">
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="modeBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="modeLabel" styleClass="stat-value"/>
                             <Label text="Moda" styleClass="stat-title"/>
                         </children>
                     </VBox>
 
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="stdDevBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="standardDeviationLabel" styleClass="stat-value"/>
                             <Label text="Deviazione standard" styleClass="stat-title"/>
                         </children>
                     </VBox>
 
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="varianceBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="varianceLabel" styleClass="stat-value"/>
                             <Label text="Varianza" styleClass="stat-title"/>
                         </children>
                     </VBox>
 
-                    <VBox HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="weightedLastFiveBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
                             <Label fx:id="weightedMeanLastFiveExamsLabel" styleClass="stat-value"/>
                             <Label text="Media ponderata (ultimi 5)" styleClass="stat-title"/>
