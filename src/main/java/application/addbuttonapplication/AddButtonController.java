@@ -7,7 +7,8 @@ import customexceptions.examformatexception.GradeFormatException;
 import customexceptions.examformatexception.WeightFormatException;
 import dbmanager.DBManageDB;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import universitymanager.Exam;
 import universitymanager.ExamFactory;
@@ -45,8 +46,8 @@ public class AddButtonController {
             DBManageDB.insertExam(exam);
 
         } catch (NumberFormatException e) {
-            System.out.println("Errore nel format di grade/weight.");
-        } catch (WeightFormatException |
+           FXMLUtils.errorAlert("Errore nel format di grade/weight.");
+        }catch (WeightFormatException |
                  GradeFormatException |
                  FutureDateException |
                  InvalidDateFormatException e) {

@@ -1,6 +1,7 @@
 package application.mainapplication;
 
 import application.FXMLUtils;
+import dbmanager.DBStartTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -116,6 +117,9 @@ public class ExamsManagerController {
         gradesSeries.setName("Voti");
         weightedAverageSeries.setName("Media ponderata");
         lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
+
+        //creo/verifico la tabella
+        DBStartTable.ensureCreated();
 
         // ---- DATI INIZIALI ----
         updateDatas();

@@ -9,8 +9,6 @@ import java.sql.SQLException;
 
 public class DBManageDB {
     public static void insertExam(Exam exam) {
-        DBStartTable.ensureCreated();
-
         String sql = "INSERT INTO exams (name, weight, grade, exam_date) VALUES (?, ?, ?, ?);";
 
         try (Connection conn = DBConnection.getConnection();
@@ -31,8 +29,6 @@ public class DBManageDB {
     }
 
     public static void deleteExamByName(String name) {
-        DBStartTable.ensureCreated();
-
         String sql = "DELETE FROM exams WHERE name = ?;";
 
         try (Connection conn = DBConnection.getConnection();
