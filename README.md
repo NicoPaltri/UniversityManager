@@ -14,4 +14,4 @@ Permette di gestire il libretto esami, calcolare automaticamente le medie e tene
 
 🚀 Come scaricare e usare l'App
 
-L'unico requisito è ***disporre di Java 21.0.0 o superiore**; una volta superato ciò, vai alla sezione Releases di questo repository e scarica l'ultima versione del file UniversityManager.exe.
+L'unico requisito è **disporre di Java 21.0.0 o superiore**; una volta superato ciò, vai alla sezione Releases di questo repository e scarica l'ultima versione del file UniversityManager.exe.
