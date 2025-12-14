@@ -1,6 +1,8 @@
 package application.addbuttonapplication;
 
 import application.FXMLUtils;
+import customexceptions.accessdatatexception.AlreadyExistingExamException;
+import customexceptions.accessdatatexception.DBFailedConnectionException;
 import customexceptions.dateexception.FutureDateException;
 import customexceptions.dateexception.InvalidDateFormatException;
 import customexceptions.examformatexception.GradeFormatException;
@@ -32,25 +34,31 @@ public class AddButtonController {
             int weight = Integer.parseInt(weightInputField.getText());
             int grade = Integer.parseInt(gradeInputField.getText());
 
+
             String day = dayInputField.getText().trim();
+            day = makeThisTwoDigits(day);
+
             String month = monthInputField.getText().trim();
+            month = makeThisTwoDigits(month);
+
             String year = yearInputField.getText().trim();
-            String completeDate = yearInputField.getText().trim() +
-                    monthInputField.getText().trim() +
-                    dayInputField.getText().trim();
+
+            String completeDate = year + month + day;
 
             Exam exam = examFactory.createExam(name, weight, grade, completeDate);
 
-            setEveryFieldToBlank();
-
             DBManageDB.insertExam(exam);
 
+            setEveryFieldToBlank();
+
         } catch (NumberFormatException e) {
-           FXMLUtils.errorAlert("Errore nel format di grade/weight.");
-        }catch (WeightFormatException |
+            FXMLUtils.errorAlert("Errore nel format di grade/weight.");
+        } catch (WeightFormatException |
                  GradeFormatException |
                  FutureDateException |
-                 InvalidDateFormatException e) {
+                 InvalidDateFormatException |
+                 AlreadyExistingExamException |
+                 DBFailedConnectionException e) {
             FXMLUtils.errorAlert(e.getMessage());
         }
     }
@@ -63,5 +71,13 @@ public class AddButtonController {
         dayInputField.setText("");
         monthInputField.setText("");
         yearInputField.setText("");
+    }
+
+    private String makeThisTwoDigits(String text) {
+        if (text.length() == 1) {
+            return "0" + text;
+        }
+
+        return text;
     }
 }

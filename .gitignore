@@ -44,3 +44,5 @@ build/
 ### others ###
 mvnw
 mvnw.cmd
+appConfing.xml
+dependency-reduced-pom.xml

@@ -1,5 +1,7 @@
 package dbmanager;
 
+import customexceptions.accessdatatexception.AlreadyExistingExamException;
+import customexceptions.accessdatatexception.DBFailedConnectionException;
 import customexceptions.accessdatatexception.DataAccessException;
 import universitymanager.Exam;
 
@@ -24,7 +26,17 @@ public class DBManageDB {
             System.out.println("Esame inserito con successo: " + exam.toString());
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException(sql);
+
+            // CONTROLLO DEL TIPO DI ERRORE
+            // Il codice 19 corrisponde a SQLITE_CONSTRAINT (es. PK duplicata)
+            if (e.getErrorCode() == 19) {
+                throw new AlreadyExistingExamException();
+            }
+            else {
+                // Qualsiasi altro codice (es. 0, 1, 5, 6...) è un problema tecnico/di connessione
+                // L'utente non può farci nulla se non riprovare più tardi
+                throw new DBFailedConnectionException("");
+            }
         }
     }
 

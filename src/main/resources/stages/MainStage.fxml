@@ -18,10 +18,10 @@
                         <Insets top="20" right="20" bottom="10" left="20"/>
                     </VBox.margin>
                     <columns>
-                        <TableColumn fx:id="colName" text="Name"/>
-                        <TableColumn fx:id="colWeight" text="W"/>
-                        <TableColumn fx:id="colGrade" text="G"/>
-                        <TableColumn fx:id="colDate" text="Date"/>
+                        <TableColumn fx:id="colName" text="Nome"/>
+                        <TableColumn fx:id="colWeight" text="P"/>
+                        <TableColumn fx:id="colGrade" text="V"/>
+                        <TableColumn fx:id="colDate" text="Data"/>
                     </columns>
                 </TableView>
 
