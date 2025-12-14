@@ -42,6 +42,7 @@ build/
 /src/test/*
 
 ### others ###
+*.exe
 mvnw
 mvnw.cmd
 appConfing.xml
