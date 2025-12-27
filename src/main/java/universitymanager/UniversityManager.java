@@ -68,16 +68,39 @@ public class UniversityManager {
             return 0;
         }
 
-        List<Exam> gradeOrderedExams = new java.util.ArrayList<>(List.copyOf(exams));
-        gradeOrderedExams.sort(Comparator.comparing(Exam::getGrade));
+        List<Integer> gradesList = exams.stream().map(Exam::getGrade).toList();
+        List<Integer> orderedGrades = new ArrayList<>(gradesList);
+        orderedGrades.sort(null);
 
-        if (exams.size() % 2 == 0) {
-            double minorMedian = gradeOrderedExams.get(gradeOrderedExams.size() / 2 - 1).getGrade();
-            double majorMedian = gradeOrderedExams.get(gradeOrderedExams.size() / 2).getGrade();
+        return getMedianFromIntegerOrderedList(orderedGrades);
+    }
+
+    private static Exam getExamMedianFromExamList(List<Exam> exams) {
+        if (exams.size() == 1) {
+            return exams.getFirst();
+        }
+
+        exams.sort(Comparator.comparing(Exam::getGrade));
+
+        return exams.get(exams.size() / 2);
+    }
+
+    private static double getMedianFromIntegerOrderedList(List<Integer> numbers) {
+        if (numbers.isEmpty()) {
+            return 0;
+        }
+
+        if (numbers.size() == 1) {
+            return numbers.getFirst();
+        }
+
+        if (numbers.size() % 2 == 0) {
+            double minorMedian = numbers.get(numbers.size() / 2 - 1);
+            double majorMedian = numbers.get(numbers.size() / 2);
 
             return (majorMedian + minorMedian) / 2;
         } else {
-            return exams.get(exams.size() / 2).getGrade();
+            return numbers.get(numbers.size() / 2);
         }
     }
 
@@ -123,12 +146,44 @@ public class UniversityManager {
         return Math.sqrt(calculations / exams.size());
     }
 
-    public static double getVarianceFromExamList(List<Exam> exams) {
+    public static double getInterQuartileRangeFromExamList(List<Exam> exams) {
         if (exams.isEmpty()) {
             return 0;
         }
 
-        return Math.pow(getStandardDeviationFromExamList(exams), 2);
+        exams.sort(Comparator.comparing(Exam::getGrade));
+
+        Exam median = getExamMedianFromExamList(exams);
+
+        if (exams.size() < 3) { //troppi pochi dati per dare un risultato
+            return getMedianFromExamList(exams);
+        }
+
+        List<Integer> q1List = new ArrayList<>();
+        List<Integer> q3List = new ArrayList<>();
+
+        boolean beforeMedian = true;
+
+        for (Exam exam : exams) {
+            if (exam.equals(median)) {
+                beforeMedian = false;
+
+                if (exams.size() % 2 == 1) {
+                    continue;
+                }
+            }
+
+            if (beforeMedian) {
+                q1List.add(exam.getGrade());
+            } else {
+                q3List.add(exam.getGrade());
+            }
+        }
+
+        double q1 = getMedianFromIntegerOrderedList(q1List);
+        double q3 = getMedianFromIntegerOrderedList(q3List);
+
+        return q3 - q1;
     }
 
     public static double getWeightedMeanOfLastFiveExamsFromList(List<Exam> exams) {

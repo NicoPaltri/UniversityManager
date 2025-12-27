@@ -57,7 +57,7 @@ public class ExamsManagerController {
 
     public Label modeLabel;
     public Label standardDeviationLabel;
-    public Label varianceLabel;
+    public Label interQuartileLabel;
     public Label weightedMeanLastFiveExamsLabel;
 
     private final XYChart.Series<String, Number> gradesSeries = new XYChart.Series<>();
@@ -110,7 +110,7 @@ public class ExamsManagerController {
         medianLabel.setWrapText(true);
         modeLabel.setWrapText(true);
         standardDeviationLabel.setWrapText(true);
-        varianceLabel.setWrapText(true);
+        interQuartileLabel.setWrapText(true);
         weightedMeanLastFiveExamsLabel.setWrapText(true);
 
         // ---- SERIE LINE CHART ----
@@ -125,11 +125,10 @@ public class ExamsManagerController {
         updateDatas();
     }
 
-
     private void updateDatas() {
         FXMLUtils.commonUpdateDatas(exams, examTable);
 
-        //CONTROLLER SPECIFIC UPDATES
+        //CONTROLLER SPECIFIC UPDATES---
 
         //line chart update
         updateLineChart();
@@ -210,8 +209,8 @@ public class ExamsManagerController {
         double standardDeviation = UniversityManager.getStandardDeviationFromExamList(exams);
         standardDeviationLabel.setText(formatter.format(standardDeviation));
 
-        double variance = UniversityManager.getVarianceFromExamList(exams);
-        varianceLabel.setText(formatter.format(variance));
+        double interQuartileRange = UniversityManager.getInterQuartileRangeFromExamList(exams);
+        interQuartileLabel.setText(formatter.format(interQuartileRange));
 
         double weightedMeanLastFiveExams = UniversityManager.getWeightedMeanOfLastFiveExamsFromList(exams);
         weightedMeanLastFiveExamsLabel.setText(formatter.format(weightedMeanLastFiveExams));

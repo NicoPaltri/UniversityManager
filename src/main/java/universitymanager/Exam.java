@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Objects;
+
 public class Exam {
     private final StringProperty nameFX;
     private final IntegerProperty weightFX;
@@ -60,5 +62,17 @@ public class Exam {
                 ", weight: " + this.getWeight() +
                 ", grade: " + this.getGrade() +
                 ", date: " + this.getDate() + ".";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Exam exam = (Exam) o;
+        return Objects.equals(nameFX, exam.nameFX);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nameFX);
     }
 }

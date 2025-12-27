@@ -3,6 +3,7 @@ package application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,7 +42,24 @@ public class FXMLUtils {
         colGrade.setCellValueFactory(c -> c.getValue().gradeProperty());
         colDate.setCellValueFactory(c -> c.getValue().dateProperty());
 
-        examTable.setItems(exams);
+        // 2. CREIAMO IL WRAPPER SortedList
+        SortedList<Exam> sortedData = new SortedList<>(exams);
+
+        // 3. Colleghiamo il comparatore
+        sortedData.comparatorProperty().bind(examTable.comparatorProperty());
+
+        // 4. Passiamo i dati alla tabella
+        examTable.setItems(sortedData);
+
+        // 5. FORZIAMO L'ORDINAMENTO VISIVO
+        colDate.setSortType(TableColumn.SortType.ASCENDING);
+
+        // Aggiungiamo la colonna alla lista degli ordinamenti attivi
+        examTable.getSortOrder().clear();
+        examTable.getSortOrder().add(colDate);
+
+        // Chiamiamo sort() per applicarlo immediatamente
+        examTable.sort();
     }
 
     public static void commonUpdateDatas(ObservableList<Exam> exams, TableView<Exam> examTable) {
@@ -60,7 +78,7 @@ public class FXMLUtils {
         Platform.runLater(() -> examTable.getSelectionModel().clearSelection());
     }
 
-    public static void errorAlert(String message){
+    public static void errorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Errore di input");
         alert.setHeaderText("Operazione non valida");

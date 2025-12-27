@@ -152,10 +152,10 @@
                         </children>
                     </VBox>
 
-                    <VBox fx:id="varianceBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
+                    <VBox fx:id="interQuartileBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
-                            <Label fx:id="varianceLabel" styleClass="stat-value"/>
-                            <Label text="Varianza" styleClass="stat-title"/>
+                            <Label fx:id="interQuartileLabel" styleClass="stat-value"/>
+                            <Label text="Variazione quartili interni" styleClass="stat-title"/>
                         </children>
                     </VBox>
 
