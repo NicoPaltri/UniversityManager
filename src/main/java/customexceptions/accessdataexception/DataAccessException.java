@@ -1,4 +1,4 @@
-package customexceptions.accessdatatexception;
+package customexceptions.accessdataexception;
 
 public class DataAccessException extends RuntimeException {
     public DataAccessException(String query) {

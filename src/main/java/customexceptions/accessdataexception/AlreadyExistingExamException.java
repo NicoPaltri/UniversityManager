@@ -1,4 +1,4 @@
-package customexceptions.accessdatatexception;
+package customexceptions.accessdataexception;
 
 public class AlreadyExistingExamException extends RuntimeException {
     public AlreadyExistingExamException() {

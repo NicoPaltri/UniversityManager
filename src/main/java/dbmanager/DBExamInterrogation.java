@@ -1,6 +1,6 @@
 package dbmanager;
 
-import customexceptions.accessdatatexception.DataAccessException;
+import customexceptions.accessdataexception.DataAccessException;
 import universitymanager.Exam;
 import universitymanager.ExamFactory;
 

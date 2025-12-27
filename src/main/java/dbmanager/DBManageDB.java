@@ -1,8 +1,8 @@
 package dbmanager;
 
-import customexceptions.accessdatatexception.AlreadyExistingExamException;
-import customexceptions.accessdatatexception.DBFailedConnectionException;
-import customexceptions.accessdatatexception.DataAccessException;
+import customexceptions.accessdataexception.AlreadyExistingExamException;
+import customexceptions.accessdataexception.DBFailedConnectionException;
+import customexceptions.accessdataexception.DataAccessException;
 import universitymanager.Exam;
 
 import java.sql.Connection;

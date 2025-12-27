@@ -1,4 +1,4 @@
-package customexceptions.accessdatatexception;
+package customexceptions.accessdataexception;
 
 public class DBFailedConnectionException extends RuntimeException {
     public DBFailedConnectionException(String message) {

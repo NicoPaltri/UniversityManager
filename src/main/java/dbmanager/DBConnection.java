@@ -1,6 +1,6 @@
 package dbmanager;
 
-import customexceptions.accessdatatexception.DBFailedConnectionException;
+import customexceptions.accessdataexception.DBFailedConnectionException;
 
 import java.io.IOException;
 import java.nio.file.Files;

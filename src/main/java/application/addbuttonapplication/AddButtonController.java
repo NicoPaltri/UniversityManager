@@ -1,16 +1,14 @@
 package application.addbuttonapplication;
 
 import application.FXMLUtils;
-import customexceptions.accessdatatexception.AlreadyExistingExamException;
-import customexceptions.accessdatatexception.DBFailedConnectionException;
+import customexceptions.accessdataexception.AlreadyExistingExamException;
+import customexceptions.accessdataexception.DBFailedConnectionException;
 import customexceptions.dateexception.FutureDateException;
 import customexceptions.dateexception.InvalidDateFormatException;
 import customexceptions.examformatexception.GradeFormatException;
 import customexceptions.examformatexception.WeightFormatException;
 import dbmanager.DBManageDB;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import universitymanager.Exam;
 import universitymanager.ExamFactory;
