@@ -1,6 +1,6 @@
 package universitymanager;
 
-import dbmanager.DBExamInterrogation;
+import dbmanager.examsTable.DBExamsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.math3.stat.StatUtils;
@@ -10,10 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UniversityManager {
-    DBExamInterrogation dbInterrogator;
+    DBExamsInterrogation dbInterrogator;
 
     public UniversityManager() {
-        this.dbInterrogator = new DBExamInterrogation();
+        this.dbInterrogator = new DBExamsInterrogation();
     }
 
     public ObservableList<Exam> getObservableListFromDB() {

@@ -1,15 +1,15 @@
-package dbmanager;
+package dbmanager.examsTable;
+
+import dbmanager.DBConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DBStartTable {
-    private DBStartTable() {
-    }
+public class DBExamsStartTable {
 
     public static void ensureCreated() {
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnectionFromDB();
              Statement st = conn.createStatement()) {
 
             st.execute("""

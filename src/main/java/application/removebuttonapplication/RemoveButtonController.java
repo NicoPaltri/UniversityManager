@@ -1,17 +1,14 @@
 package application.removebuttonapplication;
 
 import application.FXMLUtils;
-import dbmanager.DBManageDB;
-import javafx.application.Platform;
+import dbmanager.examsTable.DBManageExamsDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import universitymanager.Exam;
-import universitymanager.UniversityManager;
 
 public class RemoveButtonController {
 
@@ -51,7 +48,7 @@ public class RemoveButtonController {
             return;
         }
 
-        DBManageDB.deleteExamByName(exam.getName());
+        DBManageExamsDB.deleteExamByName(exam.getName());
 
         updateDatas();
     }

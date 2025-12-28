@@ -11,17 +11,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnection {
-
     private static final String DB_FOLDER = "data";
     private static final String DB_FILE = "votesDB.db";
     private static final String URL = "jdbc:sqlite:" + DB_FOLDER + "/" + DB_FILE;
 
-    private DBConnection() {
-    }
-
-    public static Connection getConnection() {
+    public static Connection getConnectionFromDB() {
         try {
-            // Creazione cartella data/
             Files.createDirectories(
                     Paths.get(System.getProperty("user.dir"), DB_FOLDER)
             );
@@ -35,7 +30,7 @@ public class DBConnection {
             return connection;
 
         } catch (IOException | SQLException e) {
-            throw new DBFailedConnectionException("Connessione al db: fallita");
+            throw new DBFailedConnectionException("Connessione al db" + URL + ", esito: fallita");
         }
     }
 }

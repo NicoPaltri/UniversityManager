@@ -1,7 +1,9 @@
 package application.mainapplication;
 
 import application.FXMLUtils;
-import dbmanager.DBStartTable;
+import dbmanager.examsTable.DBExamsStartTable;
+import dbmanager.settingsTable.DBSettingsInterrogation;
+import dbmanager.settingsTable.DBSettingsStartTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,8 @@ import universitymanager.Exam;
 import universitymanager.UniversityManager;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 
 public class ExamsManagerController {
@@ -119,7 +123,12 @@ public class ExamsManagerController {
         lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
 
         //creo/verifico la tabella
-        DBStartTable.ensureCreated();
+        DBExamsStartTable.ensureCreated();
+
+        DBSettingsStartTable.ensureCreated();
+
+
+
 
         // ---- DATI INIZIALI ----
         updateDatas();
@@ -177,7 +186,9 @@ public class ExamsManagerController {
     }
 
     private void updatePieChartProgress() {
-        final double max = 180;
+        DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
+
+        final double max = settingsInterrogation.getTotalAmountCFU();
         double filled = UniversityManager.getTotalExamsWeight(exams);
 
         double filledPercentage = filled / max * 100;
@@ -271,4 +282,5 @@ public class ExamsManagerController {
             throw new RuntimeException(e);
         }
     }
+
 }

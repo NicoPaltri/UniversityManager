@@ -1,19 +1,20 @@
-package dbmanager;
+package dbmanager.examsTable;
 
 import customexceptions.accessdataexception.AlreadyExistingExamException;
 import customexceptions.accessdataexception.DBFailedConnectionException;
 import customexceptions.accessdataexception.DataAccessException;
+import dbmanager.DBConnection;
 import universitymanager.Exam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBManageDB {
+public class DBManageExamsDB {
     public static void insertExam(Exam exam) {
         String sql = "INSERT INTO exams (name, weight, grade, exam_date) VALUES (?, ?, ?, ?);";
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, exam.getName());
@@ -43,7 +44,7 @@ public class DBManageDB {
     public static void deleteExamByName(String name) {
         String sql = "DELETE FROM exams WHERE name = ?;";
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, name);
