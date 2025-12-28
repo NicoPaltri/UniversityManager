@@ -6,7 +6,8 @@ Permette di gestire il libretto esami, calcolare automaticamente le medie e tene
 
     -gestione esami: aggiungi e rimuovi esami dal tuo libretto
     
-    -calcolo di statisctiche: calcolo automatico di media aritmetica, media ponderata, mediana, moda e tanto altro
+    -calcolo di statisctiche: calcolo automatico di:
+    media aritmetica, media ponderata, mediana, moda e tanto altro
     
     -monitoraggio CFU: visualizzazione rapida dei crediti acquisiti rispetto al totale
     
