@@ -117,17 +117,17 @@ public class ExamsManagerController {
         interQuartileLabel.setWrapText(true);
         weightedMeanLastFiveExamsLabel.setWrapText(true);
 
-        // ---- SERIE LINE CHART ----
-        gradesSeries.setName("Voti");
-        weightedAverageSeries.setName("Media ponderata");
-        lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
+        //Set up grafico a linee
+        setUpGradeChart(gradesSeries, weightedAverageSeries, lineChart);
 
-        //creo/verifico la tabella
+        //Set up tabelle del DB
         DBExamsStartTable.ensureCreated();
 
-        DBSettingsStartTable.ensureCreated();
-
-
+        DBSettingsInterrogation settingsInterrogator = new DBSettingsInterrogation();
+        if (!settingsInterrogator.settingsTableExistsAndIsFull()) {
+            DBSettingsStartTable.ensureCreated();
+            settingsInterrogator.setDefaultCFU();
+        }
 
 
         // ---- DATI INIZIALI ----
@@ -283,4 +283,9 @@ public class ExamsManagerController {
         }
     }
 
+    private void setUpGradeChart(XYChart.Series<String, Number> gradesSeries, XYChart.Series<String, Number> weightedAverageSeries, LineChart<String, Number> lineChart) {
+        gradesSeries.setName("Voti");
+        weightedAverageSeries.setName("Media ponderata");
+        lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
+    }
 }

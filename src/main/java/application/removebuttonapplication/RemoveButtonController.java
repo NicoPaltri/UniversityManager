@@ -1,7 +1,7 @@
 package application.removebuttonapplication;
 
 import application.FXMLUtils;
-import dbmanager.examsTable.DBManageExamsDB;
+import dbmanager.examsTable.DBManageExams;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,7 +48,7 @@ public class RemoveButtonController {
             return;
         }
 
-        DBManageExamsDB.deleteExamByName(exam.getName());
+        DBManageExams.deleteExamByName(exam.getName());
 
         updateDatas();
     }

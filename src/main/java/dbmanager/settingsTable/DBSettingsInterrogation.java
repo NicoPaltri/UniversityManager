@@ -47,10 +47,13 @@ public class DBSettingsInterrogation {
     }
 
     public void setDefaultCFU() {
-        String sql = "INSERT INTO settings (name, value) VALUES (totalCFU, 180);";
+        String sql = "INSERT INTO settings (name, value) VALUES (?, ?);";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, "totalCFU");
+            ps.setInt(2, 180);
 
             ps.executeUpdate();
 
@@ -58,4 +61,20 @@ public class DBSettingsInterrogation {
             throw new DataAccessException(sql);
         }
     }
+
+
+    public boolean settingsTableExistsAndIsFull() {
+        String sql = "SELECT 1 FROM settings";
+
+        try (Connection connection = DBConnection.getConnectionFromDB();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
 }

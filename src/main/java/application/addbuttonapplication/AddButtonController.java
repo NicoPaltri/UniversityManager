@@ -7,7 +7,7 @@ import customexceptions.dateexception.FutureDateException;
 import customexceptions.dateexception.InvalidDateFormatException;
 import customexceptions.examformatexception.GradeFormatException;
 import customexceptions.examformatexception.WeightFormatException;
-import dbmanager.examsTable.DBManageExamsDB;
+import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
 import universitymanager.Exam;
@@ -45,7 +45,7 @@ public class AddButtonController {
 
             Exam exam = examFactory.createExam(name, weight, grade, completeDate);
 
-            DBManageExamsDB.insertExam(exam);
+            DBManageExams.insertExam(exam);
 
             setEveryFieldToBlank();
 
