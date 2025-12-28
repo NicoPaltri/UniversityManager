@@ -37,29 +37,36 @@ public class FXMLUtils {
                                                       TableColumn<Exam, Number> colGrade,
                                                       TableColumn<Exam, String> colDate) {
 
-        colName.setCellValueFactory(c -> c.getValue().nameProperty());
-        colWeight.setCellValueFactory(c -> c.getValue().weightProperty());
-        colGrade.setCellValueFactory(c -> c.getValue().gradeProperty());
-        colDate.setCellValueFactory(c -> c.getValue().dateProperty());
+        //associo ad ogni colonna il valore riferito all'esame
+        colName.setCellValueFactory(cell -> cell.getValue().nameProperty());
+        colWeight.setCellValueFactory(cell -> cell.getValue().weightProperty());
+        colGrade.setCellValueFactory(cell -> cell.getValue().gradeProperty());
+        colDate.setCellValueFactory(cell -> cell.getValue().dateProperty());
 
-        // 2. CREIAMO IL WRAPPER SortedList
-        SortedList<Exam> sortedData = new SortedList<>(exams);
+        //associa la lista e la lista ordinata
+        SortedList<Exam> sorted = new SortedList<>(exams);
+        sorted.comparatorProperty().bind(examTable.comparatorProperty());
+        examTable.setItems(sorted);
+        /*
+        * sorted è un wrapper (osservatore) di exams
+        * il metodo per ordinare la table, viene applicato in modo dinamico anche a sorted
+        * la table viene scritta seguendo sorted
+        */
 
-        // 3. Colleghiamo il comparatore
-        sortedData.comparatorProperty().bind(examTable.comparatorProperty());
-
-        // 4. Passiamo i dati alla tabella
-        examTable.setItems(sortedData);
-
-        // 5. FORZIAMO L'ORDINAMENTO VISIVO
+        //definisce il come la tabella della essere ordinata
         colDate.setSortType(TableColumn.SortType.ASCENDING);
-
-        // Aggiungiamo la colonna alla lista degli ordinamenti attivi
-        examTable.getSortOrder().clear();
-        examTable.getSortOrder().add(colDate);
-
-        // Chiamiamo sort() per applicarlo immediatamente
+        examTable.getSortOrder().setAll(colDate);
         examTable.sort();
+        /*
+        * specifico che colDate preferisce come ordinamento ascending
+        * dico che table deve seguire l'ordinamento impostato in colDate
+        *
+        * examTable.sort:
+        *   table aggiorna il suo comparator (quindi quello di colDate)
+        *   sorted aggiorna (bind) il suo comparator
+        *   sorted riordina i dati
+        *   table mostra sorted
+        * */
     }
 
     public static void commonUpdateDatas(ObservableList<Exam> exams, TableView<Exam> examTable) {

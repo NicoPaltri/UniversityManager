@@ -25,8 +25,6 @@ import universitymanager.Exam;
 import universitymanager.UniversityManager;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.DecimalFormat;
 
 public class ExamsManagerController {
@@ -58,7 +56,6 @@ public class ExamsManagerController {
     public Label aritmethicMeanLabel;
     public Label weightedMeanLabel;
     public Label medianLabel;
-
     public Label modeLabel;
     public Label standardDeviationLabel;
     public Label interQuartileLabel;
@@ -72,88 +69,53 @@ public class ExamsManagerController {
 
 
     public void initialize() {
-        // LEFT: 40% fisso, RIGHT: tutto il resto
-        leftBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
-        rightBox.prefWidthProperty().bind(
-                mainPane.widthProperty().subtract(leftBox.widthProperty())
-        );
-
-        VBox.setVgrow(examTable, Priority.ALWAYS);
-
+        //FXML e collegamento della lista di esami con la tableView
         FXMLUtils.setUpStandardExamTable(examTable, colName, colWeight, colGrade, colDate);
-        FXMLUtils.linkTableViewAndObservableList(exams,
-                examTable, colName, colWeight, colGrade, colDate);
+        FXMLUtils.linkTableViewAndObservableList(exams, examTable, colName, colWeight, colGrade, colDate);
 
-        // ---- LINE CHART SETTINGS ----
-        lineChart.setAnimated(false);
-        timeAxisInLineChart.setGapStartAndEnd(false);
-        timeAxisInLineChart.setAnimated(false);
+        //FXML Vboxes
+        arrangeVBoxes();
 
-        // proporzione 70/30 tra lineChartBox e pieChartBox nella fascia superiore
-        chartsRow1.widthProperty().addListener((obs, oldW, newW) -> {
-            double w = newW.doubleValue();
-            lineChartBox.setPrefWidth(w * 0.70);
-            pieChartBox.setPrefWidth(w * 0.30);
-        });
+        //FXML top row (piechart and linechart)
+        arrangeTopRow();
 
-        // i grafici riempiono i rispettivi box
-        VBox.setVgrow(lineChartBox, Priority.ALWAYS);
-        VBox.setVgrow(pieChartBox, Priority.ALWAYS);
-        VBox.setVgrow(lineChart, Priority.ALWAYS);
-        VBox.setVgrow(pieChartTotalExam, Priority.ALWAYS);
+        //FXML linechart
+        arrangeLineChart();
 
-        lineChart.prefWidthProperty().bind(lineChartBox.widthProperty());
-        lineChart.prefHeightProperty().bind(lineChartBox.heightProperty());
+        //FXML piechart
+        arrangePieChart();
 
-        pieChartTotalExam.prefWidthProperty().bind(pieChartBox.widthProperty());
-        pieChartTotalExam.prefHeightProperty().bind(pieChartBox.heightProperty());
+        //FXML delle label
+        arrangeFXMLLabels();
 
-        // ---- LABELS: niente troncamenti ----
-        aritmethicMeanLabel.setWrapText(true);
-        weightedMeanLabel.setWrapText(true);
-        medianLabel.setWrapText(true);
-        modeLabel.setWrapText(true);
-        standardDeviationLabel.setWrapText(true);
-        interQuartileLabel.setWrapText(true);
-        weightedMeanLastFiveExamsLabel.setWrapText(true);
+        //Inizializza grafico a linee
+        initGradeChart();
 
-        //Set up grafico a linee
-        setUpGradeChart(gradesSeries, weightedAverageSeries, lineChart);
+        //Inizializza tabelle del DB
+        initDBTables();
 
-        //Set up tabelle del DB
-        DBExamsStartTable.ensureCreated();
-
-        DBSettingsInterrogation settingsInterrogator = new DBSettingsInterrogation();
-        if (!settingsInterrogator.settingsTableExistsAndIsFull()) {
-            DBSettingsStartTable.ensureCreated();
-            settingsInterrogator.setDefaultCFU();
-        }
-
-
-        // ---- DATI INIZIALI ----
+        //Refresh dati mostrati eg grafici, scritte, liste...
         updateDatas();
     }
 
+    //updating datas
     private void updateDatas() {
+        //common updates
         FXMLUtils.commonUpdateDatas(exams, examTable);
 
-        //CONTROLLER SPECIFIC UPDATES---
+        //controller specific updates
 
-        //line chart update
+        //line chart updates
         updateLineChart();
 
-        //pie chart update
+        //pie chart updates
         updatePieChartProgress();
 
-        //update labels
+        //labels updates
         updateLabels();
     }
 
     private void updateLineChart() {
-        updateSeriesInLineChart();
-    }
-
-    private void updateSeriesInLineChart() {
         updateGradesSeries();
         updateWeightedAverageSeries();
     }
@@ -227,6 +189,70 @@ public class ExamsManagerController {
         weightedMeanLastFiveExamsLabel.setText(formatter.format(weightedMeanLastFiveExams));
     }
 
+    //FXML arranging
+    private void arrangeTopRow() {
+        chartsRow1.widthProperty().addListener((obs, oldW, newW) -> {
+            double w = newW.doubleValue();
+            lineChartBox.setPrefWidth(w * 0.70);
+            pieChartBox.setPrefWidth(w * 0.30);
+        });
+    }
+
+    private void arrangeVBoxes() {
+        leftBox.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.40));
+        rightBox.prefWidthProperty().bind(
+                mainPane.widthProperty().subtract(leftBox.widthProperty())
+        );
+
+        VBox.setVgrow(examTable, Priority.ALWAYS);
+        VBox.setVgrow(lineChartBox, Priority.ALWAYS);
+        VBox.setVgrow(pieChartBox, Priority.ALWAYS);
+        VBox.setVgrow(lineChart, Priority.ALWAYS);
+        VBox.setVgrow(pieChartTotalExam, Priority.ALWAYS);
+    }
+
+    private void arrangeLineChart() {
+        lineChart.setAnimated(false);
+        timeAxisInLineChart.setGapStartAndEnd(false);
+        timeAxisInLineChart.setAnimated(false);
+        lineChart.prefWidthProperty().bind(lineChartBox.widthProperty());
+        lineChart.prefHeightProperty().bind(lineChartBox.heightProperty());
+    }
+
+    private void arrangePieChart() {
+        pieChartTotalExam.prefWidthProperty().bind(pieChartBox.widthProperty());
+        pieChartTotalExam.prefHeightProperty().bind(pieChartBox.heightProperty());
+    }
+
+    private void arrangeFXMLLabels() {
+        aritmethicMeanLabel.setWrapText(true);
+        weightedMeanLabel.setWrapText(true);
+        medianLabel.setWrapText(true);
+        modeLabel.setWrapText(true);
+        standardDeviationLabel.setWrapText(true);
+        interQuartileLabel.setWrapText(true);
+        weightedMeanLastFiveExamsLabel.setWrapText(true);
+    }
+
+    //initializing
+    private void initDBTables() {
+        DBExamsStartTable.ensureCreated();
+
+        DBSettingsInterrogation settingsInterrogator = new DBSettingsInterrogation();
+        if (!settingsInterrogator.settingsTableExistsAndIsFull()) {
+            DBSettingsStartTable.ensureCreated();
+            settingsInterrogator.setDefaultCFU();
+        }
+    }
+
+    private void initGradeChart() {
+        gradesSeries.setName("Voti");
+        weightedAverageSeries.setName("Media ponderata");
+        lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
+    }
+
+
+    //buttons
     public void addExamButtonOnAction(ActionEvent actionEvent) {
         openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml", "/styles/add_exam.css",
                 () -> {
@@ -283,9 +309,4 @@ public class ExamsManagerController {
         }
     }
 
-    private void setUpGradeChart(XYChart.Series<String, Number> gradesSeries, XYChart.Series<String, Number> weightedAverageSeries, LineChart<String, Number> lineChart) {
-        gradesSeries.setName("Voti");
-        weightedAverageSeries.setName("Media ponderata");
-        lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
-    }
 }
