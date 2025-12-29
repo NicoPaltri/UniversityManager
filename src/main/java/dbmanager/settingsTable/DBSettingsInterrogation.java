@@ -12,15 +12,38 @@ public class DBSettingsInterrogation {
     public DBSettingsInterrogation() {
     }
 
-    public int getTotalAmountCFU() {
-        String sql = "SELECT value FROM settings WHERE name = 'totalCFU';";
+    private int getValueFromSetting(String name) {
+        String sql = "SELECT value FROM settings WHERE name = ?;";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
-             PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
 
             return rs.getInt("value");
 
+        } catch (SQLException e) {
+            throw new DataAccessException(sql);
+        }
+    }
+
+    public int getTotalAmountCFU() {
+        return getValueFromSetting("totalCFU");
+    }
+
+    private void changeSetting(String name, int value) {
+        String sql = "UPDATE settings SET value = ? WHERE name = ?;";
+
+        try (Connection conn = DBConnection.getConnectionFromDB();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, value);
+            ps.setString(2, name);
+
+            ps.executeUpdate();
+
+            System.out.println("Modifica avvenuta con successo: " + sql);
         } catch (SQLException e) {
             throw new DataAccessException(sql);
         }
@@ -31,19 +54,7 @@ public class DBSettingsInterrogation {
             throw new IllegalArgumentException("CFU must be > 0");
         }
 
-        String sql = "UPDATE settings SET value = ? WHERE name = 'totalCFU';";
-
-        try (Connection conn = DBConnection.getConnectionFromDB();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, CFU);
-
-            ps.executeUpdate();
-
-            System.out.println("Modifica avvenuta con successo, nuovi CFU: " + CFU);
-        } catch (SQLException e) {
-            throw new DataAccessException(sql);
-        }
+        changeSetting("totalCFU", CFU);
     }
 
     public void setDefaultCFU() {
@@ -61,7 +72,6 @@ public class DBSettingsInterrogation {
             throw new DataAccessException(sql);
         }
     }
-
 
     public boolean settingsTableExistsAndIsFull() {
         String sql = "SELECT 1 FROM settings";
