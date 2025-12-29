@@ -241,7 +241,7 @@ public class ExamsManagerController {
         DBSettingsInterrogation settingsInterrogator = new DBSettingsInterrogation();
         if (!settingsInterrogator.settingsTableExistsAndIsFull()) {
             DBSettingsStartTable.ensureCreated();
-            settingsInterrogator.setDefaultCFU();
+            settingsInterrogator.insertDefaultCFU();
         }
     }
 

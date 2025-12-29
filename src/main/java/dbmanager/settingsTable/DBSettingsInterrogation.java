@@ -1,5 +1,8 @@
 package dbmanager.settingsTable;
 
+import customexceptions.accessdataexception.AlreadyExistingExamException;
+import customexceptions.accessdataexception.AlreadyExistingSettingException;
+import customexceptions.accessdataexception.DBFailedConnectionException;
 import customexceptions.accessdataexception.DataAccessException;
 import dbmanager.DBConnection;
 
@@ -57,20 +60,29 @@ public class DBSettingsInterrogation {
         changeSetting("totalCFU", CFU);
     }
 
-    public void setDefaultCFU() {
+    private void insertDefaultSetting(String name, int value) {
         String sql = "INSERT INTO settings (name, value) VALUES (?, ?);";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, "totalCFU");
-            ps.setInt(2, 180);
+            ps.setString(1, name);
+            ps.setInt(2, value);
 
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql);
+            if (e.getErrorCode() == 19) {
+                throw new AlreadyExistingSettingException();
+            }
+            else {
+                throw new DBFailedConnectionException("");
+            }
         }
+    }
+
+    public void insertDefaultCFU() {
+        insertDefaultSetting("totalCFU", 180);
     }
 
     public boolean settingsTableExistsAndIsFull() {
