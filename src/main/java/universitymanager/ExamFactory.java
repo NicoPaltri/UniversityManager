@@ -18,7 +18,7 @@ public class ExamFactory {
         isWeightOk(name, weight);
         isGradeOk(name, grade);
         grade = normalizeGrade(grade);
-        isDateOk(date);
+        isDateOk(name, date);
 
         Exam exam = new Exam(name, date, grade, weight);
 
@@ -46,16 +46,16 @@ public class ExamFactory {
         return grade;
     }
 
-    private void isDateOk(String date) {
+    private void isDateOk(String name, String date) {
         try {
             LocalDate correctDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
 
             if (correctDate.isAfter(LocalDate.now())) {
-                throw new FutureDateException( correctDate.toString());
+                throw new FutureDateException(name, correctDate.toString());
             }
 
         } catch (DateTimeParseException e) {
-            throw new InvalidDateFormatException(date);
+            throw new InvalidDateFormatException(name, date, e);
         }
     }
 }

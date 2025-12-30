@@ -1,6 +1,6 @@
 package dbmanager;
 
-import customexceptions.accessdataexception.DBFailedConnectionException;
+import customexceptions.accessdatasexception.DBFailedConnectionException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +30,7 @@ public class DBConnection {
             return connection;
 
         } catch (IOException | SQLException e) {
-            throw new DBFailedConnectionException("Connessione al db" + URL + ", esito: fallita");
+            throw new DBFailedConnectionException(URL, e);
         }
     }
 }

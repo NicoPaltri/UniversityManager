@@ -1,8 +1,8 @@
 package application.addbuttonapplication;
 
 import application.FXMLUtils;
-import customexceptions.accessdataexception.AlreadyExistingExamException;
-import customexceptions.accessdataexception.DBFailedConnectionException;
+import customexceptions.accessdatasexception.AlreadyExistingExamException;
+import customexceptions.accessdatasexception.DBFailedConnectionException;
 import customexceptions.dateexception.FutureDateException;
 import customexceptions.dateexception.InvalidDateFormatException;
 import customexceptions.examformatexception.GradeFormatException;

@@ -1,9 +1,8 @@
 package dbmanager.settingsTable;
 
-import customexceptions.accessdataexception.AlreadyExistingExamException;
-import customexceptions.accessdataexception.AlreadyExistingSettingException;
-import customexceptions.accessdataexception.DBFailedConnectionException;
-import customexceptions.accessdataexception.DataAccessException;
+import customexceptions.accessdatasexception.AlreadyExistingSettingException;
+import customexceptions.accessdatasexception.DBInternalErrorException;
+import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
 
 import java.sql.Connection;
@@ -27,7 +26,7 @@ public class DBSettingsInterrogation {
             return rs.getInt("value");
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql);
+            throw new DataAccessException(sql, e);
         }
     }
 
@@ -48,7 +47,7 @@ public class DBSettingsInterrogation {
 
             System.out.println("Modifica avvenuta con successo: " + sql);
         } catch (SQLException e) {
-            throw new DataAccessException(sql);
+            throw new DataAccessException(sql, e);
         }
     }
 
@@ -73,12 +72,12 @@ public class DBSettingsInterrogation {
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 19) {
-                throw new AlreadyExistingSettingException();
-            }
-            else {
-                throw new DBFailedConnectionException("");
+                throw new AlreadyExistingSettingException(name, e);
+            } else {
+                throw new DBInternalErrorException(sql, e);
             }
         }
+
     }
 
     public void insertDefaultCFU() {

@@ -7,7 +7,6 @@ module universitymanager {
     requires java.desktop;
     requires javafx.base;
     requires commons.math3;
-    requires universitymanager;
 
     opens application.mainapplication to javafx.fxml;
     exports application.mainapplication;

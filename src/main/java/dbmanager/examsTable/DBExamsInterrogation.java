@@ -1,6 +1,6 @@
 package dbmanager.examsTable;
 
-import customexceptions.accessdataexception.DataAccessException;
+import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
 import universitymanager.Exam;
 import universitymanager.ExamFactory;
@@ -37,7 +37,7 @@ public class DBExamsInterrogation {
             }
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql);
+            throw new DataAccessException(sql, e);
         }
 
         return examList;
