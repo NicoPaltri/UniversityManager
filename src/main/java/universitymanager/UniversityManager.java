@@ -143,7 +143,7 @@ public class UniversityManager {
 
         gradesWithMaxFrequency.sort(null);
 
-        return (int) getMedianFromIntegerOrderedList(gradesWithMaxFrequency);
+        return gradesWithMaxFrequency.get((gradesWithMaxFrequency.size() - 1) / 2);
     }
 
 
