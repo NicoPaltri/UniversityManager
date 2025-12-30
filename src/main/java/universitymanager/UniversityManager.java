@@ -3,7 +3,6 @@ package universitymanager;
 import dbmanager.examsTable.DBExamsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.commons.math3.stat.StatUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -44,6 +43,7 @@ public class UniversityManager {
                 .sum();
     }
 
+
     public static double getArithmeticMeanFromExamList(List<Exam> exams) {
         return exams.stream()
                 .mapToDouble(Exam::getGrade)
@@ -51,17 +51,32 @@ public class UniversityManager {
                 .orElse(0.0);
     }
 
+
     public static double getWeightedMeanFromExamList(List<Exam> exams) {
-        double weighted = 0;
+        double num = 0;
         double weights = 0;
 
         for (Exam e : exams) {
-            weighted += e.getGrade() * e.getWeight();
+            num += e.getGrade() * e.getWeight();
             weights += e.getWeight();
         }
 
-        return weights == 0 ? 0 : weighted / weights;
+        return weights == 0 ? 0 : num / weights;
     }
+
+    public static double getWeightedMeanOfLastFiveExamsFromList(List<Exam> exams) {
+        if (exams.isEmpty()) {
+            return 0;
+        }
+
+        List<Exam> sorted = exams.stream()
+                .sorted(Comparator.comparing(Exam::getDate))
+                .toList();
+
+        int from = Math.max(0, sorted.size() - 5);
+        return getWeightedMeanFromExamList(sorted.subList(from, sorted.size()));
+    }
+
 
     public static double getMedianFromExamList(List<Exam> exams) {
         if (exams.isEmpty()) {
@@ -73,16 +88,6 @@ public class UniversityManager {
         orderedGrades.sort(null);
 
         return getMedianFromIntegerOrderedList(orderedGrades);
-    }
-
-    private static Exam getExamMedianFromExamList(List<Exam> exams) {
-        if (exams.size() == 1) {
-            return exams.getFirst();
-        }
-
-        exams.sort(Comparator.comparing(Exam::getGrade));
-
-        return exams.get(exams.size() / 2);
     }
 
     private static double getMedianFromIntegerOrderedList(List<Integer> numbers) {
@@ -104,33 +109,43 @@ public class UniversityManager {
         }
     }
 
+
     public static int getModeFromExamList(List<Exam> exams) {
         if (exams.isEmpty()) {
             return 0;
         }
 
-        if (exams.size() == 1) {
-            return exams.getFirst().getGrade();
-        }
-
-        double[] gradesArray = exams.stream().mapToDouble(Exam::getGrade).toArray();
-        double[] candidatesModes = StatUtils.mode(gradesArray);
-
-        if (candidatesModes.length == 1) {
-            return (int) candidatesModes[0];
-        }
-
-        double mean = getArithmeticMeanFromExamList(exams);
-        double probableMode = 0;
-
-        for (Double v : candidatesModes) {
-            if (Math.abs(v - mean) < Math.abs(probableMode - mean)) {
-                probableMode = v;
+        Map<Integer, Integer> mapGradeFrequency = new HashMap<>();
+        for (Exam e : exams) {
+            if (mapGradeFrequency.containsKey(e.getGrade())) {
+                mapGradeFrequency.replace(e.getGrade(), mapGradeFrequency.get(e.getGrade()) + 1);
+            } else {
+                mapGradeFrequency.put(e.getGrade(), 1);
             }
         }
 
-        return (int) probableMode;
+        int maxFrequency = mapGradeFrequency.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(0);
+
+        List<Integer> gradesWithMaxFrequency = new ArrayList<>();
+        mapGradeFrequency.forEach((key, value) -> {
+            if (value == maxFrequency) {
+                gradesWithMaxFrequency.add(key);
+            }
+        });
+
+        if (gradesWithMaxFrequency.size() == 1) {
+            return gradesWithMaxFrequency.getFirst();
+        }
+
+        gradesWithMaxFrequency.sort(null);
+
+        return (int) getMedianFromIntegerOrderedList(gradesWithMaxFrequency);
     }
+
 
     public static double getStandardDeviationFromExamList(List<Exam> exams) {
         if (exams.isEmpty()) {
@@ -146,59 +161,25 @@ public class UniversityManager {
         return Math.sqrt(calculations / exams.size());
     }
 
+
     public static double getInterQuartileRangeFromExamList(List<Exam> exams) {
-        if (exams.isEmpty()) {
+        if (exams.size() < 4) {
             return 0;
         }
 
-        exams.sort(Comparator.comparing(Exam::getGrade));
+        List<Integer> sorted = exams.stream()
+                .map(Exam::getGrade)
+                .sorted()
+                .toList();
 
-        Exam median = getExamMedianFromExamList(exams);
+        int n = sorted.size();
+        List<Integer> lower = sorted.subList(0, n / 2);
+        List<Integer> upper = sorted.subList((n + 1) / 2, n);
 
-        if (exams.size() < 3) { //troppi pochi dati per dare un risultato
-            return getMedianFromExamList(exams);
-        }
-
-        List<Integer> q1List = new ArrayList<>();
-        List<Integer> q3List = new ArrayList<>();
-
-        boolean beforeMedian = true;
-
-        for (Exam exam : exams) {
-            if (exam.equals(median)) {
-                beforeMedian = false;
-
-                if (exams.size() % 2 == 1) {
-                    continue;
-                }
-            }
-
-            if (beforeMedian) {
-                q1List.add(exam.getGrade());
-            } else {
-                q3List.add(exam.getGrade());
-            }
-        }
-
-        double q1 = getMedianFromIntegerOrderedList(q1List);
-        double q3 = getMedianFromIntegerOrderedList(q3List);
+        double q1 = getMedianFromIntegerOrderedList(lower);
+        double q3 = getMedianFromIntegerOrderedList(upper);
 
         return q3 - q1;
     }
 
-    public static double getWeightedMeanOfLastFiveExamsFromList(List<Exam> exams) {
-        if (exams.isEmpty()) {
-            return 0;
-        }
-
-        int numberOfExams = exams.size();
-
-        if (exams.size() > 5) {
-            numberOfExams = 5;
-        }
-
-        List<Exam> lastExamsList = exams.subList(exams.size() - numberOfExams, exams.size() - 1);
-
-        return getWeightedMeanFromExamList(lastExamsList);
-    }
 }
