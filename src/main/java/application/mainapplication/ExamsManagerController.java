@@ -52,6 +52,8 @@ public class ExamsManagerController {
 
     public Button addButton;
     public Button removeButton;
+    public Button settingsButton;
+    public Button modifyButton;
 
     public Label aritmethicMeanLabel;
     public Label weightedMeanLabel;
@@ -152,6 +154,9 @@ public class ExamsManagerController {
 
         final double max = settingsInterrogation.getTotalAmountCFU();
         double filled = UniversityManager.getTotalExamsWeight(exams);
+        if (filled > max) {
+            filled = max;
+        }
 
         double filledPercentage = filled / max * 100;
         double remainingPercentage = 100 - filledPercentage;

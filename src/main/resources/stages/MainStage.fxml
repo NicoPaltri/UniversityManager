@@ -25,19 +25,40 @@
                     </columns>
                 </TableView>
 
-                <Button fx:id="addButton" focusTraversable="false" text="Aggiungi" maxWidth="Infinity"
-                        onAction="#addExamButtonOnAction">
+                <GridPane fx:id="buttonsGrid" hgap="10" vgap="10" maxWidth="Infinity">
                     <VBox.margin>
-                        <Insets top="10" right="20" bottom="2" left="20"/>
+                        <Insets top="10" right="20" bottom="20" left="20"/>
                     </VBox.margin>
-                </Button>
 
-                <Button fx:id="removeButton" focusTraversable="false" text="Rimuovi" maxWidth="Infinity"
-                        onAction="#removeButtonOnAction">
-                    <VBox.margin>
-                        <Insets top="2" right="20" bottom="20" left="20"/>
-                    </VBox.margin>
-                </Button>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <rowConstraints>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                    </rowConstraints>
+
+                    <children>
+                        <!-- Riga 0 -->
+                        <Button fx:id="addButton" text="Aggiungi" focusTraversable="false"
+                                maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                                onAction="#addExamButtonOnAction"/>
+
+                        <Button fx:id="removeButton" text="Rimuovi" focusTraversable="false"
+                                maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                                onAction="#removeButtonOnAction"/>
+
+                        <!-- Riga 1 -->
+                        <Button fx:id="settingsButton" text="Impostazioni" focusTraversable="false"
+                                maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+                        <Button fx:id="modifyButton" text="Modifica" focusTraversable="false"
+                                maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    </children>
+                </GridPane>
+
             </children>
         </VBox>
     </left>
