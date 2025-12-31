@@ -254,8 +254,10 @@ public class ExamsManagerController {
 
     //buttons
     public void addExamButtonOnAction(ActionEvent actionEvent) {
-        openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml", "/styles/add_exam.css",
-                () -> {
+        FXMLUtils utils = new FXMLUtils();
+
+        utils.openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml",
+                "/styles/add_exam.css", mainPane, () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
                     updateDatas();
@@ -265,7 +267,10 @@ public class ExamsManagerController {
     }
 
     public void removeButtonOnAction(ActionEvent actionEvent) {
-        openNewWindow("Rimuovi esame", "/stages/RemoveExamStage.fxml", "/styles/remove_exam.css",
+        FXMLUtils utils = new FXMLUtils();
+
+        utils.openNewWindow("Rimuovi esame", "/stages/RemoveExamStage.fxml",
+                "/styles/remove_exam.css", mainPane,
                 () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
@@ -273,40 +278,6 @@ public class ExamsManagerController {
 
                     System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
                 });
-    }
-
-    private void openNewWindow(String windowName, String windowPath, String cssPath, Runnable onClose) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(windowPath));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            //css
-            scene.getStylesheets().add(
-                    getClass().getResource(cssPath).toExternalForm()
-            );
-
-            Stage stage = new Stage();
-            stage.setTitle(windowName);
-            stage.setScene(scene);
-
-            //blocco la finestra principale
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(mainPane.getScene().getWindow());
-
-            //Callback: cosa fare quando la finestra viene chiusa
-            stage.setOnHidden(e -> {
-                if (onClose != null) {
-                    onClose.run();
-                }
-            });
-
-            stage.show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

@@ -4,12 +4,20 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import universitymanager.Exam;
 import universitymanager.UniversityManager;
+
+import java.io.IOException;
 
 public class FXMLUtils {
     public static ObservableList<Exam> getEmptyObservableList() {
@@ -48,25 +56,25 @@ public class FXMLUtils {
         sorted.comparatorProperty().bind(examTable.comparatorProperty());
         examTable.setItems(sorted);
         /*
-        * sorted è un wrapper (osservatore) di exams
-        * il metodo per ordinare la table, viene applicato in modo dinamico anche a sorted
-        * la table viene scritta seguendo sorted
-        */
+         * sorted è un wrapper (osservatore) di exams
+         * il metodo per ordinare la table, viene applicato in modo dinamico anche a sorted
+         * la table viene scritta seguendo sorted
+         */
 
         //definisce il come la tabella della essere ordinata
         colDate.setSortType(TableColumn.SortType.ASCENDING);
         examTable.getSortOrder().setAll(colDate);
         examTable.sort();
         /*
-        * specifico che colDate preferisce come ordinamento ascending
-        * dico che table deve seguire l'ordinamento impostato in colDate
-        *
-        * examTable.sort:
-        *   table aggiorna il suo comparator (quindi quello di colDate)
-        *   sorted aggiorna (bind) il suo comparator
-        *   sorted riordina i dati
-        *   table mostra sorted
-        * */
+         * specifico che colDate preferisce come ordinamento ascending
+         * dico che table deve seguire l'ordinamento impostato in colDate
+         *
+         * examTable.sort:
+         *   table aggiorna il suo comparator (quindi quello di colDate)
+         *   sorted aggiorna (bind) il suo comparator
+         *   sorted riordina i dati
+         *   table mostra sorted
+         * */
     }
 
     public static void commonUpdateDatas(ObservableList<Exam> exams, TableView<Exam> examTable) {
@@ -81,8 +89,43 @@ public class FXMLUtils {
         exams.setAll(universityManager.getObservableListFromDB());
     }
 
-    public static void clearTableSelection(TableView<Exam> examTable) {
-        Platform.runLater(() -> examTable.getSelectionModel().clearSelection());
+    public static <T> void clearTableSelection(TableView<T> tableView) {
+        Platform.runLater(() -> tableView.getSelectionModel().clearSelection());
+    }
+
+
+    public void openNewWindow(String windowName, String windowPath, String cssPath, Pane mainPane, Runnable onClose) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(windowPath));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+
+            //css
+            scene.getStylesheets().add(
+                    getClass().getResource(cssPath).toExternalForm()
+            );
+
+            Stage stage = new Stage();
+            stage.setTitle(windowName);
+            stage.setScene(scene);
+
+            //blocco la finestra principale
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(mainPane.getScene().getWindow());
+
+            //Callback: cosa fare quando la finestra viene chiusa
+            stage.setOnHidden(e -> {
+                if (onClose != null) {
+                    onClose.run();
+                }
+            });
+
+            stage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void errorAlert(String message) {

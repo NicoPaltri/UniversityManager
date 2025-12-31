@@ -4,15 +4,57 @@ import customexceptions.accessdatasexception.AlreadyExistingSettingException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
 import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
+import settingsmanager.Setting;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBSettingsInterrogation {
     public DBSettingsInterrogation() {
     }
+
+    public boolean settingsTableExistsAndIsFull() {
+        String sql = "SELECT 1 FROM settings";
+
+        try (Connection connection = DBConnection.getConnectionFromDB();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public List<Setting> getAllSettings() {
+        List<Setting> settings = new ArrayList<>();
+
+        String sql = "SELECT name, value FROM settings";
+
+        try (Connection connection = DBConnection.getConnectionFromDB();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String name = rs.getString("name");
+                int value = rs.getInt("value");
+
+                Setting setting = new Setting(name, value);
+                settings.add(setting);
+            }
+
+        } catch (SQLException e) {
+            throw new DataAccessException(sql, e);
+        }
+
+        return settings;
+    }
+
 
     private int getValueFromSetting(String name) {
         String sql = "SELECT value FROM settings WHERE name = ?;";
@@ -31,8 +73,9 @@ public class DBSettingsInterrogation {
     }
 
     public int getTotalAmountCFU() {
-        return getValueFromSetting("totalCFU");
+        return getValueFromSetting(SettingsNameKey.TOTAL_CFU.name());
     }
+
 
     private void changeSetting(String name, int value) {
         String sql = "UPDATE settings SET value = ? WHERE name = ?;";
@@ -59,6 +102,7 @@ public class DBSettingsInterrogation {
         changeSetting("totalCFU", CFU);
     }
 
+
     private void insertDefaultSetting(String name, int value) {
         String sql = "INSERT INTO settings (name, value) VALUES (?, ?);";
 
@@ -81,21 +125,8 @@ public class DBSettingsInterrogation {
     }
 
     public void insertDefaultCFU() {
-        insertDefaultSetting("totalCFU", 180);
+        insertDefaultSetting(SettingsNameKey.TOTAL_CFU.name(), 180);
     }
 
-    public boolean settingsTableExistsAndIsFull() {
-        String sql = "SELECT 1 FROM settings";
-
-        try (Connection connection = DBConnection.getConnectionFromDB();
-             PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            return rs.next();
-
-        } catch (SQLException e) {
-            return false;
-        }
-    }
 
 }
