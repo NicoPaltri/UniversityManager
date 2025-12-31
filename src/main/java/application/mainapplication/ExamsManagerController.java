@@ -7,9 +7,6 @@ import dbmanager.settingsTable.DBSettingsStartTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,12 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import universitymanager.Exam;
 import universitymanager.UniversityManager;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class ExamsManagerController {
@@ -152,20 +146,23 @@ public class ExamsManagerController {
     private void updatePieChartProgress() {
         DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
 
-        final double max = settingsInterrogation.getTotalAmountCFU();
+        double maxCFU = settingsInterrogation.getTotalAmountCFU();
         double filled = UniversityManager.getTotalExamsWeight(exams);
-        if (filled > max) {
-            filled = max;
-        }
 
-        double filledPercentage = filled / max * 100;
-        double remainingPercentage = 100 - filledPercentage;
+        double displayedFilled = Math.min(filled, maxCFU);
+        double displayedRemaining = Math.max(0, maxCFU - filled);
+
+        double filledPercentage = (displayedFilled / maxCFU) * 100;
 
         pieChartLabel.setText(formatter.format(filledPercentage) + "%");
 
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
-                new PieChart.Data("Filled (" + formatter.format(filledPercentage) + "%)", filled),
-                new PieChart.Data("Remaining (" + formatter.format(remainingPercentage) + "%)", max - filled)
+                new PieChart.Data(
+                        "Filled (" + formatter.format(filledPercentage) + "%)", displayedFilled
+                ),
+                new PieChart.Data(
+                        "Remaining (" + formatter.format(100 - filledPercentage) + "%)", displayedRemaining
+                )
         );
 
         pieChartTotalExam.setData(data);

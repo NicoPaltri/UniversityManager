@@ -57,7 +57,7 @@ public class DBSettingsInterrogation {
 
 
     private int getValueFromSetting(String name) {
-        String sql = "SELECT value FROM settings WHERE name = ?;";
+        String sql = "SELECT value FROM settings WHERE name = ?";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -73,12 +73,12 @@ public class DBSettingsInterrogation {
     }
 
     public int getTotalAmountCFU() {
-        return getValueFromSetting(SettingsNameKey.TOTAL_CFU.name());
+        return getValueFromSetting(SettingsName.TOTAL_CFU.getSettingName());
     }
 
 
     private void changeSetting(String name, int value) {
-        String sql = "UPDATE settings SET value = ? WHERE name = ?;";
+        String sql = "UPDATE settings SET value = ? WHERE name = ?";
 
         try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -99,12 +99,12 @@ public class DBSettingsInterrogation {
             throw new IllegalArgumentException("CFU must be > 0");
         }
 
-        changeSetting("totalCFU", CFU);
+        changeSetting(SettingsName.TOTAL_CFU.getSettingName(), CFU);
     }
 
 
     private void insertDefaultSetting(String name, int value) {
-        String sql = "INSERT INTO settings (name, value) VALUES (?, ?);";
+        String sql = "INSERT INTO settings (name, value) VALUES (?, ?)";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -125,7 +125,7 @@ public class DBSettingsInterrogation {
     }
 
     public void insertDefaultCFU() {
-        insertDefaultSetting(SettingsNameKey.TOTAL_CFU.name(), 180);
+        insertDefaultSetting(SettingsName.TOTAL_CFU.getSettingName(), 180);
     }
 
 
