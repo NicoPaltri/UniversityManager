@@ -51,7 +51,7 @@ public class DBManageExams {
             }
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
     }
 }

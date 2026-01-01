@@ -56,7 +56,8 @@
                                 onAction="#settingButtonOnAction"/>
 
                         <Button fx:id="modifyButton" text="Modifica" focusTraversable="false"
-                                maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                onAction="#modifyButtonOnAction"/>
                     </children>
                 </GridPane>
 

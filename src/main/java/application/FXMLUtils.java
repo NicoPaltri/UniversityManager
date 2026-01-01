@@ -94,6 +94,15 @@ public class FXMLUtils {
     }
 
 
+    public static String makeThisTwoDigits(String text) {
+        if (text.length() == 1) {
+            return "0" + text;
+        }
+
+        return text;
+    }
+
+
     public void openNewWindow(String windowName, String windowPath, String cssPath, Pane mainPane, Runnable onClose) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(windowPath));
@@ -167,7 +176,6 @@ public class FXMLUtils {
             throw new RuntimeException(e);
         }
     }
-
 
     public static void errorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

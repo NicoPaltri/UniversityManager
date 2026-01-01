@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="application.modifybuttonapplication.ModifyButtonController"
+            prefWidth="650" prefHeight="450">
+
+    <!--- TOP -->
+    <top>
+        <VBox fx:id="topVBox" alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="20"/>
+            </padding>
+            <children>
+                <Label fx:id="topLabel" text="Modifica un esame">
+                    <font><Font size="32"/></font>
+                </Label>
+            </children>
+        </VBox>
+    </top>
+
+    <!--- CENTER (TableView responsiva) -->
+    <center>
+        <VBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="20" left="40" right="40"/>
+            </padding>
+
+            <children>
+
+                <TableView fx:id="examTable"
+                           VBox.vgrow="ALWAYS"
+                           styleClass="field-container">
+
+                    <columns>
+                        <TableColumn fx:id="colName" text="Nome"/>
+                        <TableColumn fx:id="colWeight" text="P"/>
+                        <TableColumn fx:id="colGrade" text="V"/>
+                        <TableColumn fx:id="colDate" text="Data"/>
+                    </columns>
+
+                </TableView>
+
+            </children>
+        </VBox>
+    </center>
+
+    <!--- BOTTOM -->
+    <bottom>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="20" bottom="25"/>
+            </padding>
+            <children>
+                <Button fx:id="selectButton" text="Seleziona"
+                        onAction="#selectButtonOnAction"
+                        styleClass="confirm-button"/>
+            </children>
+        </HBox>
+    </bottom>
+
+</BorderPane>

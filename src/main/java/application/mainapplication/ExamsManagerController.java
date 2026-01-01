@@ -296,4 +296,20 @@ public class ExamsManagerController {
                 }
         );
     }
+
+    public void modifyButtonOnAction(ActionEvent actionEvent) {
+        FXMLUtils utils = new FXMLUtils();
+
+        utils.openNewWindow("Modifica",
+                "/stages/modifystages/ModifyExamStage.fxml",
+                "/styles/modify_exam.css",
+                mainPane,
+                () -> {
+                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
+                    updateDatas();
+
+                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
+                }
+        );
+    }
 }
