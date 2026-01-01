@@ -1,6 +1,8 @@
 package customexceptions.dateexception;
 
-public class InvalidDateFormatException extends RuntimeException {
+import customexceptions.ApplicationException;
+
+public class InvalidDateFormatException extends ApplicationException {
     public InvalidDateFormatException(String name, String date) {
         super("Il formato della data non è aaaammgg [ " + date + "], in " + name);
     }

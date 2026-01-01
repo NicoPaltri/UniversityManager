@@ -1,6 +1,8 @@
 package customexceptions.accessdatasexception;
 
-public class AlreadyExistingExamException extends RuntimeException {
+import customexceptions.ApplicationException;
+
+public class AlreadyExistingExamException extends ApplicationException {
     public AlreadyExistingExamException(String name) {
         super("L'esame inserito è già presente nel database " + name);
     }

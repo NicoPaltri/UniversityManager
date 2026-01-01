@@ -1,13 +1,7 @@
 package application.modifybuttonapplication;
 
 import application.FXMLUtils;
-import customexceptions.accessdatasexception.AlreadyExistingExamException;
-import customexceptions.accessdatasexception.DBFailedConnectionException;
-import customexceptions.accessdatasexception.DBInternalErrorException;
-import customexceptions.dateexception.FutureDateException;
-import customexceptions.dateexception.InvalidDateFormatException;
-import customexceptions.examformatexception.GradeFormatException;
-import customexceptions.examformatexception.WeightFormatException;
+import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -54,22 +48,7 @@ public class ChosenExamController {
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
         try {
-            String name = nameInputField.getText().trim();
-            int weight = Integer.parseInt(weightInputField.getText());
-            int grade = Integer.parseInt(gradeInputField.getText());
-
-            String day = dayInputField.getText().trim();
-            day = FXMLUtils.makeThisTwoDigits(day);
-
-            String month = monthInputField.getText().trim();
-            month = FXMLUtils.makeThisTwoDigits(month);
-
-            String year = yearInputField.getText().trim();
-
-            String completeDate = year + month + day;
-
-            ExamFactory examFactory = new ExamFactory();
-            Exam modifiedExam = examFactory.createExam(name, weight, grade, completeDate);
+            Exam modifiedExam = getExamFromFields();
 
             DBManageExams.deleteExamByName(selectedExam.getName());
             DBManageExams.insertExam(modifiedExam);
@@ -79,15 +58,28 @@ public class ChosenExamController {
 
         } catch (NumberFormatException e) {
             FXMLUtils.errorAlert("Errore nel format di grade/weight.");
-        } catch (WeightFormatException |
-                 GradeFormatException |
-                 FutureDateException |
-                 InvalidDateFormatException |
-                 AlreadyExistingExamException |
-                 DBInternalErrorException |
-                 DBFailedConnectionException e) {
+        } catch (ApplicationException e) {
             FXMLUtils.errorAlert(e.getMessage());
         }
+    }
+
+    private Exam getExamFromFields() {
+        String name = nameInputField.getText().trim();
+        int weight = Integer.parseInt(weightInputField.getText());
+        int grade = Integer.parseInt(gradeInputField.getText());
+
+        String day = dayInputField.getText().trim();
+        day = FXMLUtils.makeThisTwoDigits(day);
+
+        String month = monthInputField.getText().trim();
+        month = FXMLUtils.makeThisTwoDigits(month);
+
+        String year = yearInputField.getText().trim();
+
+        String completeDate = year + month + day;
+
+        ExamFactory examFactory = new ExamFactory();
+        return examFactory.createExam(name, weight, grade, completeDate);
     }
 
 }

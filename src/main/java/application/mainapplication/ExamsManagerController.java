@@ -20,6 +20,7 @@ import universitymanager.Exam;
 import universitymanager.UniversityManager;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class ExamsManagerController {
 
@@ -250,9 +251,10 @@ public class ExamsManagerController {
     private void initGradeChart() {
         gradesSeries.setName("Voti");
         weightedAverageSeries.setName("Media ponderata");
-        lineChart.getData().addAll(gradesSeries, weightedAverageSeries);
+        lineChart.getData().addAll(
+                List.of(gradesSeries, weightedAverageSeries)
+        );
     }
-
 
     //buttons
     public void addExamButtonOnAction(ActionEvent actionEvent) {

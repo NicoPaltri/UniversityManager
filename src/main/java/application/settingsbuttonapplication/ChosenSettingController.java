@@ -1,6 +1,7 @@
 package application.settingsbuttonapplication;
 
 import application.FXMLUtils;
+import customexceptions.ApplicationException;
 import customexceptions.settingsexcpetions.InvalidCFUValueException;
 import dbmanager.settingsTable.DBSettingsInterrogation;
 import javafx.event.ActionEvent;
@@ -42,7 +43,7 @@ public class ChosenSettingController {
 
         } catch (NumberFormatException e) {
             FXMLUtils.errorAlert("Il valore passato deve essere un numero intero; " + e.getMessage());
-        } catch (InvalidCFUValueException e) {
+        } catch (ApplicationException e) {
             FXMLUtils.errorAlert(e.getMessage());
         }
     }

@@ -1,5 +1,6 @@
 package dbmanager.examsTable;
 
+import customexceptions.accessdatasexception.DBInternalErrorException;
 import dbmanager.DBConnection;
 
 import java.sql.Connection;
@@ -21,7 +22,7 @@ public class DBExamsStartTable {
                         );
                     """);
         } catch (SQLException e) {
-            throw new RuntimeException("Errore nella creazione della tabella exams", e);
+            throw new DBInternalErrorException("Errore nella creazione della tabella exams", e);
         }
     }
 }

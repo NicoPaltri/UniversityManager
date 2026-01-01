@@ -1,12 +1,7 @@
 package application.addbuttonapplication;
 
 import application.FXMLUtils;
-import customexceptions.accessdatasexception.AlreadyExistingExamException;
-import customexceptions.accessdatasexception.DBFailedConnectionException;
-import customexceptions.dateexception.FutureDateException;
-import customexceptions.dateexception.InvalidDateFormatException;
-import customexceptions.examformatexception.GradeFormatException;
-import customexceptions.examformatexception.WeightFormatException;
+import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
@@ -50,12 +45,7 @@ public class AddButtonController {
 
         } catch (NumberFormatException e) {
             FXMLUtils.errorAlert("Errore nel format di grade/weight.");
-        } catch (WeightFormatException |
-                 GradeFormatException |
-                 FutureDateException |
-                 InvalidDateFormatException |
-                 AlreadyExistingExamException |
-                 DBFailedConnectionException e) {
+        } catch (ApplicationException e) {
             FXMLUtils.errorAlert(e.getMessage());
         }
     }

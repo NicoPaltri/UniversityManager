@@ -1,6 +1,8 @@
 package customexceptions.accessdatasexception;
 
-public class AlreadyExistingSettingException extends RuntimeException {
+import customexceptions.ApplicationException;
+
+public class AlreadyExistingSettingException extends ApplicationException {
     public AlreadyExistingSettingException(String name) {
         super("Il setting inserito è già presente nel database " + name);
     }

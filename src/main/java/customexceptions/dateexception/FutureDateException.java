@@ -1,8 +1,8 @@
 package customexceptions.dateexception;
 
-import java.time.LocalDate;
+import customexceptions.ApplicationException;
 
-public class FutureDateException extends RuntimeException {
+public class FutureDateException extends ApplicationException {
     public FutureDateException(String name, String date) {
         super("La data inserita è nel futuro [ " + date + " ], in " + name);
     }

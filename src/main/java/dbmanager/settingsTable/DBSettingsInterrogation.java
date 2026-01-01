@@ -1,7 +1,6 @@
 package dbmanager.settingsTable;
 
 import customexceptions.accessdatasexception.AlreadyExistingSettingException;
-import customexceptions.accessdatasexception.DBInternalErrorException;
 import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
 import settingsmanager.Setting;
@@ -114,7 +113,7 @@ public class DBSettingsInterrogation {
             if (e.getErrorCode() == 19) {
                 throw new AlreadyExistingSettingException(name, e);
             } else {
-                throw new DBInternalErrorException(sql, e);
+                throw new DataAccessException(sql, e);
             }
         }
 
@@ -123,6 +122,5 @@ public class DBSettingsInterrogation {
     public void insertDefaultCFU() {
         insertDefaultSetting(SettingsName.TOTAL_CFU.getSettingName(), 180);
     }
-
 
 }

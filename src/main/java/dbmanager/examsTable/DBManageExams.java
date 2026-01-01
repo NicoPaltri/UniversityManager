@@ -1,9 +1,7 @@
 package dbmanager.examsTable;
 
 import customexceptions.accessdatasexception.AlreadyExistingExamException;
-import customexceptions.accessdatasexception.DBFailedConnectionException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
-import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
 import universitymanager.Exam;
 

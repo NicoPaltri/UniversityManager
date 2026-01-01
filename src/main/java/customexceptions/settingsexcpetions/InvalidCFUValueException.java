@@ -1,6 +1,8 @@
 package customexceptions.settingsexcpetions;
 
-public class InvalidCFUValueException extends RuntimeException {
+import customexceptions.ApplicationException;
+
+public class InvalidCFUValueException extends ApplicationException {
     public InvalidCFUValueException() {
         super("Il numero totale di CFU non può essere minore o uguale a 0");
     }

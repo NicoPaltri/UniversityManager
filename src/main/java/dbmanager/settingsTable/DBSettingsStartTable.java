@@ -1,5 +1,6 @@
 package dbmanager.settingsTable;
 
+import customexceptions.accessdatasexception.DBInternalErrorException;
 import dbmanager.DBConnection;
 
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class DBSettingsStartTable {
                         );
                     """);
         } catch (SQLException e) {
-            throw new RuntimeException("Errore nella creazione della tabella settings", e);
+        throw new DBInternalErrorException("Errore nella creazione della tabella settings", e);
         }
     }
 }

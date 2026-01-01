@@ -1,6 +1,6 @@
 package application;
 
-import javafx.application.Platform;
+import customexceptions.encapsulateexception.EncapsulateIOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -18,6 +18,9 @@ import universitymanager.Exam;
 import universitymanager.UniversityManager;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.Objects;
 
 public class FXMLUtils {
     public static ObservableList<Exam> getEmptyObservableList() {
@@ -35,7 +38,7 @@ public class FXMLUtils {
         colGrade.prefWidthProperty().bind(examTable.widthProperty().multiply(0.10));
         colDate.prefWidthProperty().bind(examTable.widthProperty().multiply(0.30));
 
-        examTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        examTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     public static void linkTableViewAndObservableList(ObservableList<Exam> exams,
@@ -63,7 +66,7 @@ public class FXMLUtils {
 
         //definisce il come la tabella della essere ordinata
         colDate.setSortType(TableColumn.SortType.ASCENDING);
-        examTable.getSortOrder().setAll(colDate);
+        examTable.getSortOrder().setAll(List.of(colDate));
         examTable.sort();
         /*
          * specifico che colDate preferisce come ordinamento ascending
@@ -111,9 +114,11 @@ public class FXMLUtils {
             Scene scene = new Scene(root);
 
             //css
-            scene.getStylesheets().add(
-                    getClass().getResource(cssPath).toExternalForm()
+            URL cssUrl = Objects.requireNonNull(
+                    getClass().getResource(cssPath),
+                    "CSS non trovato: " + cssPath
             );
+            scene.getStylesheets().add(cssUrl.toExternalForm());
 
             Stage stage = new Stage();
             stage.setTitle(windowName);
@@ -133,7 +138,7 @@ public class FXMLUtils {
             stage.show();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new EncapsulateIOException(windowPath, e);
         }
     }
 
@@ -157,7 +162,13 @@ public class FXMLUtils {
 
             //css
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+
+            URL cssUrl = Objects.requireNonNull(
+                    getClass().getResource(cssPath),
+                    "CSS non trovato: " + cssPath
+            );
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+
 
             Stage stage = new Stage();
             stage.setTitle(windowName);
@@ -173,7 +184,7 @@ public class FXMLUtils {
             stage.show();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new EncapsulateIOException(windowPath, e);
         }
     }
 

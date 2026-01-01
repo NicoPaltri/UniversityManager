@@ -18,6 +18,8 @@ module universitymanager {
     exports application.mainapplication to javafx.graphics;
 
     exports dbmanager.settingsTable;
+    exports universitymanager;
+    exports settingsmanager;
 
     // FXML reflection access (controllers)
     opens application.mainapplication to javafx.fxml;
