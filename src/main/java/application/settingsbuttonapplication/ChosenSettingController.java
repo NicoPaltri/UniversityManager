@@ -1,0 +1,59 @@
+package application.settingsbuttonapplication;
+
+import application.FXMLUtils;
+import customexceptions.settingsexcpetions.InvalidCFUValueException;
+import dbmanager.settingsTable.DBSettingsInterrogation;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import dbmanager.settingsTable.SettingsName;
+import javafx.stage.Stage;
+
+public class ChosenSettingController {
+
+    public Label nameLabel;
+    public TextField valueInputField;
+
+    private String chosenSettingName;
+
+
+    public void initialize() {
+    }
+
+    public void initSetting(String chosenSettingName) {
+        this.chosenSettingName = chosenSettingName;
+        nameLabel.setText(chosenSettingName);
+    }
+
+    public void modifyButtonOnAction(ActionEvent actionEvent) {
+        String stringValue = valueInputField.getText().trim();
+
+        try {
+            int value = Integer.parseInt(stringValue);
+
+            //non OCP no switch allowed 'constant expression required'
+            if (chosenSettingName.equals(SettingsName.TOTAL_CFU.getSettingName())) {
+                changeTotalCFU(value);
+            }
+
+            //se tutto è andato bene chiudo la pagina
+            Stage thisStage = (Stage) nameLabel.getScene().getWindow();
+            thisStage.close();
+
+        } catch (NumberFormatException e) {
+            FXMLUtils.errorAlert("Il valore passato deve essere un numero intero; " + e.getMessage());
+        } catch (InvalidCFUValueException e) {
+            FXMLUtils.errorAlert(e.getMessage());
+        }
+    }
+
+    private void changeTotalCFU(int value) {
+        if (value <= 0) {
+            throw new InvalidCFUValueException();
+        }
+
+        DBSettingsInterrogation dbSettingsInterrogation = new DBSettingsInterrogation();
+        dbSettingsInterrogation.changeTotalCFU(value);
+    }
+
+}

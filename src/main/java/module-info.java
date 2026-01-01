@@ -1,23 +1,26 @@
 module universitymanager {
+    // JavaFX
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
-    requires javafx.graphics;
-    requires org.xerial.sqlitejdbc;
+
+    // Desktop
     requires java.desktop;
-    requires javafx.base;
+
+    // DB
+    requires java.sql;
+    requires org.xerial.sqlitejdbc;
+
+    // Math
     requires commons.math3;
 
+    // JavaFX needs to instantiate Application (Launcher is in javafx.graphics)
+    exports application.mainapplication to javafx.graphics;
+
+    exports dbmanager.settingsTable;
+
+    // FXML reflection access (controllers)
     opens application.mainapplication to javafx.fxml;
-    exports application.mainapplication;
-
     opens application.addbuttonapplication to javafx.fxml;
-    exports application.addbuttonapplication;
-
     opens application.removebuttonapplication to javafx.fxml;
-    exports application.removebuttonapplication;
-
-    opens universitymanager;
-    exports universitymanager;
+    opens application.settingsbuttonapplication to javafx.fxml;
 }
-

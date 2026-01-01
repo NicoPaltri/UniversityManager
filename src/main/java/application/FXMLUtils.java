@@ -90,7 +90,7 @@ public class FXMLUtils {
     }
 
     public static <T> void clearTableSelection(TableView<T> tableView) {
-        Platform.runLater(() -> tableView.getSelectionModel().clearSelection());
+        tableView.getSelectionModel().clearSelection();
     }
 
 
@@ -127,6 +127,47 @@ public class FXMLUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public <C> void openNewWindow(
+            String windowName,
+            String windowPath,
+            String cssPath,
+            Pane mainPane,
+            java.util.function.Consumer<C> controllerInitializer,
+            Runnable onClose
+    ) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(windowPath));
+            Parent root = loader.load();
+
+            // prende controller creato da FXMLLoader
+            C controller = loader.getController();
+            if (controllerInitializer != null) {
+                controllerInitializer.accept(controller);
+            }
+
+            //css
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+
+            Stage stage = new Stage();
+            stage.setTitle(windowName);
+            stage.setScene(scene);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(mainPane.getScene().getWindow());
+
+            stage.setOnHidden(e -> {
+                if (onClose != null) onClose.run();
+            });
+
+            stage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static void errorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

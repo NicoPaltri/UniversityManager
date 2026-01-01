@@ -14,20 +14,20 @@ public class Setting {
         this.value = new SimpleIntegerProperty(value);
     }
 
-    public StringProperty nameProperty() {
+    public StringProperty getNameProperty() {
         return name;
     }
 
-    public IntegerProperty valueProperty() {
+    public IntegerProperty getValueProperty() {
         return value;
     }
 
     public String getName() {
-        return name.getName();
+        return name.get();
     }
 
     public int getValue() {
-        return value.getValue();
+        return value.get();
     }
 
     @Override

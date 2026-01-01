@@ -57,7 +57,7 @@
             </padding>
             <children>
                 <Button fx:id="selectButton" text="Seleziona"
-                        onAction="#modifyButtonOnAction"
+                        onAction="#selectButtonOnAction"
                         styleClass="confirm-button"/>
             </children>
         </HBox>

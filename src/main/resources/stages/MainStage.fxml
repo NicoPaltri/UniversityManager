@@ -52,7 +52,8 @@
 
                         <!-- Riga 1 -->
                         <Button fx:id="settingsButton" text="Impostazioni" focusTraversable="false"
-                                maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                maxWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                                onAction="#settingButtonOnAction"/>
 
                         <Button fx:id="modifyButton" text="Modifica" focusTraversable="false"
                                 maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1"/>

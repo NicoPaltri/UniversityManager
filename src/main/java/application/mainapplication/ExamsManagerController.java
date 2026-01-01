@@ -282,4 +282,18 @@ public class ExamsManagerController {
                 });
     }
 
+    public void settingButtonOnAction(ActionEvent actionEvent) {
+        FXMLUtils utils = new FXMLUtils();
+
+        utils.openNewWindow("Impostazioni", "/stages/settingsstages/SettingsStage.fxml",
+                "/styles/settings_stage.css", mainPane,
+                () -> {
+
+                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
+                    updateDatas();
+
+                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
+                }
+        );
+    }
 }

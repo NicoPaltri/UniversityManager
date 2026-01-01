@@ -35,18 +35,11 @@ public class SettingsButtonController {
         updateSettings();
     }
 
-    public void modifyButtonOnAction(ActionEvent actionEvent) {
-        FXMLUtils utils = new FXMLUtils();
+    private void updateSettings() {
+        DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
+        settings.setAll(settingsInterrogation.getAllSettings());
 
-        utils.openNewWindow("Modifica impostazioni", "/stages/SettingsStage.fxml",
-                "/styles/settings_stage.css", mainPane,
-                () -> {
-
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateSettings();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                });
+        FXMLUtils.clearTableSelection(settingsTable);
     }
 
     private void setUpSettingsTable() {
@@ -56,18 +49,40 @@ public class SettingsButtonController {
         settingsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
-    private void updateSettings() {
-        DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
-        settings.setAll(settingsInterrogation.getAllSettings());
-
-        FXMLUtils.clearTableSelection(settingsTable);
-    }
-
     private void linkSettingsTableAndSettingsList() {
-        colName.setCellValueFactory(cell -> cell.getValue().nameProperty());
-        colValue.setCellValueFactory(cell -> cell.getValue().valueProperty());
+        settingsTable.setItems(settings);
+
+        colName.setCellValueFactory(cell -> cell.getValue().getNameProperty());
+        colValue.setCellValueFactory(cell -> cell.getValue().getValueProperty());
 
         //impedisce anche il riordino tramite sort programmatico
         settingsTable.setSortPolicy(tv -> false);
     }
+
+    public void selectButtonOnAction(ActionEvent actionEvent) {
+        Setting selected = settingsTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            FXMLUtils.errorAlert("Seleziona una riga prima di continuare.");
+            return;
+        }
+
+        String selectedKey = selected.getName();
+
+        FXMLUtils utils = new FXMLUtils();
+        utils.openNewWindow(
+                "Modifica impostazioni",
+                "/stages/settingsstages/ModifyChosenSettingStage.fxml",
+                "/styles/settings_stage.css",
+                mainPane,
+                (ChosenSettingController c) -> c.initSetting(selectedKey),
+                () -> {
+
+                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
+                    updateSettings();
+
+                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
+                });
+
+    }
+
 }

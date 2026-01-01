@@ -95,10 +95,6 @@ public class DBSettingsInterrogation {
     }
 
     public void changeTotalCFU(int CFU) {
-        if (CFU <= 0) {
-            throw new IllegalArgumentException("CFU must be > 0");
-        }
-
         changeSetting(SettingsName.TOTAL_CFU.getSettingName(), CFU);
     }
 
