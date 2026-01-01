@@ -154,7 +154,7 @@ public class ExamsManagerController {
 
         double filledPercentage = (displayedFilled / maxCFU) * 100;
 
-        pieChartLabel.setText(formatter.format(filledPercentage) + "%");
+        pieChartLabel.setText(formatter.format(filledPercentage) + "%" + " (" + (int) displayedFilled + "/" + (int) maxCFU + ")");
 
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
                 new PieChart.Data(
