@@ -7,8 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import universitymanager.Exam;
-import universitymanager.ExamFactory;
+import universitymanager.examtypes.Exam;
+import universitymanager.examfactories.ExamFactory;
 
 public class ChosenExamController {
 

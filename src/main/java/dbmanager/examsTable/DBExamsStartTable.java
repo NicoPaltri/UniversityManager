@@ -15,11 +15,13 @@ public class DBExamsStartTable {
 
             st.execute("""
                         CREATE TABLE IF NOT EXISTS exams(
-                          name      TEXT PRIMARY KEY,
-                          weight    INTEGER NOT NULL CHECK(weight BETWEEN 3 AND 15),
-                          grade     INTEGER NOT NULL CHECK(grade BETWEEN 18 AND 30),
-                          exam_date TEXT NOT NULL CHECK(length(exam_date) = 8)
-                        );
+                            name      TEXT PRIMARY KEY,
+                            weight    INTEGER NOT NULL CHECK (weight BETWEEN 3 AND 15),
+                            grade     INTEGER CHECK (grade IS NULL OR grade BETWEEN 18 AND 30),
+                            exam_date TEXT NOT NULL CHECK (length(exam_date) = 8),
+                            type      TEXT NOT NULL CHECK (type IN ('GRADED', 'IDONEITA'))
+                          );
+                    
                     """);
         } catch (SQLException e) {
             throw new DBInternalErrorException("Errore nella creazione della tabella exams", e);

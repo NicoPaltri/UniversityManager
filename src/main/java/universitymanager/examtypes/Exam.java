@@ -1,4 +1,4 @@
-package universitymanager;
+package universitymanager.examtypes;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

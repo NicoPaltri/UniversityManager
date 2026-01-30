@@ -1,4 +1,4 @@
-package universitymanager;
+package universitymanager.examtypes;
 
 public enum ExamTypologies {
     GradedExam("GRADED"),

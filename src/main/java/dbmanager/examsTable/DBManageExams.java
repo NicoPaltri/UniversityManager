@@ -3,7 +3,7 @@ package dbmanager.examsTable;
 import customexceptions.accessdatasexception.AlreadyExistingExamException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
 import dbmanager.DBConnection;
-import universitymanager.Exam;
+import universitymanager.examtypes.Exam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

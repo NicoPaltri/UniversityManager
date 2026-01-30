@@ -3,6 +3,7 @@ package universitymanager;
 import dbmanager.examsTable.DBExamsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import universitymanager.examtypes.Exam;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

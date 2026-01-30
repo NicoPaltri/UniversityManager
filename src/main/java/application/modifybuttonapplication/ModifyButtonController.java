@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
-import universitymanager.Exam;
+import universitymanager.examtypes.Exam;
 
 public class ModifyButtonController {
 

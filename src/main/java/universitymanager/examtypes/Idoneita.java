@@ -1,9 +1,9 @@
-package universitymanager;
+package universitymanager.examtypes;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Idoneita extends Exam{
+public class Idoneita extends Exam {
     public Idoneita(String name, int weight, String date) {
         super(name, weight, date);
     }

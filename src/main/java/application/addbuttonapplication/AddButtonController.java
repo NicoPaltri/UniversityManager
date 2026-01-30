@@ -5,8 +5,8 @@ import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
-import universitymanager.Exam;
-import universitymanager.ExamFactory;
+import universitymanager.examtypes.Exam;
+import universitymanager.examfactories.ExamFactory;
 
 public class AddButtonController {
 

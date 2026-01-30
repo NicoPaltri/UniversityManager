@@ -2,8 +2,8 @@ package dbmanager.examsTable;
 
 import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
-import universitymanager.Exam;
-import universitymanager.ExamFactory;
+import universitymanager.examtypes.Exam;
+import universitymanager.examfactories.ExamFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class DBExamsInterrogation {
         List<Exam> examList = new ArrayList<>();
         ExamFactory examFactory = new ExamFactory();
 
-        String sql = "SELECT name, weight, grade, exam_date FROM exams";
+        String sql = "SELECT name, weight, grade, exam_date, type FROM exams";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -31,6 +31,7 @@ public class DBExamsInterrogation {
                 int weight = rs.getInt("weight");
                 int grade = rs.getInt("grade");
                 String date = rs.getString("exam_date");
+                String type=rs.getString("type");
 
                 Exam exam = examFactory.createExam(name, weight, grade, date);
                 examList.add(exam);

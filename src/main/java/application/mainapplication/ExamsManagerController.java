@@ -16,7 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import universitymanager.Exam;
+import universitymanager.examtypes.Exam;
 import universitymanager.UniversityManager;
 
 import java.text.DecimalFormat;

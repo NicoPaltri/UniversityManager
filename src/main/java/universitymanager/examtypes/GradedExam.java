@@ -1,9 +1,9 @@
-package universitymanager;
+package universitymanager.examtypes;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class GradedExam extends Exam{
+public class GradedExam extends Exam {
     private final int grade;
 
     public GradedExam(String name, int weight, String date, int grade) {

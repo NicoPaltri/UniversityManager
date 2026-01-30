@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import universitymanager.Exam;
+import universitymanager.examtypes.Exam;
 import universitymanager.UniversityManager;
 
 import java.io.IOException;
