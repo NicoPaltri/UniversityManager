@@ -1,9 +1,13 @@
 package dbmanager.examsTable;
 
 import customexceptions.accessdatasexception.DataAccessException;
+import customexceptions.examformatexception.NullGradeForGradedExamException;
+import customexceptions.examformatexception.TypeFormatException;
 import dbmanager.DBConnection;
+import universitymanager.examfactories.GradedExamFactory;
+import universitymanager.examfactories.IdoneitaFactory;
 import universitymanager.examtypes.Exam;
-import universitymanager.examfactories.ExamFactory;
+import universitymanager.examtypes.ExamTypologies;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,14 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBExamsInterrogation {
-    public DBExamsInterrogation() {
-    }
-
     public List<Exam> getAllExams() {
         List<Exam> examList = new ArrayList<>();
-        ExamFactory examFactory = new ExamFactory();
-
         String sql = "SELECT name, weight, grade, exam_date, type FROM exams";
+
+        GradedExamFactory gradedExamFactory = new GradedExamFactory();
+        IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -29,18 +31,35 @@ public class DBExamsInterrogation {
             while (rs.next()) {
                 String name = rs.getString("name");
                 int weight = rs.getInt("weight");
-                int grade = rs.getInt("grade");
-                String date = rs.getString("exam_date");
-                String type=rs.getString("type");
 
-                Exam exam = examFactory.createExam(name, weight, grade, date);
+                //NULL-safe per Idoneità
+                Integer grade = rs.getObject("grade", Integer.class);
+
+                String date = rs.getString("exam_date");
+                String type = rs.getString("type"); // nel DB è NOT NULL
+
+                Exam exam;
+
+                if (ExamTypologies.GradedExam.getExamTypology().equals(type)) {
+                    if (grade == null) {
+                        throw new NullGradeForGradedExamException(name);
+                    }
+                    exam = gradedExamFactory.createExam(name, weight, grade, date);
+
+                } else if (ExamTypologies.Idoneita.getExamTypology().equals(type)) {
+                    exam = idoneitaFactory.createExam(name, weight, date);
+
+                } else {
+                    throw new TypeFormatException(name, type);
+                }
+
                 examList.add(exam);
             }
+
+            return examList;
 
         } catch (SQLException e) {
             throw new DataAccessException(sql, e);
         }
-
-        return examList;
     }
 }
