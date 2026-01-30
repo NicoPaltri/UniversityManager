@@ -2,12 +2,11 @@ package dbmanager.examsTable;
 
 import customexceptions.accessdatasexception.AlreadyExistingExamException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
-import customexceptions.examformatexception.NullGradeForGradedExamException;
-import customexceptions.examformatexception.TypeFormatException;
+import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
 import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.ExamTypologies;
 import universitymanager.examtypes.GradedExam;
+import universitymanager.examtypes.Idoneita;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,14 +23,13 @@ public class DBManageExams {
             ps.setString(1, exam.getName());
             ps.setInt(2, exam.getWeight());
 
-            if (ExamTypologies.GradedExam.getExamTypology().equals(exam.getType())) {
-                //ACCOPPIAMENTO
-                GradedExam gradedExam = (GradedExam) exam;
+            //ACCOPPIAMENTO
+            if (exam instanceof GradedExam gradedExam) {
                 ps.setInt(3, gradedExam.getGrade());
-            } else if (ExamTypologies.Idoneita.getExamTypology().equals(exam.getType())) {
+            } else if (exam instanceof Idoneita) {
                 ps.setNull(3, Types.INTEGER);
             } else {
-                throw new TypeFormatException(exam.getName(), exam.getType());
+                throw new UnknownExamTypeException(exam.getName(), exam.getType());
             }
 
             ps.setString(4, exam.getDate());

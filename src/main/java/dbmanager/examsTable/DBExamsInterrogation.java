@@ -2,7 +2,7 @@ package dbmanager.examsTable;
 
 import customexceptions.accessdatasexception.DataAccessException;
 import customexceptions.examformatexception.NullGradeForGradedExamException;
-import customexceptions.examformatexception.TypeFormatException;
+import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
 import universitymanager.examfactories.GradedExamFactory;
 import universitymanager.examfactories.IdoneitaFactory;
@@ -50,7 +50,7 @@ public class DBExamsInterrogation {
                     exam = idoneitaFactory.createExam(name, weight, date);
 
                 } else {
-                    throw new TypeFormatException(name, type);
+                    throw new UnknownExamTypeException(name, type);
                 }
 
                 examList.add(exam);
