@@ -33,7 +33,9 @@ public class DBExamsInterrogation {
                 int weight = rs.getInt("weight");
 
                 //NULL-safe per Idoneità
-                Integer grade = rs.getObject("grade", Integer.class);
+                Integer grade;
+                int temporaryGrade = rs.getInt("grade");
+                grade = rs.wasNull() ? null : temporaryGrade;
 
                 String date = rs.getString("exam_date");
                 String type = rs.getString("type"); // nel DB è NOT NULL

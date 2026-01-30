@@ -60,11 +60,11 @@ public abstract class Exam {
     public String toString() {
         return this.getType() + "[" +
                 " name=" + this.getName() +
-                " weight=" + this.getWeight() +
-                " grade=" + this.gradeProperty().get() +
-                " date=" + this.getDate() +
-                " type=" + this.getType() +
-                "].";
+                ", weight=" + this.getWeight() +
+                ", grade=" + this.gradeProperty().get() +
+                ", date=" + this.getDate() +
+                ", type=" + this.getType() +
+                "]";
     }
 
     @Override
