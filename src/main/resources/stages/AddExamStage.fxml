@@ -12,12 +12,12 @@
 
     <!-- TOP -->
     <top>
-        <VBox alignment="CENTER" spacing="10">
+        <VBox id="topVBox" alignment="CENTER" spacing="10">
             <padding>
                 <Insets top="20" bottom="20"/>
             </padding>
             <children>
-                <Label text="Inserisci un nuovo esame">
+                <Label id="topLabel" text="Inserisci un nuovo esame">
                     <font>
                         <Font size="32"/>
                     </font>
@@ -40,13 +40,23 @@
 
             <!-- NOME -->
             <Label text="Nome" GridPane.rowIndex="0"/>
-            <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <HBox spacing="10"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0"
+                  styleClass="field-container">
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5"/>
+                </padding>
                 <TextField fx:id="nameInputField" promptText="Nome esame" HBox.hgrow="ALWAYS"/>
             </HBox>
 
             <!-- PESO -->
             <Label text="Peso" GridPane.rowIndex="1"/>
-            <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <HBox spacing="10"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1"
+                  styleClass="field-container">
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5"/>
+                </padding>
                 <TextField fx:id="weightInputField" promptText="Peso" prefWidth="80"/>
             </HBox>
 
@@ -56,13 +66,16 @@
                   spacing="10"
                   alignment="CENTER_LEFT"
                   GridPane.columnIndex="1"
-                  GridPane.rowIndex="2">
+                  GridPane.rowIndex="2"
+                  styleClass="field-container">
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5"/>
+                </padding>
 
                 <TextField fx:id="gradeInputField"
                            promptText="Voto"
                            prefWidth="80"/>
 
-                <!-- spazio elastico -->
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <CheckBox fx:id="idoneitaCheckBox" text="Idoneità"/>
@@ -72,9 +85,26 @@
             <Label text="Data" GridPane.rowIndex="3"/>
             <HBox spacing="12" GridPane.columnIndex="1" GridPane.rowIndex="3">
 
-                <TextField fx:id="dayInputField" promptText="gg" maxWidth="60"/>
-                <TextField fx:id="monthInputField" promptText="mm" maxWidth="60"/>
-                <TextField fx:id="yearInputField" promptText="aaaa" maxWidth="90"/>
+                <HBox alignment="CENTER" styleClass="date-container">
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5"/>
+                    </padding>
+                    <TextField fx:id="dayInputField" promptText="gg" maxWidth="60"/>
+                </HBox>
+
+                <HBox alignment="CENTER" styleClass="date-container">
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5"/>
+                    </padding>
+                    <TextField fx:id="monthInputField" promptText="mm" maxWidth="60"/>
+                </HBox>
+
+                <HBox alignment="CENTER" styleClass="date-container">
+                    <padding>
+                        <Insets top="5" bottom="5" left="5" right="5"/>
+                    </padding>
+                    <TextField fx:id="yearInputField" promptText="aaaa" maxWidth="90"/>
+                </HBox>
 
             </HBox>
 
@@ -89,7 +119,8 @@
             </padding>
             <Button text="Conferma"
                     fx:id="addButton"
-                    onAction="#confirmButtonOnAction"/>
+                    onAction="#confirmButtonOnAction"
+                    styleClass="confirm-button"/>
         </HBox>
     </bottom>
 
