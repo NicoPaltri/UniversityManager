@@ -13,7 +13,7 @@ module universitymanager {
     // Math
     requires commons.math3;
     requires javafx.base;
-    requires universitymanager;
+    requires javafx.graphics;
 
     // JavaFX needs to instantiate Application (Launcher is in javafx.graphics)
     exports application.mainapplication to javafx.graphics;
@@ -30,4 +30,5 @@ module universitymanager {
     opens application.modifybuttonapplication to javafx.fxml;
     exports universitymanager.examfactories;
     exports universitymanager.examtypes;
+    opens application to javafx.fxml;
 }

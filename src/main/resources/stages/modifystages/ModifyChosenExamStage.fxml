@@ -68,7 +68,7 @@
                     </children>
                 </HBox>
 
-                <!-- VOTO -->
+                <!-- VOTO + IDONEITÀ -->
                 <Label text="Voto" GridPane.rowIndex="2"/>
 
                 <HBox fx:id="gradeBox" spacing="10" alignment="CENTER_LEFT"
@@ -79,6 +79,11 @@
                     </padding>
                     <children>
                         <TextField fx:id="gradeInputField" promptText="Voto" prefWidth="80"/>
+
+                        <!-- spazio elastico per spingere la checkbox a destra -->
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <CheckBox fx:id="idoneitaCheckBox" text="Idoneità"/>
                     </children>
                 </HBox>
 

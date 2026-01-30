@@ -1,6 +1,7 @@
 package application.modifybuttonapplication;
 
 import application.FXMLUtils;
+import application.OpenWindowUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,14 +11,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import universitymanager.examtypes.Exam;
 
-public class ModifyButtonController {
+public class ModifyExamButtonController {
 
     public BorderPane mainPane;
 
     public TableView<Exam> examTable;
     public TableColumn<Exam, String> colName;
     public TableColumn<Exam, Number> colWeight;
-    public TableColumn<Exam, Number> colGrade;
+    public TableColumn<Exam, String> colGrade;
     public TableColumn<Exam, String> colDate;
 
     public Button selectButton;
@@ -50,11 +51,11 @@ public class ModifyButtonController {
     public void selectButtonOnAction(ActionEvent actionEvent) {
         Exam selectedExam = examTable.getSelectionModel().getSelectedItem();
         if (selectedExam == null) {
-            FXMLUtils.errorAlert("Seleziona una riga prima di continuare.");
+            OpenWindowUtils.errorAlert("Seleziona una riga prima di continuare.");
             return;
         }
 
-        FXMLUtils utils = new FXMLUtils();
+        OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(
                 "Modifica esame",
                 "/stages/modifystages/ModifyChosenExamStage.fxml",

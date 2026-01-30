@@ -10,12 +10,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import universitymanager.examtypes.Exam;
 
-public class RemoveButtonController {
+public class RemoveExamButtonController {
 
     public TableView<Exam> examTable;
     public TableColumn<Exam, String> colName;
     public TableColumn<Exam, Number> colWeight;
-    public TableColumn<Exam, Number> colGrade;
+    public TableColumn<Exam, String> colGrade;
     public TableColumn<Exam, String> colDate;
 
     public Button deleteButton;

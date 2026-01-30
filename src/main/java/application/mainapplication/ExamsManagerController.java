@@ -1,6 +1,8 @@
 package application.mainapplication;
 
+import application.ExamUtils;
 import application.FXMLUtils;
+import application.OpenWindowUtils;
 import dbmanager.examsTable.DBExamsStartTable;
 import dbmanager.settingsTable.DBSettingsInterrogation;
 import dbmanager.settingsTable.DBSettingsStartTable;
@@ -18,6 +20,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import universitymanager.examtypes.Exam;
 import universitymanager.UniversityManager;
+import universitymanager.examtypes.GradedExam;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -31,7 +34,7 @@ public class ExamsManagerController {
     public TableView<Exam> examTable;
     public TableColumn<Exam, String> colName;
     public TableColumn<Exam, Number> colWeight;
-    public TableColumn<Exam, Number> colGrade;
+    public TableColumn<Exam, String> colGrade;
     public TableColumn<Exam, String> colDate;
 
     public HBox chartsRow1;
@@ -120,7 +123,9 @@ public class ExamsManagerController {
     private void updateGradesSeries() {
         gradesSeries.getData().clear();
 
-        for (Exam exam : exams) {
+        List<GradedExam> gradedExams= ExamUtils.filterGradedExamsFromExamList(exams);
+
+        for (GradedExam exam : gradedExams) {
             gradesSeries.getData().add(
                     new XYChart.Data<>(exam.getDate(), exam.getGrade())
             );
@@ -131,10 +136,12 @@ public class ExamsManagerController {
     private void updateWeightedAverageSeries() {
         weightedAverageSeries.getData().clear();
 
+        List<GradedExam> gradedExams= ExamUtils.filterGradedExamsFromExamList(exams);
+
         double numerator = 0;
         double denominator = 0;
 
-        for (Exam exam : exams) {
+            for (GradedExam exam : gradedExams) {
             numerator += exam.getWeight() * exam.getGrade();
             denominator += exam.getWeight();
 
@@ -170,25 +177,27 @@ public class ExamsManagerController {
     }
 
     private void updateLabels() {
-        double arithmeticMean = UniversityManager.getArithmeticMeanFromExamList(exams);
+        List<GradedExam> gradedExams=ExamUtils.filterGradedExamsFromExamList(exams);
+
+        double arithmeticMean = UniversityManager.getArithmeticMeanFromGradedExamList(gradedExams);
         aritmethicMeanLabel.setText(formatter.format(arithmeticMean));
 
-        double weightedMean = UniversityManager.getWeightedMeanFromExamList(exams);
+        double weightedMean = UniversityManager.getWeightedMeanFromGradedExamList(gradedExams);
         weightedMeanLabel.setText(formatter.format(weightedMean));
 
-        double median = UniversityManager.getMedianFromExamList(exams);
+        double median = UniversityManager.getMedianFromGradedExamList(gradedExams);
         medianLabel.setText(formatter.format(median));
 
-        int mode = UniversityManager.getModeFromExamList(exams);
+        int mode = UniversityManager.getModeFromGradedExamList(gradedExams);
         modeLabel.setText(String.valueOf(mode));
 
-        double standardDeviation = UniversityManager.getStandardDeviationFromExamList(exams);
+        double standardDeviation = UniversityManager.getStandardDeviationFromGradedExamList(gradedExams);
         standardDeviationLabel.setText(formatter.format(standardDeviation));
 
-        double interQuartileRange = UniversityManager.getInterQuartileRangeFromExamList(exams);
+        double interQuartileRange = UniversityManager.getInterQuartileRangeFromGradedExamList(gradedExams);
         interQuartileLabel.setText(formatter.format(interQuartileRange));
 
-        double weightedMeanLastFiveExams = UniversityManager.getWeightedMeanOfLastFiveExamsFromList(exams);
+        double weightedMeanLastFiveExams = UniversityManager.getWeightedMeanOfLastFiveGradedExamsFromList(gradedExams);
         weightedMeanLastFiveExamsLabel.setText(formatter.format(weightedMeanLastFiveExams));
     }
 
@@ -258,7 +267,7 @@ public class ExamsManagerController {
 
     //buttons
     public void addExamButtonOnAction(ActionEvent actionEvent) {
-        FXMLUtils utils = new FXMLUtils();
+        OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml",
                 "/styles/add_exam.css", mainPane, () -> {
@@ -271,7 +280,7 @@ public class ExamsManagerController {
     }
 
     public void removeButtonOnAction(ActionEvent actionEvent) {
-        FXMLUtils utils = new FXMLUtils();
+        OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Rimuovi esame", "/stages/RemoveExamStage.fxml",
                 "/styles/remove_exam.css", mainPane,
@@ -285,7 +294,7 @@ public class ExamsManagerController {
     }
 
     public void settingButtonOnAction(ActionEvent actionEvent) {
-        FXMLUtils utils = new FXMLUtils();
+        OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Impostazioni", "/stages/settingsstages/SettingsStage.fxml",
                 "/styles/settings_stage.css", mainPane,
@@ -300,7 +309,7 @@ public class ExamsManagerController {
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
-        FXMLUtils utils = new FXMLUtils();
+        OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Modifica",
                 "/stages/modifystages/ModifyExamStage.fxml",

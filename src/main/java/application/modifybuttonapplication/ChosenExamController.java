@@ -1,14 +1,22 @@
 package application.modifybuttonapplication;
 
+import application.ExamUtils;
 import application.FXMLUtils;
+import application.InputFieldsUtils;
+import application.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import universitymanager.examfactories.GradedExamFactory;
+import universitymanager.examfactories.IdoneitaFactory;
 import universitymanager.examtypes.Exam;
 import universitymanager.examfactories.ExamFactory;
+import universitymanager.examtypes.ExamTypologies;
+import universitymanager.examtypes.GradedExam;
 
 public class ChosenExamController {
 
@@ -20,6 +28,8 @@ public class ChosenExamController {
     public TextField monthInputField;
     public TextField yearInputField;
 
+    public CheckBox idoneitaCheckBox;
+
     public Button modifyButton;
 
 
@@ -28,6 +38,13 @@ public class ChosenExamController {
     public void initialize() {
         //initExams viene chiamato solo dopo initialize, quindi
         //in initialize non si può usare selectedExam perchè è sempre null
+
+        //mostro/non mostro gradTextField
+        gradeInputField.visibleProperty()
+                .bind(idoneitaCheckBox.selectedProperty().not());
+
+        gradeInputField.managedProperty()
+                .bind(gradeInputField.visibleProperty());
     }
 
     public void initExam(Exam exam) {
@@ -38,7 +55,18 @@ public class ChosenExamController {
     private void setLabels() {
         nameInputField.setText(selectedExam.getName());
         weightInputField.setText(String.valueOf(selectedExam.getWeight()));
-        gradeInputField.setText(String.valueOf(selectedExam.getGrade()));
+
+        if (ExamTypologies.Idoneita.getExamTypology().equals(selectedExam.getType())) {
+            idoneitaCheckBox.setSelected(true);
+            gradeInputField.setText("0");
+        }
+
+        if (ExamTypologies.GradedExam.getExamTypology().equals(selectedExam.getType())) {
+            idoneitaCheckBox.setSelected(false);
+            //ACCOPPIAMENTO
+            GradedExam gradedExam = (GradedExam) selectedExam;
+            gradeInputField.setText(String.valueOf(gradedExam.getGrade()));
+        }
 
         //REMEMBER: aaaa-mm-dd
         dayInputField.setText(selectedExam.getDate().substring(8, 10));
@@ -56,30 +84,40 @@ public class ChosenExamController {
             Stage thisStage = (Stage) modifyButton.getScene().getWindow();
             thisStage.close();
 
-        } catch (NumberFormatException e) {
-            FXMLUtils.errorAlert("Errore nel format di grade/weight.");
         } catch (ApplicationException e) {
-            FXMLUtils.errorAlert(e.getMessage());
+            OpenWindowUtils.errorAlert(e.getMessage());
         }
     }
 
     private Exam getExamFromFields() {
+        GradedExamFactory gradedExamFactory = new GradedExamFactory();
+        IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
+
         String name = nameInputField.getText().trim();
-        int weight = Integer.parseInt(weightInputField.getText());
-        int grade = Integer.parseInt(gradeInputField.getText());
+        int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
 
-        String day = dayInputField.getText().trim();
-        day = FXMLUtils.makeThisTwoDigits(day);
+        // int grade = Integer.parseInt(gradeInputField.getText());
 
-        String month = monthInputField.getText().trim();
-        month = FXMLUtils.makeThisTwoDigits(month);
+        String day = InputFieldsUtils.getStringParameterFromInputField(dayInputField);
+        day = ExamUtils.makeThisTwoDigits(day);
 
-        String year = yearInputField.getText().trim();
+        String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
+        month = ExamUtils.makeThisTwoDigits(month);
+
+        String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
 
         String completeDate = year + month + day;
 
-        ExamFactory examFactory = new ExamFactory();
-        return examFactory.createExam(name, weight, grade, completeDate);
+        Exam exam;
+
+        if (idoneitaCheckBox.isSelected()) {
+            exam = idoneitaFactory.createExam(name, weight, completeDate);
+        } else {
+            int grade = InputFieldsUtils.getIntParameterFromInputField(gradeInputField, "grade");
+            exam = gradedExamFactory.createExam(name, weight, grade, completeDate);
+        }
+
+        return exam;
     }
 
 }

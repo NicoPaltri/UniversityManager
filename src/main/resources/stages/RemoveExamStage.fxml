@@ -7,7 +7,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="application.removebuttonapplication.RemoveButtonController"
+            fx:controller="application.removebuttonapplication.RemoveExamButtonController"
             prefWidth="650" prefHeight="450">
 
     <!--- TOP -->

@@ -1,6 +1,7 @@
 package application.settingsbuttonapplication;
 
 import application.FXMLUtils;
+import application.OpenWindowUtils;
 import dbmanager.settingsTable.DBSettingsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,13 +63,13 @@ public class SettingsButtonController {
     public void selectButtonOnAction(ActionEvent actionEvent) {
         Setting selected = settingsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            FXMLUtils.errorAlert("Seleziona una riga prima di continuare.");
+            OpenWindowUtils.errorAlert("Seleziona una riga prima di continuare.");
             return;
         }
 
         String selectedKey = selected.getName();
 
-        FXMLUtils utils = new FXMLUtils();
+        OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(
                 "Modifica impostazioni",
                 "/stages/settingsstages/ModifyChosenSettingStage.fxml",

@@ -1,26 +1,14 @@
 package application;
 
-import customexceptions.encapsulateexception.EncapsulateIOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import universitymanager.examtypes.Exam;
 import universitymanager.UniversityManager;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.Objects;
 
 public class FXMLUtils {
     public static ObservableList<Exam> getEmptyObservableList() {
@@ -30,7 +18,7 @@ public class FXMLUtils {
     public static void setUpStandardExamTable(TableView<Exam> examTable,
                                               TableColumn<Exam, String> colName,
                                               TableColumn<Exam, Number> colWeight,
-                                              TableColumn<Exam, Number> colGrade,
+                                              TableColumn<Exam, String> colGrade,
                                               TableColumn<Exam, String> colDate) {
 
         colName.prefWidthProperty().bind(examTable.widthProperty().multiply(0.50));
@@ -45,7 +33,7 @@ public class FXMLUtils {
                                                       TableView<Exam> examTable,
                                                       TableColumn<Exam, String> colName,
                                                       TableColumn<Exam, Number> colWeight,
-                                                      TableColumn<Exam, Number> colGrade,
+                                                      TableColumn<Exam, String> colGrade,
                                                       TableColumn<Exam, String> colDate) {
 
         //associo ad ogni colonna il valore riferito all'esame
@@ -89,113 +77,10 @@ public class FXMLUtils {
     private static void updateList(ObservableList<Exam> exams) {
         UniversityManager universityManager = new UniversityManager();
 
-        exams.setAll(universityManager.getObservableListFromDB());
+        exams.setAll(universityManager.getExamOrderedObservableListFromDB());
     }
 
     public static <T> void clearTableSelection(TableView<T> tableView) {
         tableView.getSelectionModel().clearSelection();
-    }
-
-
-    public static String makeThisTwoDigits(String text) {
-        if (text.length() == 1) {
-            return "0" + text;
-        }
-
-        return text;
-    }
-
-
-    public void openNewWindow(String windowName, String windowPath, String cssPath, Pane mainPane, Runnable onClose) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(windowPath));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            //css
-            URL cssUrl = Objects.requireNonNull(
-                    getClass().getResource(cssPath),
-                    "CSS non trovato: " + cssPath
-            );
-            scene.getStylesheets().add(cssUrl.toExternalForm());
-
-            Stage stage = new Stage();
-            stage.setTitle(windowName);
-            stage.setScene(scene);
-
-            //blocco la finestra principale
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(mainPane.getScene().getWindow());
-
-            //Callback: cosa fare quando la finestra viene chiusa
-            stage.setOnHidden(e -> {
-                if (onClose != null) {
-                    onClose.run();
-                }
-            });
-
-            stage.show();
-
-        } catch (IOException e) {
-            throw new EncapsulateIOException(windowPath, e);
-        }
-    }
-
-    public <C> void openNewWindow(
-            String windowName,
-            String windowPath,
-            String cssPath,
-            Pane mainPane,
-            java.util.function.Consumer<C> controllerInitializer,
-            Runnable onClose
-    ) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(windowPath));
-            Parent root = loader.load();
-
-            // prende controller creato da FXMLLoader
-            C controller = loader.getController();
-            if (controllerInitializer != null) {
-                controllerInitializer.accept(controller);
-            }
-
-            //css
-            Scene scene = new Scene(root);
-
-            URL cssUrl = Objects.requireNonNull(
-                    getClass().getResource(cssPath),
-                    "CSS non trovato: " + cssPath
-            );
-            scene.getStylesheets().add(cssUrl.toExternalForm());
-
-
-            Stage stage = new Stage();
-            stage.setTitle(windowName);
-            stage.setScene(scene);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(mainPane.getScene().getWindow());
-
-            stage.setOnHidden(e -> {
-                if (onClose != null) onClose.run();
-            });
-
-            stage.show();
-
-        } catch (IOException e) {
-            throw new EncapsulateIOException(windowPath, e);
-        }
-    }
-
-    public static void errorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore di input");
-        alert.setHeaderText("Operazione non valida");
-        alert.setContentText(message);
-
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.showAndWait();
-
     }
 }

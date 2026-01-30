@@ -1,6 +1,8 @@
 package application.settingsbuttonapplication;
 
 import application.FXMLUtils;
+import application.InputFieldsUtils;
+import application.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import customexceptions.settingsexcpetions.InvalidCFUValueException;
 import dbmanager.settingsTable.DBSettingsInterrogation;
@@ -27,7 +29,7 @@ public class ChosenSettingController {
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
-        String stringValue = valueInputField.getText().trim();
+        String stringValue = InputFieldsUtils.getStringParameterFromInputField(valueInputField);
 
         try {
             int value = Integer.parseInt(stringValue);
@@ -42,9 +44,9 @@ public class ChosenSettingController {
             thisStage.close();
 
         } catch (NumberFormatException e) {
-            FXMLUtils.errorAlert("Il valore passato deve essere un numero intero; " + e.getMessage());
+            OpenWindowUtils.errorAlert("Il valore passato deve essere un numero intero; " + e.getMessage());
         } catch (ApplicationException e) {
-            FXMLUtils.errorAlert(e.getMessage());
+            OpenWindowUtils.errorAlert(e.getMessage());
         }
     }
 

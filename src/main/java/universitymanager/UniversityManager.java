@@ -1,12 +1,12 @@
 package universitymanager;
 
+import application.ExamUtils;
 import dbmanager.examsTable.DBExamsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universitymanager.examtypes.Exam;
+import universitymanager.examtypes.GradedExam;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UniversityManager {
@@ -16,27 +16,18 @@ public class UniversityManager {
         this.dbInterrogator = new DBExamsInterrogation();
     }
 
-    public ObservableList<Exam> getObservableListFromDB() {
+
+    public ObservableList<Exam> getExamOrderedObservableListFromDB() {
         List<Exam> exams = dbInterrogator.getAllExams();
         exams.sort(Comparator.comparing(Exam::getDate));
 
-        moreReadableDate(exams);
+        ExamUtils.moreReadableDate(exams);
 
         System.out.println("La lista che ho ottenuto dal DB è: " + exams.toString());
 
         return FXCollections.observableArrayList(exams);
     }
 
-    private void moreReadableDate(List<Exam> exams) {
-        DateTimeFormatter inputFormatter = DateTimeFormatter.BASIC_ISO_DATE; // yyyyMMdd
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ISO_LOCAL_DATE; // yyyy-MM-dd
-
-        for (Exam exam : exams) {
-            String newDate = LocalDate.parse(exam.getDate(), inputFormatter).format(outputFormatter);
-            exam.setDate(newDate);
-        }
-
-    }
 
     public static int getTotalExamsWeight(List<Exam> exams) {
         return exams.stream()
@@ -45,19 +36,19 @@ public class UniversityManager {
     }
 
 
-    public static double getArithmeticMeanFromExamList(List<Exam> exams) {
+    public static double getArithmeticMeanFromGradedExamList(List<GradedExam> exams) {
         return exams.stream()
-                .mapToDouble(Exam::getGrade)
+                .mapToDouble(GradedExam::getGrade)
                 .average()
                 .orElse(0.0);
     }
 
 
-    public static double getWeightedMeanFromExamList(List<Exam> exams) {
+    public static double getWeightedMeanFromGradedExamList(List<GradedExam> exams) {
         double num = 0;
         double weights = 0;
 
-        for (Exam e : exams) {
+        for (GradedExam e : exams) {
             num += e.getGrade() * e.getWeight();
             weights += e.getWeight();
         }
@@ -65,26 +56,26 @@ public class UniversityManager {
         return weights == 0 ? 0 : num / weights;
     }
 
-    public static double getWeightedMeanOfLastFiveExamsFromList(List<Exam> exams) {
+    public static double getWeightedMeanOfLastFiveGradedExamsFromList(List<GradedExam> exams) {
         if (exams.isEmpty()) {
             return 0;
         }
 
-        List<Exam> sorted = exams.stream()
+        List<GradedExam> sorted = exams.stream()
                 .sorted(Comparator.comparing(Exam::getDate))
                 .toList();
 
         int from = Math.max(0, sorted.size() - 5);
-        return getWeightedMeanFromExamList(sorted.subList(from, sorted.size()));
+        return getWeightedMeanFromGradedExamList(sorted.subList(from, sorted.size()));
     }
 
 
-    public static double getMedianFromExamList(List<Exam> exams) {
+    public static double getMedianFromGradedExamList(List<GradedExam> exams) {
         if (exams.isEmpty()) {
             return 0;
         }
 
-        List<Integer> gradesList = exams.stream().map(Exam::getGrade).toList();
+        List<Integer> gradesList = exams.stream().map(GradedExam::getGrade).toList();
         List<Integer> orderedGrades = new ArrayList<>(gradesList);
         orderedGrades.sort(null);
 
@@ -111,13 +102,13 @@ public class UniversityManager {
     }
 
 
-    public static int getModeFromExamList(List<Exam> exams) {
+    public static int getModeFromGradedExamList(List<GradedExam> exams) {
         if (exams.isEmpty()) {
             return 0;
         }
 
         Map<Integer, Integer> mapGradeFrequency = new HashMap<>();
-        for (Exam e : exams) {
+        for (GradedExam e : exams) {
             if (mapGradeFrequency.containsKey(e.getGrade())) {
                 mapGradeFrequency.replace(e.getGrade(), mapGradeFrequency.get(e.getGrade()) + 1);
             } else {
@@ -148,14 +139,14 @@ public class UniversityManager {
     }
 
 
-    public static double getStandardDeviationFromExamList(List<Exam> exams) {
+    public static double getStandardDeviationFromGradedExamList(List<GradedExam> exams) {
         if (exams.isEmpty()) {
             return 0;
         }
 
-        List<Double> grades = exams.stream().map(Exam::getGrade).map(Integer::doubleValue).toList();
+        List<Double> grades = exams.stream().map(GradedExam::getGrade).map(Integer::doubleValue).toList();
 
-        double mean = getArithmeticMeanFromExamList(exams);
+        double mean = getArithmeticMeanFromGradedExamList(exams);
 
         double calculations = grades.stream().mapToDouble(e -> Math.pow(e - mean, 2)).sum();
 
@@ -163,13 +154,13 @@ public class UniversityManager {
     }
 
 
-    public static double getInterQuartileRangeFromExamList(List<Exam> exams) {
+    public static double getInterQuartileRangeFromGradedExamList(List<GradedExam> exams) {
         if (exams.size() < 4) {
             return 0;
         }
 
         List<Integer> sorted = exams.stream()
-                .map(Exam::getGrade)
+                .map(GradedExam::getGrade)
                 .sorted()
                 .toList();
 
@@ -182,5 +173,4 @@ public class UniversityManager {
 
         return q3 - q1;
     }
-
 }
