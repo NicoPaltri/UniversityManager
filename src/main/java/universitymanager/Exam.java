@@ -7,72 +7,77 @@ import javafx.beans.property.StringProperty;
 
 import java.util.Objects;
 
-public class Exam {
-    private final StringProperty nameFX;
-    private final IntegerProperty weightFX;
-    private final IntegerProperty gradeFX;
-    private final StringProperty dateFX;
+public abstract class Exam {
+    private final String name;
+    private final int weight;
+    private String date;
 
-    public Exam(String name, String date, int grade, int weight) {
-        this.nameFX = new SimpleStringProperty(name);
-        this.weightFX = new SimpleIntegerProperty(weight);
-        this.gradeFX = new SimpleIntegerProperty(grade);
-        this.dateFX = new SimpleStringProperty(date);
+    public Exam(String name, int weight, String date) {
+        this.name = name;
+        this.weight = weight;
+        this.date = date;
     }
+
 
     public String getName() {
-        return nameFX.get();
-    }
-
-    public String getDate() {
-        return dateFX.get();
-    }
-
-    public int getGrade() {
-        return gradeFX.get();
+        return name;
     }
 
     public int getWeight() {
-        return weightFX.get();
+        return weight;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+
+    public void setDate(String newDate) {
+        this.date = newDate;
+    }
+
+
+    public abstract String getType(); //a way to "know" the class without instanceof
+
+
+    //UI
     public StringProperty nameProperty() {
-        return nameFX;
+        return new SimpleStringProperty(name);
     }
 
     public IntegerProperty weightProperty() {
-        return weightFX;
-    }
-
-    public IntegerProperty gradeProperty() {
-        return gradeFX;
+        return new SimpleIntegerProperty(weight);
     }
 
     public StringProperty dateProperty() {
-        return dateFX;
+        return new SimpleStringProperty(date);
     }
 
-    public void setDate(String newDate) {
-        this.dateFX.set(newDate);
-    }
+    public abstract StringProperty gradeProperty();
+
 
     @Override
     public String toString() {
-        return "name: " + this.getName() +
-                ", weight: " + this.getWeight() +
-                ", grade: " + this.getGrade() +
-                ", date: " + this.getDate() + ".";
+        return this.getType() + "[" +
+                " name=" + this.getName() +
+                " weight=" + this.getWeight() +
+                " grade=" + this.gradeProperty().get() +
+                " date=" + this.getDate() +
+                " type=" + this.getType() +
+                "].";
     }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exam exam = (Exam) o;
-        return Objects.equals(nameFX, exam.nameFX);
+        return Objects.equals(getName(), exam.getName());
     }
+
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(nameFX);
+        return Objects.hashCode(this.getName());
     }
 }
