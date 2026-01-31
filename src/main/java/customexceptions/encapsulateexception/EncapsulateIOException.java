@@ -3,11 +3,17 @@ package customexceptions.encapsulateexception;
 import customexceptions.ApplicationException;
 
 public class EncapsulateIOException extends ApplicationException {
+
+    private static String buildMessage(String resource) {
+        return "Impossibile accedere alla risorsa " + resource + " (INTERNAL ERROR)";
+    }
+
     public EncapsulateIOException(String resource) {
-        super("Impossibile accedere alla risorsa " + resource + " (INTERNAL ERROR)");
+        super(buildMessage(resource));
     }
 
     public EncapsulateIOException(String resource, Throwable e) {
-        super("Impossibile accedere alla risorsa " + resource + " (INTERNAL ERROR); " + e.getMessage());
+        super(buildMessage(resource), e);
     }
+
 }

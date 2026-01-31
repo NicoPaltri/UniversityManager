@@ -5,11 +5,17 @@ import customexceptions.ApplicationException;
 import java.time.LocalDate;
 
 public class FutureDateException extends ApplicationException {
+
+    private static String buildMessage(String name, LocalDate date) {
+        return "La data inserita è nel futuro [ " + date.toString() + " ], in " + name;
+    }
+
     public FutureDateException(String name, LocalDate date) {
-        super("La data inserita è nel futuro [ " + date.toString() + " ], in " + name);
+        super(buildMessage(name, date));
     }
 
     public FutureDateException(String name, LocalDate date, Throwable e) {
-        super("La data inserita è nel futuro [ " + date + " ], in " + name + "; " + e);
+        super(buildMessage(name, date), e);
     }
+
 }

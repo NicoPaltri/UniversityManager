@@ -3,12 +3,17 @@ package customexceptions.accessdatasexception;
 import customexceptions.ApplicationException;
 
 public class AlreadyExistingExamException extends ApplicationException {
-    public AlreadyExistingExamException(String name) {
-        super("L'esame inserito è già presente nel database " + name);
+
+    private static String buildMessage(String name) {
+        return "L'esame inserito è già presente nel database: " + name;
     }
 
-    public AlreadyExistingExamException(String name, Throwable e) {
-        super("L'esame inserito è già presente nel database " + name + "; " + e);
+    public AlreadyExistingExamException(String name) {
+        super(buildMessage(name));
+    }
+
+    public AlreadyExistingExamException(String name, Throwable cause) {
+        super(buildMessage(name), cause);
     }
 
 }
