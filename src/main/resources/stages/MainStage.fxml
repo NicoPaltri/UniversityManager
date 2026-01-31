@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.lang.String?>
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="application.mainapplication.ExamsManagerController">
@@ -18,10 +19,29 @@
                         <Insets top="20" right="20" bottom="10" left="20"/>
                     </VBox.margin>
                     <columns>
-                        <TableColumn fx:id="colName" text="Nome"/>
-                        <TableColumn fx:id="colWeight" text="P"/>
-                        <TableColumn fx:id="colGrade" text="V"/>
-                        <TableColumn fx:id="colDate" text="Data"/>
+                        <TableColumn fx:id="colName" text="Nome">
+                            <styleClass>
+                                <String fx:value="col-name"/>
+                            </styleClass>
+                        </TableColumn>
+
+                        <TableColumn fx:id="colWeight" text="P">
+                            <styleClass>
+                                <String fx:value="col-num"/>
+                            </styleClass>
+                        </TableColumn>
+
+                        <TableColumn fx:id="colGrade" text="V">
+                            <styleClass>
+                                <String fx:value="col-num"/>
+                            </styleClass>
+                        </TableColumn>
+
+                        <TableColumn fx:id="colDate" text="Data">
+                            <styleClass>
+                                <String fx:value="col-num"/>
+                            </styleClass>
+                        </TableColumn>
                     </columns>
                 </TableView>
 
