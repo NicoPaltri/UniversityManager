@@ -19,7 +19,10 @@ public class ExamsManagerApplication extends Application {
 
         //css
         scene.getStylesheets().add(
-                ExamsManagerApplication.class.getResource("/styles/main_stage.css").toExternalForm()
+                ExamsManagerApplication.class.getResource("/styles/generalStyleSheet.css").toExternalForm()
+        );
+        scene.getStylesheets().add(
+                ExamsManagerApplication.class.getResource("/styles/specificMainStage.css").toExternalForm()
         );
 
         stage.setTitle("UniversityManager");

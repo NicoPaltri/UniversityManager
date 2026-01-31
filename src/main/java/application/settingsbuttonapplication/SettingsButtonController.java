@@ -73,7 +73,7 @@ public class SettingsButtonController {
         utils.openNewWindow(
                 "Modifica impostazioni",
                 "/stages/settingsstages/ModifyChosenSettingStage.fxml",
-                "/styles/settings_stage.css",
+                "/styles/secificSettingStage.css",
                 mainPane,
                 (ChosenSettingController c) -> c.initSetting(selectedKey),
                 () -> {

@@ -59,7 +59,7 @@ public class ModifyExamButtonController {
         utils.openNewWindow(
                 "Modifica esame",
                 "/stages/modifystages/ModifyChosenExamStage.fxml",
-                "/styles/modify_exam.css",
+                "/styles/specificModifyExam.css",
                 mainPane,
                 (ChosenExamController c) -> c.initExam(selectedExam), () -> {
 

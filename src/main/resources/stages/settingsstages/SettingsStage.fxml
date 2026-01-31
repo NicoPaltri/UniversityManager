@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
+<?import java.lang.String?>
 <BorderPane fx:id="mainPane"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -37,10 +38,17 @@
                 <TableView fx:id="settingsTable"
                            VBox.vgrow="ALWAYS"
                            styleClass="field-container">
-
                     <columns>
-                        <TableColumn fx:id="colName" text="Nome"/>
-                        <TableColumn fx:id="colValue" text="Valore"/>
+                        <TableColumn fx:id="colName" text="Nome">
+                            <style>
+                                <String fx:value="col-name"/>
+                            </style>
+                        </TableColumn>
+                        <TableColumn fx:id="colValue" text="Valore">
+                            <style>
+                                <String fx:value="col-num"/>
+                            </style>
+                        </TableColumn>
                     </columns>
 
                 </TableView>

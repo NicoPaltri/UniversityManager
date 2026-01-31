@@ -21,28 +21,29 @@ public class OpenWindowUtils {
     public void openNewWindow(
             String windowName,
             String windowPath,
-            String cssPath,
+            String overrideCssPath,
             Pane mainPane,
             Runnable onClose
     ) {
-        openNewWindowInternal(windowName, windowPath, cssPath, mainPane, null, onClose);
+        openNewWindowInternal(windowName, windowPath, overrideCssPath, mainPane, null, onClose);
     }
+
 
     public <C> void openNewWindow(
             String windowName,
             String windowPath,
-            String cssPath,
+            String overrideCssPath,
             Pane mainPane,
             java.util.function.Consumer<C> controllerInitializer,
             Runnable onClose
     ) {
-        openNewWindowInternal(windowName, windowPath, cssPath, mainPane, controllerInitializer, onClose);
+        openNewWindowInternal(windowName, windowPath, overrideCssPath, mainPane, controllerInitializer, onClose);
     }
 
     private <C> void openNewWindowInternal(
             String windowName,
             String windowPath,
-            String cssPath,
+            String overrideCssPath,
             Pane mainPane,
             java.util.function.Consumer<C> controllerInitializer,
             Runnable onClose
@@ -54,7 +55,6 @@ public class OpenWindowUtils {
             );
             Parent root = loader.load();
 
-            // Controller init (se richiesto)
             if (controllerInitializer != null) {
                 @SuppressWarnings("unchecked")
                 C controller = (C) loader.getController();
@@ -62,18 +62,19 @@ public class OpenWindowUtils {
             }
 
             Scene scene = new Scene(root);
-            addStylesheet(scene, cssPath);
+
+            // 1) CSS generale
+            addStylesheet(scene, "/styles/generalStyleSheet.css");
+            // 2) CSS di override (viene dopo => vince)
+            addStylesheet(scene, overrideCssPath);
 
             Stage stage = new Stage();
             stage.setTitle(windowName);
             stage.setScene(scene);
-
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(mainPane.getScene().getWindow());
 
-            if (onClose != null) {
-                stage.setOnHidden(e -> onClose.run());
-            }
+            if (onClose != null) stage.setOnHidden(e -> onClose.run());
 
             stage.show();
 
@@ -91,7 +92,6 @@ public class OpenWindowUtils {
         );
         scene.getStylesheets().add(cssUrl.toExternalForm());
     }
-
 
     public static void errorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

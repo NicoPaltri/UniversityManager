@@ -1,34 +1,12 @@
 /* ==========================================================
-   ======================= GENERALE ==========================
-   ========================================================== */
-
-.root {
-    -fx-font-family: "Inter", "Segoe UI", sans-serif;
-}
-
-
-/* ==========================================================
-   ====================== TOP TITLE BAR ======================
-   ========================================================== */
-
-#topVBox {
-    -fx-background-color: linear-gradient(to bottom, #3f6ad8, #1f3d7a);
-}
-
-#topLabel {
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}
-
-
-/* ==========================================================
    ======================== TABLEVIEW ========================
    ========================================================== */
 
 .table-view {
     -fx-background-radius: 10;
     -fx-background-insets: 0;
-    -fx-border-radius: 10;
+
+    -fx-border-width: 0;
 }
 
 /* Header colorato */
@@ -49,24 +27,12 @@
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-alignment: CENTER;
 }
 
 /* Celle → separatore bianco destro */
 .table-cell {
     -fx-border-color: white transparent white transparent;
     -fx-border-width: 0 1 0 0;
-    -fx-alignment: CENTER;
-}
-
-.table-cell.col-name {
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 0 0 0 8;
-}
-
-.table-cell.col-num {
-    -fx-alignment: CENTER;
-    -fx-padding: 0 8 0 0;
 }
 
 /* Righe base */
@@ -147,55 +113,6 @@
     -fx-text-fill: -fx-text-inner-color !important;
 }
 
-
-/* ==========================================================
-   ======================== FORM FIELDS ======================
-   ========================================================== */
-
-.field-container {
-    -fx-background-color: rgba(189,224,254,1);
-    -fx-background-radius: 10;
-    -fx-padding: 10 14;
-}
-
-.date-container {
-    -fx-background-color: rgba(255,252,242,1);
-    -fx-background-radius: 8;
-}
-
-.text-field {
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
-    -fx-border-color: #bbbbbb;
-}
-
-.text-field:focused {
-    -fx-border-color: #4a6cf7;
-    -fx-background-color: white;
-}
-
-
-/* ==========================================================
-   ======================== BUTTON ===========================
-   ========================================================== */
-
-.confirm-button {
-    -fx-background-color: #ef233c;
-    -fx-text-fill: white;
-    -fx-padding: 10 22;
-    -fx-background-radius: 10;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-}
-
-.confirm-button:hover {
-    -fx-background-color: #c1121f;
-}
-
-.confirm-button:pressed {
-    -fx-background-color: #780000;
-}
-
 /* ==========================================================
    ===================== CHART CONTAINERS ====================
    ========================================================== */
@@ -205,7 +122,6 @@
     -fx-background-radius: 12;
     -fx-padding: 10;
 }
-
 
 /* ==========================================================
    ======================= LINE CHART =========================
@@ -241,7 +157,6 @@
     -fx-stroke: rgba(0,0,0,0.1);
 }
 
-
 /* ==========================================================
    ========================== PIE CHART =======================
    ========================================================== */
@@ -263,7 +178,7 @@
     -fx-text-fill: #ff9f1c;   /* colore default, puoi sovrascriverlo dal controller */
 }
 
-/* ==========================================================
+  /* ==========================================================
    ===================== STATISTIC BOXES =====================
    ========================================================== */
 

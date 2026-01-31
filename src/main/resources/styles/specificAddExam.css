@@ -1,0 +1,18 @@
+/* ==== BUTTON ==== */
+
+.confirm-button {
+    -fx-background-color: #70e000;
+    -fx-text-fill: white;
+    -fx-padding: 10 22;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #28b000;
+}
+
+.confirm-button:pressed {
+    -fx-background-color: #008000;
+}

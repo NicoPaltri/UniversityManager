@@ -270,7 +270,7 @@ public class ExamsManagerController {
         OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml",
-                "/styles/add_exam.css", mainPane, () -> {
+                "/styles/specificAddExam.css", mainPane, () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
                     updateDatas();
@@ -283,7 +283,7 @@ public class ExamsManagerController {
         OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Rimuovi esame", "/stages/RemoveExamStage.fxml",
-                "/styles/remove_exam.css", mainPane,
+                "/styles/specificRemoveExam.css", mainPane,
                 () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
@@ -297,7 +297,7 @@ public class ExamsManagerController {
         OpenWindowUtils utils = new OpenWindowUtils();
 
         utils.openNewWindow("Impostazioni", "/stages/settingsstages/SettingsStage.fxml",
-                "/styles/settings_stage.css", mainPane,
+                "/styles/secificSettingStage.css", mainPane,
                 () -> {
 
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
@@ -313,7 +313,7 @@ public class ExamsManagerController {
 
         utils.openNewWindow("Modifica",
                 "/stages/modifystages/ModifyExamStage.fxml",
-                "/styles/modify_exam.css",
+                "/styles/specificModifyExam.css",
                 mainPane,
                 () -> {
                     //Questo viene eseguito SOLO dopo la chiusura della finestra!
