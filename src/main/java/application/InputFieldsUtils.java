@@ -11,7 +11,7 @@ public class InputFieldsUtils {
         try {
             return Integer.parseInt(textField.getText());
         } catch (NumberFormatException e) {
-            throw new EncapsulateNumberFormatException("weight", e);
+            throw new EncapsulateNumberFormatException(parameter, e);
         }
     }
 

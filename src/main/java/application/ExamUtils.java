@@ -6,6 +6,8 @@ import universitymanager.examtypes.GradedExam;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,18 +30,34 @@ public class ExamUtils {
                 .collect(Collectors.toList());
     }
 
-    public static LocalDate buildStandardDate(String year, String month, String day) {
+    public static LocalDate buildLocalDate(String year, String month, String day) {
+        final String raw = year + "-" + month + "-" + day;
+
         try {
-            day = ExamUtils.makeThisTwoDigits(day);
-            month = ExamUtils.makeThisTwoDigits(month);
+            int y = Integer.parseInt(year.trim());
+            int m = Integer.parseInt(month.trim());
+            int d = Integer.parseInt(day.trim());
 
-            int intDay = Integer.parseInt(day);
-            int intMonth = Integer.parseInt(month);
-            int intYear = Integer.parseInt(year);
-
-            return LocalDate.of(intYear, intMonth, intDay);
+            return LocalDate.of(y, m, d);
         } catch (NumberFormatException | DateTimeException e) {
-            throw new InvalidDateFormatException(year + month + day, e);
+            throw new InvalidDateFormatException(raw, e);
+        }
+    }
+
+    public static LocalDate parseIsoDate(String isoDate) {
+        if (isoDate == null) {
+            throw new InvalidDateFormatException("null");
+        }
+
+        String date = isoDate.trim();
+        if (date.isEmpty()) {
+            throw new InvalidDateFormatException("empty string");
+        }
+
+        try {
+            return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateFormatException(date, e);
         }
     }
 

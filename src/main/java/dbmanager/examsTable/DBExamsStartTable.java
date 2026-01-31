@@ -18,7 +18,7 @@ public class DBExamsStartTable {
                             name      TEXT PRIMARY KEY,
                             weight    INTEGER NOT NULL CHECK (weight BETWEEN 3 AND 15),
                             grade     INTEGER CHECK (grade IS NULL OR grade BETWEEN 18 AND 30),
-                            exam_date TEXT NOT NULL CHECK (length(exam_date) = 8),
+                            exam_date TEXT NOT NULL CHECK (length(exam_date) = 10),
                             type      TEXT NOT NULL CHECK (type IN ('GRADED', 'IDONEITA'))
                           );
                     

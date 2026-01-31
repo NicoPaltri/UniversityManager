@@ -1,7 +1,6 @@
 package application.modifybuttonapplication;
 
 import application.ExamUtils;
-import application.FXMLUtils;
 import application.InputFieldsUtils;
 import application.OpenWindowUtils;
 import customexceptions.ApplicationException;
@@ -14,7 +13,6 @@ import javafx.stage.Stage;
 import universitymanager.examfactories.GradedExamFactory;
 import universitymanager.examfactories.IdoneitaFactory;
 import universitymanager.examtypes.Exam;
-import universitymanager.examfactories.ExamFactory;
 import universitymanager.examtypes.ExamTypologies;
 import universitymanager.examtypes.GradedExam;
 
@@ -101,7 +99,7 @@ public class ChosenExamController {
         String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
         String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
 
-        LocalDate completeDate = ExamUtils.buildStandardDate(year,month,day);
+        LocalDate completeDate = ExamUtils.buildLocalDate(year,month,day);
 
         Exam exam;
 

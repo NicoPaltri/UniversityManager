@@ -33,10 +33,6 @@ public abstract class Exam {
         return date;
     }
 
-    public String getDateFormattedYYYYMMDD(){
-        return this.getDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-    }
-
 
     public void setDate(LocalDate newDate) {
         this.date = newDate;

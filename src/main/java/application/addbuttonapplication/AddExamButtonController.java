@@ -1,7 +1,6 @@
 package application.addbuttonapplication;
 
 import application.ExamUtils;
-import application.FXMLUtils;
 import application.InputFieldsUtils;
 import application.OpenWindowUtils;
 import customexceptions.ApplicationException;
@@ -48,7 +47,7 @@ public class AddExamButtonController {
             String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
             String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
 
-            LocalDate completeDate = ExamUtils.buildStandardDate(year,month,day);
+            LocalDate completeDate = ExamUtils.buildLocalDate(year,month,day);
 
             Exam exam;
 

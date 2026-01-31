@@ -40,10 +40,7 @@ public class DBExamsInterrogation {
                 grade = rs.wasNull() ? null : temporaryGrade;
 
                 String stringDate = rs.getString("exam_date");
-                String year = stringDate.substring(0, 4);
-                String month = stringDate.substring(4, 6);
-                String day = stringDate.substring(6, 8);
-                LocalDate date = ExamUtils.buildStandardDate(year, month, day);
+                LocalDate date = ExamUtils.parseIsoDate(stringDate);
 
                 String type = rs.getString("type");
 
