@@ -32,7 +32,7 @@ public class DBManageExams {
                 throw new UnknownExamTypeException(exam.getName(), exam.getType());
             }
 
-            ps.setString(4, exam.getDate());
+            ps.setString(4, exam.getDate().toString());
             ps.setString(5, exam.getType());
 
             ps.executeUpdate();

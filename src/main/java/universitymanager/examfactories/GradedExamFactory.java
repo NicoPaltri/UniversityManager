@@ -3,11 +3,13 @@ package universitymanager.examfactories;
 import customexceptions.examformatexception.GradeFormatException;
 import universitymanager.examtypes.GradedExam;
 
+import java.time.LocalDate;
+
 public class GradedExamFactory extends ExamFactory {
     public GradedExamFactory() {
     }
 
-    public GradedExam createExam(String name, int weight, int grade, String date) {
+    public GradedExam createExam(String name, int weight, int grade, LocalDate date) {
         super.checkExam(name, weight, grade, date);
         grade = normalizeGrade(grade);
 

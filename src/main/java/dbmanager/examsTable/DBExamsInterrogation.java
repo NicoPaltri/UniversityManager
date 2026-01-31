@@ -1,5 +1,6 @@
 package dbmanager.examsTable;
 
+import application.ExamUtils;
 import customexceptions.accessdatasexception.DataAccessException;
 import customexceptions.examformatexception.NullGradeForGradedExamException;
 import customexceptions.examformatexception.UnknownExamTypeException;
@@ -13,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +39,13 @@ public class DBExamsInterrogation {
                 int temporaryGrade = rs.getInt("grade");
                 grade = rs.wasNull() ? null : temporaryGrade;
 
-                String date = rs.getString("exam_date");
-                String type = rs.getString("type"); // nel DB è NOT NULL
+                String stringDate = rs.getString("exam_date");
+                String year = stringDate.substring(0, 4);
+                String month = stringDate.substring(4, 6);
+                String day = stringDate.substring(6, 8);
+                LocalDate date = ExamUtils.buildStandardDate(year, month, day);
+
+                String type = rs.getString("type");
 
                 Exam exam;
 

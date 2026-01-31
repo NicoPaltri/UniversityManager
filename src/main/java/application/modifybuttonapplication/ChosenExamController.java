@@ -18,6 +18,8 @@ import universitymanager.examfactories.ExamFactory;
 import universitymanager.examtypes.ExamTypologies;
 import universitymanager.examtypes.GradedExam;
 
+import java.time.LocalDate;
+
 public class ChosenExamController {
 
     public TextField nameInputField;
@@ -68,10 +70,9 @@ public class ChosenExamController {
             gradeInputField.setText(String.valueOf(gradedExam.getGrade()));
         }
 
-        //REMEMBER: aaaa-mm-dd
-        dayInputField.setText(selectedExam.getDate().substring(8, 10));
-        monthInputField.setText(selectedExam.getDate().substring(5, 7));
-        yearInputField.setText(selectedExam.getDate().substring(0, 4));
+        dayInputField.setText(ExamUtils.getDayFromDate(selectedExam.getDate()));
+        monthInputField.setText(ExamUtils.getMonthFromDate(selectedExam.getDate()));
+        yearInputField.setText(ExamUtils.getYearFromDate(selectedExam.getDate()));
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
@@ -96,17 +97,11 @@ public class ChosenExamController {
         String name = nameInputField.getText().trim();
         int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
 
-        // int grade = Integer.parseInt(gradeInputField.getText());
-
         String day = InputFieldsUtils.getStringParameterFromInputField(dayInputField);
-        day = ExamUtils.makeThisTwoDigits(day);
-
         String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
-        month = ExamUtils.makeThisTwoDigits(month);
-
         String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
 
-        String completeDate = year + month + day;
+        LocalDate completeDate = ExamUtils.buildStandardDate(year,month,day);
 
         Exam exam;
 

@@ -5,14 +5,15 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract class Exam {
     private final String name;
     private final int weight;
-    private String date;
+    private LocalDate date;
 
-    public Exam(String name, int weight, String date) {
+    public Exam(String name, int weight, LocalDate date) {
         this.name = name;
         this.weight = weight;
         this.date = date;
@@ -27,12 +28,12 @@ public abstract class Exam {
         return weight;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
 
-    public void setDate(String newDate) {
+    public void setDate(LocalDate newDate) {
         this.date = newDate;
     }
 
@@ -50,7 +51,8 @@ public abstract class Exam {
     }
 
     public StringProperty dateProperty() {
-        return new SimpleStringProperty(date);
+        String stringedDate = String.valueOf(this.getDate());
+        return new SimpleStringProperty(stringedDate);
     }
 
     public abstract StringProperty gradeProperty();

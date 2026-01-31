@@ -123,11 +123,11 @@ public class ExamsManagerController {
     private void updateGradesSeries() {
         gradesSeries.getData().clear();
 
-        List<GradedExam> gradedExams= ExamUtils.filterGradedExamsFromExamList(exams);
+        List<GradedExam> gradedExamList = ExamUtils.filterGradedExamsFromExamList(exams);
 
-        for (GradedExam exam : gradedExams) {
+        for (GradedExam exam : gradedExamList) {
             gradesSeries.getData().add(
-                    new XYChart.Data<>(exam.getDate(), exam.getGrade())
+                    new XYChart.Data<>(exam.getDate().toString(), exam.getGrade())
             );
         }
 
@@ -136,17 +136,17 @@ public class ExamsManagerController {
     private void updateWeightedAverageSeries() {
         weightedAverageSeries.getData().clear();
 
-        List<GradedExam> gradedExams= ExamUtils.filterGradedExamsFromExamList(exams);
+        List<GradedExam> gradedExams = ExamUtils.filterGradedExamsFromExamList(exams);
 
         double numerator = 0;
         double denominator = 0;
 
-            for (GradedExam exam : gradedExams) {
+        for (GradedExam exam : gradedExams) {
             numerator += exam.getWeight() * exam.getGrade();
             denominator += exam.getWeight();
 
             weightedAverageSeries.getData().add(
-                    new XYChart.Data<>(exam.getDate(), numerator / denominator)
+                    new XYChart.Data<>(exam.getDate().toString(), numerator / denominator)
             );
         }
     }
@@ -177,7 +177,7 @@ public class ExamsManagerController {
     }
 
     private void updateLabels() {
-        List<GradedExam> gradedExams=ExamUtils.filterGradedExamsFromExamList(exams);
+        List<GradedExam> gradedExams = ExamUtils.filterGradedExamsFromExamList(exams);
 
         double arithmeticMean = UniversityManager.getArithmeticMeanFromGradedExamList(gradedExams);
         aritmethicMeanLabel.setText(formatter.format(arithmeticMean));

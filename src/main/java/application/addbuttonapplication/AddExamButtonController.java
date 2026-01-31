@@ -13,6 +13,8 @@ import universitymanager.examfactories.GradedExamFactory;
 import universitymanager.examfactories.IdoneitaFactory;
 import universitymanager.examtypes.Exam;
 
+import java.time.LocalDate;
+
 public class AddExamButtonController {
 
     public TextField nameInputField;
@@ -43,14 +45,10 @@ public class AddExamButtonController {
             int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
 
             String day = InputFieldsUtils.getStringParameterFromInputField(dayInputField);
-            day = ExamUtils.makeThisTwoDigits(day);
-
             String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
-            month = ExamUtils.makeThisTwoDigits(month);
-
             String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
 
-            String completeDate = year + month + day;
+            LocalDate completeDate = ExamUtils.buildStandardDate(year,month,day);
 
             Exam exam;
 

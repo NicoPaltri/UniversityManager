@@ -1,11 +1,11 @@
 package application;
 
+import customexceptions.dateexception.InvalidDateFormatException;
 import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.ExamTypologies;
 import universitymanager.examtypes.GradedExam;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,13 +28,33 @@ public class ExamUtils {
                 .collect(Collectors.toList());
     }
 
-    public static void moreReadableDate(List<Exam> exams) {
-        DateTimeFormatter inputFormatter = DateTimeFormatter.BASIC_ISO_DATE; // yyyyMMdd
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ISO_LOCAL_DATE; // yyyy-MM-dd
+    public static LocalDate buildStandardDate(String year, String month, String day) {
+        try {
+            day = ExamUtils.makeThisTwoDigits(day);
+            month = ExamUtils.makeThisTwoDigits(month);
 
-        for (Exam exam : exams) {
-            String newDate = LocalDate.parse(exam.getDate(), inputFormatter).format(outputFormatter);
-            exam.setDate(newDate);
+            int intDay = Integer.parseInt(day);
+            int intMonth = Integer.parseInt(month);
+            int intYear = Integer.parseInt(year);
+
+            return LocalDate.of(intYear, intMonth, intDay);
+        } catch (NumberFormatException | DateTimeException e) {
+            throw new InvalidDateFormatException(year + month + day, e);
         }
+    }
+
+    public static String getDayFromDate(LocalDate date) {
+        int day = date.getDayOfMonth();
+        return String.valueOf(day);
+    }
+
+    public static String getMonthFromDate(LocalDate date) {
+        int month = date.getMonthValue();
+        return String.valueOf(month);
+    }
+
+    public static String getYearFromDate(LocalDate date) {
+        int year = date.getYear();
+        return String.valueOf(year);
     }
 }

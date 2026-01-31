@@ -21,8 +21,6 @@ public class UniversityManager {
         List<Exam> exams = dbInterrogator.getAllExams();
         exams.sort(Comparator.comparing(Exam::getDate));
 
-        ExamUtils.moreReadableDate(exams);
-
         System.out.println("La lista che ho ottenuto dal DB è: " + exams.toString());
 
         return FXCollections.observableArrayList(exams);

@@ -13,12 +13,12 @@ public abstract class ExamFactory {
     }
 
 
-    protected void checkExam(String name, int weight, String date) {
+    protected void checkExam(String name, int weight, LocalDate date) {
         isWeightOk(name, weight);
         isDateOk(name, date);
     }
 
-    protected void checkExam(String name, int weight, int grade, String date) {
+    protected void checkExam(String name, int weight, int grade, LocalDate date) {
         checkExam(name, weight, date);
 
         hook_isGradeOk(name, grade);
@@ -31,16 +31,9 @@ public abstract class ExamFactory {
         }
     }
 
-    private void isDateOk(String name, String date) {
-        try {
-            LocalDate correctDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-
-            if (correctDate.isAfter(LocalDate.now())) {
-                throw new FutureDateException(name, correctDate.toString());
-            }
-
-        } catch (DateTimeParseException e) {
-            throw new InvalidDateFormatException(name, date, e);
+    private void isDateOk(String name, LocalDate date) {
+        if(date.isAfter(LocalDate.now())){
+            throw new FutureDateException(name,date);
         }
     }
 
