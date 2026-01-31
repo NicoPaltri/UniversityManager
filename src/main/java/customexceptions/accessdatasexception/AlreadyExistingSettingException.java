@@ -5,7 +5,7 @@ import customexceptions.ApplicationException;
 public class AlreadyExistingSettingException extends ApplicationException {
 
     public static String buildMessage(String name) {
-        return "Il setting inserito è già presente nel database " + name;
+        return "Violazione di un vincolo durante l'inserimento di " + name;
     }
 
     public AlreadyExistingSettingException(String name) {

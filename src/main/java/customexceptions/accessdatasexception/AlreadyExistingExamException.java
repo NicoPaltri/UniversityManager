@@ -5,7 +5,7 @@ import customexceptions.ApplicationException;
 public class AlreadyExistingExamException extends ApplicationException {
 
     private static String buildMessage(String name) {
-        return "L'esame inserito è già presente nel database: " + name;
+        return "Violazione di un vincolo durante la l'inserimento di: " + name;
     }
 
     public AlreadyExistingExamException(String name) {
