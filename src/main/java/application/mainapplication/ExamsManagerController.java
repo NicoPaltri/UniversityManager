@@ -250,10 +250,10 @@ public class ExamsManagerController {
     private void initDBTables() {
         DBExamsStartTable.ensureCreated();
 
+        DBSettingsStartTable.ensureCreated();
         DBSettingsInterrogation settingsInterrogator = new DBSettingsInterrogation();
-        if (!settingsInterrogator.settingsTableExistsAndIsFull()) {
-            DBSettingsStartTable.ensureCreated();
-            settingsInterrogator.insertDefaultCFU();
+        if (!settingsInterrogator.settingsTableIsFull()) {
+            settingsInterrogator.fillSettingsTable();
         }
     }
 

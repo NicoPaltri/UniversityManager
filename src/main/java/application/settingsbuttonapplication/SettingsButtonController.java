@@ -38,7 +38,7 @@ public class SettingsButtonController {
 
     private void updateSettings() {
         DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
-        settings.setAll(settingsInterrogation.getAllSettings());
+        settings.setAll(settingsInterrogation.getAllPersonalizedSettings());
 
         FXMLUtils.clearTableSelection(settingsTable);
     }

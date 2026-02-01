@@ -1,6 +1,5 @@
 package application.settingsbuttonapplication;
 
-import application.FXMLUtils;
 import application.InputFieldsUtils;
 import application.OpenWindowUtils;
 import customexceptions.ApplicationException;
@@ -9,7 +8,7 @@ import dbmanager.settingsTable.DBSettingsInterrogation;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import dbmanager.settingsTable.SettingsName;
+import dbmanager.settingsTable.ApplicationSettings;
 import javafx.stage.Stage;
 
 public class ChosenSettingController {
@@ -35,7 +34,7 @@ public class ChosenSettingController {
             int value = Integer.parseInt(stringValue);
 
             //non OCP no switch allowed 'constant expression required'
-            if (chosenSettingName.equals(SettingsName.TOTAL_CFU.getSettingName())) {
+            if (chosenSettingName.equals(ApplicationSettings.TOTAL_CFU.getSettingName())) {
                 changeTotalCFU(value);
             }
 

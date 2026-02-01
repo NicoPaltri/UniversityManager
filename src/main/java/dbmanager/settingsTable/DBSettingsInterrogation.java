@@ -16,21 +16,70 @@ public class DBSettingsInterrogation {
     public DBSettingsInterrogation() {
     }
 
-    public boolean settingsTableExistsAndIsFull() {
-        String sql = "SELECT 1 FROM settings";
+    public boolean settingsTableIsFull() {
+        String sql = "SELECT COUNT(*) FROM settings";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
-            return rs.next();
+            rs.next();
+            int dbRows = rs.getInt(1);
+
+            return dbRows == ApplicationSettings.getAllDefaultSettings().size();
 
         } catch (SQLException e) {
-            return false;
+            throw new DataAccessException(sql, e);
         }
     }
 
-    public List<Setting> getAllSettings() {
+    public void fillSettingsTable() {
+        String sql = "SELECT COUNT(*) FROM settings WHERE name = ?";
+        List<Setting> defaultSettings = ApplicationSettings.getAllDefaultSettings();
+
+        try (Connection conn = DBConnection.getConnectionFromDB();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            for (Setting setting : defaultSettings) {
+                ps.setString(1, setting.getName());
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    rs.next();
+
+                    int count = rs.getInt(1);
+                    if (count == 0) {
+                        insertDefaultSetting(conn, setting);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DataAccessException(sql, e);
+        }
+    }
+
+    private void insertDefaultSetting(Connection conn, Setting setting) {
+        String sql = "INSERT INTO settings (name, value) VALUES (?, ?)";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, setting.getName());
+            ps.setInt(2, setting.getValue());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 19) {
+                throw new AlreadyExistingSettingException(setting.getName(), e);
+            } else {
+                throw new DataAccessException(sql, e);
+            }
+        }
+
+    }
+
+
+    public List<Setting> getAllPersonalizedSettings() {
         List<Setting> settings = new ArrayList<>();
 
         String sql = "SELECT name, value FROM settings";
@@ -72,7 +121,7 @@ public class DBSettingsInterrogation {
     }
 
     public int getTotalAmountCFU() {
-        return getValueFromSetting(SettingsName.TOTAL_CFU.getSettingName());
+        return getValueFromSetting(ApplicationSettings.TOTAL_CFU.getSettingName());
     }
 
 
@@ -94,33 +143,7 @@ public class DBSettingsInterrogation {
     }
 
     public void changeTotalCFU(int CFU) {
-        changeSetting(SettingsName.TOTAL_CFU.getSettingName(), CFU);
-    }
-
-
-    private void insertDefaultSetting(String name, int value) {
-        String sql = "INSERT INTO settings (name, value) VALUES (?, ?)";
-
-        try (Connection connection = DBConnection.getConnectionFromDB();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setString(1, name);
-            ps.setInt(2, value);
-
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            if (e.getErrorCode() == 19) {
-                throw new AlreadyExistingSettingException(name, e);
-            } else {
-                throw new DataAccessException(sql, e);
-            }
-        }
-
-    }
-
-    public void insertDefaultCFU() {
-        insertDefaultSetting(SettingsName.TOTAL_CFU.getSettingName(), 180);
+        changeSetting(ApplicationSettings.TOTAL_CFU.getSettingName(), CFU);
     }
 
 }
