@@ -61,7 +61,7 @@ public class OpenWindowUtils {
                 controllerInitializer.accept(controller);
             }
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1000, 563);
 
             // 1) CSS generale
             addStylesheet(scene, "/styles/generalStyleSheet.css");
@@ -72,7 +72,10 @@ public class OpenWindowUtils {
             stage.setTitle(windowName);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(mainPane.getScene().getWindow());
+
+            if (mainPane != null) {
+                stage.initOwner(mainPane.getScene().getWindow());
+            }
 
             if (onClose != null) stage.setOnHidden(e -> onClose.run());
 
