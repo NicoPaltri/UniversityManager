@@ -4,14 +4,11 @@ module universitymanager {
     requires javafx.fxml;
 
     // Desktop
-    requires java.desktop;
 
     // DB
     requires java.sql;
-    requires org.xerial.sqlitejdbc;
 
     // Math
-    requires commons.math3;
     requires javafx.base;
     requires javafx.graphics;
 

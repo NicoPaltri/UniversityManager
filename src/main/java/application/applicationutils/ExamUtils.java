@@ -15,14 +15,6 @@ public class ExamUtils {
     public ExamUtils() {
     }
 
-    public static String makeThisTwoDigits(String text) {
-        if (text.length() == 1) {
-            return "0" + text;
-        }
-
-        return text;
-    }
-
     public static List<GradedExam> filterGradedExamsFromExamList(List<Exam> exams) {
         return exams.stream()
                 .filter(e -> e instanceof GradedExam)

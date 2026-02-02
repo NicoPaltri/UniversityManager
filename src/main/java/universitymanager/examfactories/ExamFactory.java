@@ -1,12 +1,8 @@
 package universitymanager.examfactories;
 
 import customexceptions.dateexception.FutureDateException;
-import customexceptions.dateexception.InvalidDateFormatException;
 import customexceptions.examformatexception.WeightFormatException;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public abstract class ExamFactory {
     public ExamFactory() {

@@ -4,8 +4,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public final class WindowRequest<C> {
-    public String windowName;
-    public String windowPath;
+    public final String windowName;
+    public final String windowPath;
     public String specificCssPath;
     public Pane mainPane;
 

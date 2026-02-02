@@ -23,8 +23,7 @@ public final class OpenWindowUtils {
             Parent root = loader.load();
 
             if (windowRequest.controllerInitializer != null) {
-                @SuppressWarnings("unchecked")
-                C controller = (C) loader.getController();
+                C controller = loader.getController();
                 windowRequest.controllerInitializer.accept(controller);
             }
 
@@ -58,8 +57,6 @@ public final class OpenWindowUtils {
             }
 
             stage.show();
-
-            return;
 
         } catch (IOException e) {
             throw new EncapsulateIOException(windowRequest.windowPath, e);
