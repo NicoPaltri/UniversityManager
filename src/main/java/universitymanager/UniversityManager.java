@@ -1,6 +1,5 @@
 package universitymanager;
 
-import application.ExamUtils;
 import dbmanager.examsTable.DBExamsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

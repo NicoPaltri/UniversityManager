@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javafx.version>21.0.6</javafx.version>
         <junit.version>5.12.1</junit.version>
-        <main-class>application.mainapplication.Launcher</main-class>
+        <main-class>application.applicationcontrollers.mainapplication.Launcher</main-class>
     </properties>
 
     <dependencies>

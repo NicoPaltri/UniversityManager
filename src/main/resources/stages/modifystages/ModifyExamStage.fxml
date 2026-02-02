@@ -9,7 +9,7 @@
 <BorderPane fx:id="mainPane"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="application.modifybuttonapplication.ModifyExamButtonController"
+            fx:controller="application.applicationcontrollers.modifybuttonapplication.ModifyExamButtonController"
             prefWidth="650" prefHeight="450">
 
     <!--- TOP -->

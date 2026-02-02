@@ -1,7 +1,8 @@
-package application.modifybuttonapplication;
+package application.applicationcontrollers.modifybuttonapplication;
 
-import application.FXMLUtils;
-import application.OpenWindowUtils;
+import application.applicationutils.FXMLUtils;
+import application.applicationutils.openwindowmanager.OpenWindowUtils;
+import application.applicationutils.openwindowmanager.WindowRequest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,20 +56,17 @@ public class ModifyExamButtonController {
             return;
         }
 
-        OpenWindowUtils utils = new OpenWindowUtils();
-        utils.openNewWindow(
+        WindowRequest<ChosenExamController> windowRequest = new WindowRequest<>(
                 "Modifica esame",
-                "/stages/modifystages/ModifyChosenExamStage.fxml",
-                "/styles/specificModifyExam.css",
-                mainPane,
-                (ChosenExamController c) -> c.initExam(selectedExam), () -> {
-
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateDatas();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                }
+                "/stages/modifystages/ModifyChosenExamStage.fxml"
         );
+        windowRequest.overrideCss("/styles/specificModifyExam.css");
+        windowRequest.owner(mainPane);
+        windowRequest.controllerInitializer((ChosenExamController c) -> c.initExam(selectedExam));
+        windowRequest.onClose(this::updateDatas);
+
+        OpenWindowUtils utils = new OpenWindowUtils();
+        utils.openNewWindow(windowRequest);
     }
 
 }

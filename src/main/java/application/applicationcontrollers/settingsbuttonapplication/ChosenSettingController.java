@@ -1,7 +1,7 @@
-package application.settingsbuttonapplication;
+package application.applicationcontrollers.settingsbuttonapplication;
 
-import application.InputFieldsUtils;
-import application.OpenWindowUtils;
+import application.applicationutils.InputFieldsUtils;
+import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import customexceptions.settingsexcpetions.InvalidCFUValueException;
 import dbmanager.settingsTable.DBSettingsInterrogation;

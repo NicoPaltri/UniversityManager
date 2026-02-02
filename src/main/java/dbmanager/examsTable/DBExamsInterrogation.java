@@ -1,6 +1,6 @@
 package dbmanager.examsTable;
 
-import application.ExamUtils;
+import application.applicationutils.ExamUtils;
 import customexceptions.accessdatasexception.DataAccessException;
 import customexceptions.examformatexception.NullGradeForGradedExamException;
 import customexceptions.examformatexception.UnknownExamTypeException;

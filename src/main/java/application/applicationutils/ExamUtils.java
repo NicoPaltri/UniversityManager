@@ -1,4 +1,4 @@
-package application;
+package application.applicationutils;
 
 import customexceptions.dateexception.InvalidDateFormatException;
 import universitymanager.examtypes.Exam;

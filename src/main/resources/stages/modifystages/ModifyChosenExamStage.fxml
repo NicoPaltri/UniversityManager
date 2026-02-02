@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="application.modifybuttonapplication.ChosenExamController"
+            fx:controller="application.applicationcontrollers.modifybuttonapplication.ChosenExamController"
             prefWidth="650" prefHeight="450">
 
     <!--- TOP -->

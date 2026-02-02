@@ -1,6 +1,5 @@
 package universitymanager.examtypes;
 
-import application.mainapplication.Launcher;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

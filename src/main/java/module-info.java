@@ -16,19 +16,20 @@ module universitymanager {
     requires javafx.graphics;
 
     // JavaFX needs to instantiate Application (Launcher is in javafx.graphics)
-    exports application.mainapplication to javafx.graphics;
+    exports application.applicationcontrollers.mainapplication to javafx.graphics;
 
     exports dbmanager.settingsTable;
     exports universitymanager;
     exports settingsmanager;
 
     // FXML reflection access (controllers)
-    opens application.mainapplication to javafx.fxml;
-    opens application.addbuttonapplication to javafx.fxml;
-    opens application.removebuttonapplication to javafx.fxml;
-    opens application.settingsbuttonapplication to javafx.fxml;
-    opens application.modifybuttonapplication to javafx.fxml;
+    opens application.applicationcontrollers.mainapplication to javafx.fxml;
+    opens application.applicationcontrollers.addbuttonapplication to javafx.fxml;
+    opens application.applicationcontrollers.removebuttonapplication to javafx.fxml;
+    opens application.applicationcontrollers.settingsbuttonapplication to javafx.fxml;
+    opens application.applicationcontrollers.modifybuttonapplication to javafx.fxml;
     exports universitymanager.examfactories;
     exports universitymanager.examtypes;
-    opens application to javafx.fxml;
+    opens application.applicationutils.openwindowmanager to javafx.fxml;
+    opens application.applicationutils to javafx.fxml;
 }

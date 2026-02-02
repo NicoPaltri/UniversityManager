@@ -1,8 +1,9 @@
-package application.mainapplication;
+package application.applicationcontrollers.mainapplication;
 
-import application.ExamUtils;
-import application.FXMLUtils;
-import application.OpenWindowUtils;
+import application.applicationutils.ExamUtils;
+import application.applicationutils.FXMLUtils;
+import application.applicationutils.openwindowmanager.OpenWindowUtils;
+import application.applicationutils.openwindowmanager.WindowRequest;
 import dbmanager.examsTable.DBExamsStartTable;
 import dbmanager.settingsTable.DBSettingsInterrogation;
 import dbmanager.settingsTable.DBSettingsStartTable;
@@ -267,60 +268,54 @@ public class ExamsManagerController {
 
     //buttons
     public void addExamButtonOnAction(ActionEvent actionEvent) {
+        WindowRequest<Object> windowRequest = new WindowRequest<>(
+                "Aggiungi esame",
+                "/stages/AddExamStage.fxml"
+        );
+        windowRequest.owner(mainPane);
+        windowRequest.onClose(this::updateDatas);
+
+
         OpenWindowUtils utils = new OpenWindowUtils();
-
-        utils.openNewWindow("Aggiungi esame", "/stages/AddExamStage.fxml",
-                "/styles/specificAddExam.css", mainPane, () -> {
-
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateDatas();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                });
+        utils.openNewWindow(windowRequest);
     }
 
     public void removeButtonOnAction(ActionEvent actionEvent) {
+        WindowRequest<Object> windowRequest = new WindowRequest<>(
+                "Rimuovi esame",
+                "/stages/RemoveExamStage.fxml"
+        );
+        windowRequest.overrideCss("/styles/specificRemoveExam.css");
+        windowRequest.owner(mainPane);
+        windowRequest.onClose(this::updateDatas);
+
         OpenWindowUtils utils = new OpenWindowUtils();
-
-        utils.openNewWindow("Rimuovi esame", "/stages/RemoveExamStage.fxml",
-                "/styles/specificRemoveExam.css", mainPane,
-                () -> {
-
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateDatas();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                });
+        utils.openNewWindow(windowRequest);
     }
 
     public void settingButtonOnAction(ActionEvent actionEvent) {
-        OpenWindowUtils utils = new OpenWindowUtils();
-
-        utils.openNewWindow("Impostazioni", "/stages/settingsstages/SettingsStage.fxml",
-                "/styles/secificSettingStage.css", mainPane,
-                () -> {
-
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateDatas();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                }
+        WindowRequest<Object> windowRequest = new WindowRequest<>(
+                "Impostazioni",
+                "/stages/settingsstages/SettingsStage.fxml"
         );
+        windowRequest.overrideCss("/styles/specificSettingStage.css");
+        windowRequest.owner(mainPane);
+        windowRequest.onClose(this::updateDatas);
+
+        OpenWindowUtils utils = new OpenWindowUtils();
+        utils.openNewWindow(windowRequest);
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
-        OpenWindowUtils utils = new OpenWindowUtils();
-
-        utils.openNewWindow("Modifica",
-                "/stages/modifystages/ModifyExamStage.fxml",
-                "/styles/specificModifyExam.css",
-                mainPane,
-                () -> {
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateDatas();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                }
+        WindowRequest<Object> windowRequest = new WindowRequest<>(
+                "Modifica",
+                "/stages/modifystages/ModifyExamStage.fxml"
         );
+        windowRequest.overrideCss("/styles/specificModifyExam.css");
+        windowRequest.owner(mainPane);
+        windowRequest.onClose(this::updateDatas);
+
+        OpenWindowUtils utils = new OpenWindowUtils();
+        utils.openNewWindow(windowRequest);
     }
 }

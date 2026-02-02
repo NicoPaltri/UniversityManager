@@ -1,7 +1,8 @@
-package application.settingsbuttonapplication;
+package application.applicationcontrollers.settingsbuttonapplication;
 
-import application.FXMLUtils;
-import application.OpenWindowUtils;
+import application.applicationutils.FXMLUtils;
+import application.applicationutils.openwindowmanager.OpenWindowUtils;
+import application.applicationutils.openwindowmanager.WindowRequest;
 import dbmanager.settingsTable.DBSettingsInterrogation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,21 +70,17 @@ public class SettingsButtonController {
 
         String selectedKey = selected.getName();
 
-        OpenWindowUtils utils = new OpenWindowUtils();
-        utils.openNewWindow(
+        WindowRequest<ChosenSettingController> windowRequest = new WindowRequest<>(
                 "Modifica impostazioni",
-                "/stages/settingsstages/ModifyChosenSettingStage.fxml",
-                "/styles/secificSettingStage.css",
-                mainPane,
-                (ChosenSettingController c) -> c.initSetting(selectedKey),
-                () -> {
+                "/stages/settingsstages/ModifyChosenSettingStage.fxml"
+        );
+        windowRequest.overrideCss("/styles/specificSettingStage.css");
+        windowRequest.owner(mainPane);
+        windowRequest.controllerInitializer((ChosenSettingController c) -> c.initSetting(selectedKey));
+        windowRequest.onClose(this::updateSettings);
 
-                    //Questo viene eseguito SOLO dopo la chiusura della finestra!
-                    updateSettings();
-
-                    System.out.println("La finestra è stata chiusa. Aggiorno i dati…");
-                });
-
+        OpenWindowUtils utils = new OpenWindowUtils();
+        utils.openNewWindow(windowRequest);
     }
 
 }

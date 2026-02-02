@@ -1,8 +1,8 @@
-package application.addbuttonapplication;
+package application.applicationcontrollers.addbuttonapplication;
 
-import application.ExamUtils;
-import application.InputFieldsUtils;
-import application.OpenWindowUtils;
+import application.applicationutils.ExamUtils;
+import application.applicationutils.InputFieldsUtils;
+import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;

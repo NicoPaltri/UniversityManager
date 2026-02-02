@@ -1,4 +1,4 @@
-package application.mainapplication;
+package application.applicationcontrollers.mainapplication;
 
 import javafx.application.Application;
 

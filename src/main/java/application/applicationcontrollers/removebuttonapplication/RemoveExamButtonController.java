@@ -1,6 +1,6 @@
-package application.removebuttonapplication;
+package application.applicationcontrollers.removebuttonapplication;
 
-import application.FXMLUtils;
+import application.applicationutils.FXMLUtils;
 import dbmanager.examsTable.DBManageExams;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

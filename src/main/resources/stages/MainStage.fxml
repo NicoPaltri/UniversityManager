@@ -8,7 +8,7 @@
 <?import java.lang.String?>
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="application.mainapplication.ExamsManagerController">
+            fx:controller="application.applicationcontrollers.mainapplication.ExamsManagerController">
 
     <!-- ========================= LEFT SIDE ========================= -->
     <left>
