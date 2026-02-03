@@ -4,9 +4,9 @@ import customexceptions.accessdatasexception.AlreadyExistingExamException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
 import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
-import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.GradedExam;
-import universitymanager.examtypes.Idoneita;
+import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.GradedExam;
+import examsmanager.examtypes.Idoneita;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

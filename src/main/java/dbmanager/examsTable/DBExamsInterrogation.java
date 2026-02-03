@@ -5,10 +5,10 @@ import customexceptions.accessdatasexception.DataAccessException;
 import customexceptions.examformatexception.NullGradeForGradedExamException;
 import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
-import universitymanager.examfactories.GradedExamFactory;
-import universitymanager.examfactories.IdoneitaFactory;
-import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.ExamTypologies;
+import examsmanager.examfactories.GradedExamFactory;
+import examsmanager.examfactories.IdoneitaFactory;
+import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.ExamTypologies;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

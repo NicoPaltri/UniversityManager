@@ -1,8 +1,8 @@
 package application.applicationutils;
 
 import customexceptions.dateexception.InvalidDateFormatException;
-import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.GradedExam;
+import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.GradedExam;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

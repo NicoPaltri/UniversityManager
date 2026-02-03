@@ -1,7 +1,7 @@
-package universitymanager.examfactories;
+package examsmanager.examfactories;
 
 import customexceptions.examformatexception.GradeFormatException;
-import universitymanager.examtypes.GradedExam;
+import examsmanager.examtypes.GradedExam;
 
 import java.time.LocalDate;
 

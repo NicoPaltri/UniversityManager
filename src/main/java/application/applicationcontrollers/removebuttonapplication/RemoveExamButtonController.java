@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import universitymanager.examtypes.Exam;
+import examsmanager.examtypes.Exam;
 
 public class RemoveExamButtonController {
 

@@ -2,6 +2,7 @@ package application.applicationcontrollers.mainapplication;
 
 import application.applicationutils.ExamUtils;
 import application.applicationutils.FXMLUtils;
+import application.applicationutils.StatisticUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import application.applicationutils.openwindowmanager.WindowRequest;
 import dbmanager.examsTable.DBExamsStartTable;
@@ -19,9 +20,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import universitymanager.examtypes.Exam;
-import universitymanager.UniversityManager;
-import universitymanager.examtypes.GradedExam;
+import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.GradedExam;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -156,7 +156,7 @@ public class ExamsManagerController {
         DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
 
         double maxCFU = settingsInterrogation.getTotalAmountCFU();
-        double filled = UniversityManager.getTotalExamsWeight(exams);
+        double filled = StatisticUtils.getTotalExamsWeight(exams);
 
         double displayedFilled = Math.min(filled, maxCFU);
         double displayedRemaining = Math.max(0, maxCFU - filled);
@@ -180,25 +180,25 @@ public class ExamsManagerController {
     private void updateLabels() {
         List<GradedExam> gradedExams = ExamUtils.filterGradedExamsFromExamList(exams);
 
-        double arithmeticMean = UniversityManager.getArithmeticMeanFromGradedExamList(gradedExams);
+        double arithmeticMean = StatisticUtils.getArithmeticMeanFromGradedExamList(gradedExams);
         aritmethicMeanLabel.setText(formatter.format(arithmeticMean));
 
-        double weightedMean = UniversityManager.getWeightedMeanFromGradedExamList(gradedExams);
+        double weightedMean = StatisticUtils.getWeightedMeanFromGradedExamList(gradedExams);
         weightedMeanLabel.setText(formatter.format(weightedMean));
 
-        double median = UniversityManager.getMedianFromGradedExamList(gradedExams);
+        double median = StatisticUtils.getMedianFromGradedExamList(gradedExams);
         medianLabel.setText(formatter.format(median));
 
-        int mode = UniversityManager.getModeFromGradedExamList(gradedExams);
+        int mode = StatisticUtils.getModeFromGradedExamList(gradedExams);
         modeLabel.setText(String.valueOf(mode));
 
-        double standardDeviation = UniversityManager.getStandardDeviationFromGradedExamList(gradedExams);
+        double standardDeviation = StatisticUtils.getStandardDeviationFromGradedExamList(gradedExams);
         standardDeviationLabel.setText(formatter.format(standardDeviation));
 
-        double interQuartileRange = UniversityManager.getInterQuartileRangeFromGradedExamList(gradedExams);
+        double interQuartileRange = StatisticUtils.getInterQuartileRangeFromGradedExamList(gradedExams);
         interQuartileLabel.setText(formatter.format(interQuartileRange));
 
-        double weightedMeanLastFiveExams = UniversityManager.getWeightedMeanOfLastFiveGradedExamsFromList(gradedExams);
+        double weightedMeanLastFiveExams = StatisticUtils.getWeightedMeanOfLastFiveGradedExamsFromList(gradedExams);
         weightedMeanLastFiveExamsLabel.setText(formatter.format(weightedMeanLastFiveExams));
     }
 

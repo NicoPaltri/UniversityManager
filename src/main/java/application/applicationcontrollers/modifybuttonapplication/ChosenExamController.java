@@ -10,11 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import universitymanager.examfactories.GradedExamFactory;
-import universitymanager.examfactories.IdoneitaFactory;
-import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.ExamTypologies;
-import universitymanager.examtypes.GradedExam;
+import examsmanager.examfactories.GradedExamFactory;
+import examsmanager.examfactories.IdoneitaFactory;
+import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.ExamTypologies;
+import examsmanager.examtypes.GradedExam;
 
 import java.time.LocalDate;
 

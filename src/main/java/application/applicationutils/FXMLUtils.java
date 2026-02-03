@@ -5,8 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import universitymanager.examtypes.Exam;
-import universitymanager.UniversityManager;
+import examsmanager.examtypes.Exam;
+import examsmanager.UniversityManager;
 
 import java.util.List;
 

@@ -1,31 +1,11 @@
-package universitymanager;
+package application.applicationutils;
 
-import dbmanager.examsTable.DBExamsInterrogation;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import universitymanager.examtypes.Exam;
-import universitymanager.examtypes.GradedExam;
+import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.GradedExam;
 
 import java.util.*;
 
-public class UniversityManager {
-    DBExamsInterrogation dbInterrogator;
-
-    public UniversityManager() {
-        this.dbInterrogator = new DBExamsInterrogation();
-    }
-
-
-    public ObservableList<Exam> getExamOrderedObservableListFromDB() {
-        List<Exam> exams = dbInterrogator.getAllExams();
-        exams.sort(Comparator.comparing(Exam::getDate));
-
-        System.out.println("La lista che ho ottenuto dal DB è: " + exams.toString());
-
-        return FXCollections.observableArrayList(exams);
-    }
-
-
+public class StatisticUtils {
     public static int getTotalExamsWeight(List<Exam> exams) {
         return exams.stream()
                 .mapToInt(Exam::getWeight)

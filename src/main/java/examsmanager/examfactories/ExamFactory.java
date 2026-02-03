@@ -1,4 +1,4 @@
-package universitymanager.examfactories;
+package examsmanager.examfactories;
 
 import customexceptions.dateexception.FutureDateException;
 import customexceptions.examformatexception.WeightFormatException;

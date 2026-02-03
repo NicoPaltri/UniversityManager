@@ -1,4 +1,4 @@
-module universitymanager {
+module examsmanager {
     // JavaFX
     requires javafx.controls;
     requires javafx.fxml;
@@ -16,7 +16,7 @@ module universitymanager {
     exports application.applicationcontrollers.mainapplication to javafx.graphics;
 
     exports dbmanager.settingsTable;
-    exports universitymanager;
+    exports examsmanager;
     exports settingsmanager;
 
     // FXML reflection access (controllers)
@@ -25,8 +25,8 @@ module universitymanager {
     opens application.applicationcontrollers.removebuttonapplication to javafx.fxml;
     opens application.applicationcontrollers.settingsbuttonapplication to javafx.fxml;
     opens application.applicationcontrollers.modifybuttonapplication to javafx.fxml;
-    exports universitymanager.examfactories;
-    exports universitymanager.examtypes;
+    exports examsmanager.examfactories;
+    exports examsmanager.examtypes;
     opens application.applicationutils.openwindowmanager to javafx.fxml;
     opens application.applicationutils to javafx.fxml;
 }

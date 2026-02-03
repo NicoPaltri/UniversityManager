@@ -8,9 +8,9 @@ import dbmanager.examsTable.DBManageExams;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import universitymanager.examfactories.GradedExamFactory;
-import universitymanager.examfactories.IdoneitaFactory;
-import universitymanager.examtypes.Exam;
+import examsmanager.examfactories.GradedExamFactory;
+import examsmanager.examfactories.IdoneitaFactory;
+import examsmanager.examtypes.Exam;
 
 import java.time.LocalDate;
 

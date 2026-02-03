@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
-import universitymanager.examtypes.Exam;
+import examsmanager.examtypes.Exam;
 
 public class ModifyExamButtonController {
 

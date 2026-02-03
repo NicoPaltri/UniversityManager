@@ -1,6 +1,6 @@
-package universitymanager.examfactories;
+package examsmanager.examfactories;
 
-import universitymanager.examtypes.Idoneita;
+import examsmanager.examtypes.Idoneita;
 
 import java.time.LocalDate;
 
