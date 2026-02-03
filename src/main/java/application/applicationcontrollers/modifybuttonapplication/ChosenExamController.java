@@ -5,6 +5,7 @@ import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
+import examsmanager.examtypes.Idoneita;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -56,15 +57,13 @@ public class ChosenExamController {
         nameInputField.setText(selectedExam.getName());
         weightInputField.setText(String.valueOf(selectedExam.getWeight()));
 
-        if (ExamTypologies.Idoneita.getExamTypology().equals(selectedExam.getType())) {
+        if (selectedExam instanceof Idoneita) {
             idoneitaCheckBox.setSelected(true);
             gradeInputField.setText("0");
         }
 
-        if (ExamTypologies.GradedExam.getExamTypology().equals(selectedExam.getType())) {
+        if (selectedExam instanceof GradedExam gradedExam) {
             idoneitaCheckBox.setSelected(false);
-            //ACCOPPIAMENTO
-            GradedExam gradedExam = (GradedExam) selectedExam;
             gradeInputField.setText(String.valueOf(gradedExam.getGrade()));
         }
 
