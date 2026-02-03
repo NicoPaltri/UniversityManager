@@ -41,23 +41,6 @@ public abstract class Exam {
     public abstract String getType(); //a way to "know" the class without instanceof
 
 
-    //UI
-    public StringProperty nameProperty() {
-        return new SimpleStringProperty(name);
-    }
-
-    public IntegerProperty weightProperty() {
-        return new SimpleIntegerProperty(weight);
-    }
-
-    public StringProperty dateProperty() {
-        String stringedDate = String.valueOf(this.getDate());
-        return new SimpleStringProperty(stringedDate);
-    }
-
-    public abstract StringProperty gradeProperty();
-
-
     @Override
     public String toString() {
         return this.getType() + "[" +
@@ -77,9 +60,25 @@ public abstract class Exam {
         return Objects.equals(getName(), exam.getName());
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hashCode(this.getName());
     }
+
+    //UI
+    public StringProperty nameProperty() {
+        return new SimpleStringProperty(name);
+    }
+
+    public IntegerProperty weightProperty() {
+        return new SimpleIntegerProperty(weight);
+    }
+
+    public StringProperty dateProperty() {
+        String stringedDate = String.valueOf(this.getDate());
+        return new SimpleStringProperty(stringedDate);
+    }
+
+    public abstract StringProperty gradeProperty();
+
 }

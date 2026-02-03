@@ -14,14 +14,6 @@ public class Setting {
         this.value = new SimpleIntegerProperty(value);
     }
 
-    public StringProperty getNameProperty() {
-        return name;
-    }
-
-    public IntegerProperty getValueProperty() {
-        return value;
-    }
-
     public String getName() {
         return name.get();
     }
@@ -34,4 +26,14 @@ public class Setting {
     public String toString() {
         return "Il setting " + this.getName() + ", ha value " + this.getValue();
     }
+
+    //UI
+    public StringProperty getNameProperty() {
+        return name;
+    }
+
+    public IntegerProperty getValueProperty() {
+        return value;
+    }
+
 }
