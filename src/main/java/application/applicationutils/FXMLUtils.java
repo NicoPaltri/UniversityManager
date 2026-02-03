@@ -53,7 +53,7 @@ public class FXMLUtils {
          */
 
         //definisce il come la tabella della essere ordinata
-        colDate.setSortType(TableColumn.SortType.ASCENDING);
+        colDate.setSortType(TableColumn.SortType.DESCENDING);
         examTable.getSortOrder().setAll(List.of(colDate));
         examTable.sort();
         /*
