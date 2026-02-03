@@ -38,8 +38,8 @@ build/
 ### DB ###
 /data/*
 
-### useless test ###
-/src/test/*
+### folder for releases ###
+./target/*
 
 ### others ###
 *.exe
