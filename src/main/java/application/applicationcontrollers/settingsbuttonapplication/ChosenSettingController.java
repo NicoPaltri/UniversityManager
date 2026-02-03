@@ -3,42 +3,42 @@ package application.applicationcontrollers.settingsbuttonapplication;
 import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
-import customexceptions.settingsexcpetions.InvalidCFUValueException;
 import dbmanager.settingsTable.DBSettingsInterrogation;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import dbmanager.settingsTable.ApplicationSettings;
 import javafx.stage.Stage;
+import settingsmanager.ApplicationSettings;
+import settingsmanager.Setting;
 
 public class ChosenSettingController {
 
     public Label nameLabel;
     public TextField valueInputField;
 
-    private String chosenSettingName;
+    private Setting chosenSetting;
 
 
     public void initialize() {
     }
 
-    public void initSetting(String chosenSettingName) {
-        this.chosenSettingName = chosenSettingName;
-        nameLabel.setText(chosenSettingName);
+    public void initSetting(Setting chosenSetting) {
+        this.chosenSetting = chosenSetting;
+        nameLabel.setText(chosenSetting.getName());
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
-        String stringValue = InputFieldsUtils.getStringParameterFromInputField(valueInputField);
+        String stringNewValue = InputFieldsUtils.getStringParameterFromInputField(valueInputField);
 
         try {
-            int value = Integer.parseInt(stringValue);
+            int newValue = Integer.parseInt(stringNewValue);
 
-            //non OCP no switch allowed 'constant expression required'
-            if (chosenSettingName.equals(ApplicationSettings.TOTAL_CFU.getSettingName())) {
-                changeTotalCFU(value);
-            }
+            ApplicationSettings applicationSettings = ApplicationSettings.fromName(chosenSetting.getName());
+            applicationSettings.validate(newValue);
 
-            //se tutto è andato bene chiudo la pagina
+            DBSettingsInterrogation dbSettingsInterrogation = new DBSettingsInterrogation();
+            dbSettingsInterrogation.changeSetting(chosenSetting.getName(), newValue);
+
             Stage thisStage = (Stage) nameLabel.getScene().getWindow();
             thisStage.close();
 
@@ -49,13 +49,5 @@ public class ChosenSettingController {
         }
     }
 
-    private void changeTotalCFU(int value) {
-        if (value <= 0) {
-            throw new InvalidCFUValueException();
-        }
-
-        DBSettingsInterrogation dbSettingsInterrogation = new DBSettingsInterrogation();
-        dbSettingsInterrogation.changeTotalCFU(value);
-    }
 
 }

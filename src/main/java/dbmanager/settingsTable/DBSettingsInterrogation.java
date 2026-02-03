@@ -3,6 +3,7 @@ package dbmanager.settingsTable;
 import customexceptions.accessdatasexception.AlreadyExistingSettingException;
 import customexceptions.accessdatasexception.DataAccessException;
 import dbmanager.DBConnection;
+import settingsmanager.ApplicationSettings;
 import settingsmanager.Setting;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class DBSettingsInterrogation {
             rs.next();
             int dbRows = rs.getInt(1);
 
-            return dbRows == ApplicationSettings.getAllDefaultSettings().size();
+            return dbRows == ApplicationSettings.values().length;
 
         } catch (SQLException e) {
             throw new DataAccessException(sql, e);
@@ -35,20 +36,20 @@ public class DBSettingsInterrogation {
 
     public void fillSettingsTable() {
         String sql = "SELECT COUNT(*) FROM settings WHERE name = ?";
-        List<Setting> defaultSettings = ApplicationSettings.getAllDefaultSettings();
+        List<ApplicationSettings> defaultSettings = List.of(ApplicationSettings.values());
 
         try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            for (Setting setting : defaultSettings) {
-                ps.setString(1, setting.getName());
+            for (ApplicationSettings applicationSetting : defaultSettings) {
+                ps.setString(1, applicationSetting.getName());
 
                 try (ResultSet rs = ps.executeQuery()) {
                     rs.next();
 
                     int count = rs.getInt(1);
                     if (count == 0) {
-                        insertDefaultSetting(conn, setting);
+                        insertDefaultSetting(conn, applicationSetting);
                     }
                 }
             }
@@ -58,19 +59,19 @@ public class DBSettingsInterrogation {
         }
     }
 
-    private void insertDefaultSetting(Connection conn, Setting setting) {
+    private void insertDefaultSetting(Connection conn, ApplicationSettings applicationSettings) {
         String sql = "INSERT INTO settings (name, value) VALUES (?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, setting.getName());
-            ps.setInt(2, setting.getValue());
+            ps.setString(1, applicationSettings.getName());
+            ps.setInt(2, applicationSettings.getDefaultValue());
 
             ps.executeUpdate();
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 19) {
-                throw new AlreadyExistingSettingException(setting.getName(), e);
+                throw new AlreadyExistingSettingException(applicationSettings.getName(), e);
             } else {
                 throw new DataAccessException(sql, e);
             }
@@ -121,17 +122,17 @@ public class DBSettingsInterrogation {
     }
 
     public int getTotalAmountCFU() {
-        return getValueFromSetting(ApplicationSettings.TOTAL_CFU.getSettingName());
+        return getValueFromSetting(ApplicationSettings.TOTAL_CFU.getName());
     }
 
 
-    private void changeSetting(String name, int value) {
+    public void changeSetting(String name, int newValue) {
         String sql = "UPDATE settings SET value = ? WHERE name = ?";
 
         try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, value);
+            ps.setInt(1, newValue);
             ps.setString(2, name);
 
             ps.executeUpdate();
@@ -142,8 +143,5 @@ public class DBSettingsInterrogation {
         }
     }
 
-    public void changeTotalCFU(int CFU) {
-        changeSetting(ApplicationSettings.TOTAL_CFU.getSettingName(), CFU);
-    }
 
 }

@@ -68,15 +68,13 @@ public class SettingsButtonController {
             return;
         }
 
-        String selectedKey = selected.getName();
-
         WindowRequest<ChosenSettingController> windowRequest = new WindowRequest<>(
                 "Modifica impostazioni",
                 "/stages/settingsstages/ModifyChosenSettingStage.fxml"
         );
         windowRequest.overrideCss("/styles/specificSettingStage.css");
         windowRequest.owner(mainPane);
-        windowRequest.controllerInitializer((ChosenSettingController c) -> c.initSetting(selectedKey));
+        windowRequest.controllerInitializer((ChosenSettingController c) -> c.initSetting(selected));
         windowRequest.onClose(this::updateSettings);
 
         OpenWindowUtils utils = new OpenWindowUtils();
