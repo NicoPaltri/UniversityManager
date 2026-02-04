@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 public class DBConnection {
     private static final String DB_FOLDER = "data";
-    private static final String DB_FILE = "votesDB.db";
+    private static final String DB_FILE = "universityManagerDB.db";
     private static final String URL = "jdbc:sqlite:" + DB_FOLDER + "/" + DB_FILE;
 
     public static Connection getConnectionFromDB() {
