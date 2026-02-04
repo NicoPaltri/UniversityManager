@@ -24,4 +24,13 @@ class GradedExamFactoryTest {
 
         GradedExam exam = gradedExamFactory.createExam(data);
     }
+
+    @Test
+    public void grade_null_throwsException() {
+        assertThrows(ApplicationException.class, () -> {
+            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+
+            GradedExam exam = gradedExamFactory.createExam(data);
+        });
+    }
 }

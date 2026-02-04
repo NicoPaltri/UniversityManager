@@ -34,29 +34,29 @@ public class DBExamsInterrogation {
                 String name = rs.getString("name");
                 int weight = rs.getInt("weight");
 
-                //NULL-safe per Idoneità
-                Integer grade;
-                int temporaryGrade = rs.getInt("grade");
-                grade = rs.wasNull() ? null : temporaryGrade;
+                Integer grade = (Integer) rs.getObject("grade");
 
                 String stringDate = rs.getString("exam_date");
                 LocalDate date = ExamUtils.parseIsoDate(stringDate);
 
                 String type = rs.getString("type");
+                ExamTypologies typology = ExamTypologies.fromType(name, type);
 
                 Exam exam;
                 ExamCreationData data = new ExamCreationData(name, weight, date);
 
-                if (ExamTypologies.GradedExam.getExamTypology().equals(type)) {
-                    data.withGrade(grade);
+                switch (typology) {
+                    case GradedExam -> {
+                        data.withGrade(grade);
+                        exam = gradedExamFactory.createExam(data);
+                    }
 
-                    exam = gradedExamFactory.createExam(data);
+                    case Idoneita -> {
+                        exam = idoneitaFactory.createExam(data);
+                    }
 
-                } else if (ExamTypologies.Idoneita.getExamTypology().equals(type)) {
-                    exam = idoneitaFactory.createExam(data);
+                    default -> throw new UnknownExamTypeException(name, type);
 
-                } else {
-                    throw new UnknownExamTypeException(name, type);
                 }
 
                 examList.add(exam);

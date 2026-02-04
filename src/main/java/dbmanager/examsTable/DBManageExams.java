@@ -23,7 +23,6 @@ public class DBManageExams {
             ps.setString(1, exam.getName());
             ps.setInt(2, exam.getWeight());
 
-            //ACCOPPIAMENTO
             if (exam instanceof GradedExam gradedExam) {
                 ps.setInt(3, gradedExam.getGrade());
             } else if (exam instanceof Idoneita) {
