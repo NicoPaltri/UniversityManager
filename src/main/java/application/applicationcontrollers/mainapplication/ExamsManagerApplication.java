@@ -14,10 +14,10 @@ public class ExamsManagerApplication extends Application {
                 "University Manager",
                 "/stages/MainStage.fxml"
         );
-        windowRequest.overrideCss("/styles/specificMainStage.css");
-        windowRequest.useStage(stage);
-        windowRequest.size(1000, 563);
-        windowRequest.modal(false);
+        windowRequest.withOverrideCss("/styles/specificMainStage.css");
+        windowRequest.withStage(stage);
+        windowRequest.withSize(1000, 563);
+        windowRequest.withModal(false);
 
         OpenWindowUtils openWindowUtils = new OpenWindowUtils();
         openWindowUtils.openNewWindow(windowRequest);

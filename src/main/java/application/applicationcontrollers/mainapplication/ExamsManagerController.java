@@ -272,8 +272,8 @@ public class ExamsManagerController {
                 "Aggiungi esame",
                 "/stages/AddExamStage.fxml"
         );
-        windowRequest.owner(mainPane);
-        windowRequest.onClose(this::updateDatas);
+        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOnClose(this::updateDatas);
 
 
         OpenWindowUtils utils = new OpenWindowUtils();
@@ -285,9 +285,9 @@ public class ExamsManagerController {
                 "Rimuovi esame",
                 "/stages/RemoveExamStage.fxml"
         );
-        windowRequest.overrideCss("/styles/specificRemoveExam.css");
-        windowRequest.owner(mainPane);
-        windowRequest.onClose(this::updateDatas);
+        windowRequest.withOverrideCss("/styles/specificRemoveExam.css");
+        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(windowRequest);
@@ -298,9 +298,9 @@ public class ExamsManagerController {
                 "Impostazioni",
                 "/stages/settingsstages/SettingsStage.fxml"
         );
-        windowRequest.overrideCss("/styles/specificSettingStage.css");
-        windowRequest.owner(mainPane);
-        windowRequest.onClose(this::updateDatas);
+        windowRequest.withOverrideCss("/styles/specificSettingStage.css");
+        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(windowRequest);
@@ -311,9 +311,9 @@ public class ExamsManagerController {
                 "Modifica",
                 "/stages/modifystages/ModifyExamStage.fxml"
         );
-        windowRequest.overrideCss("/styles/specificModifyExam.css");
-        windowRequest.owner(mainPane);
-        windowRequest.onClose(this::updateDatas);
+        windowRequest.withOverrideCss("/styles/specificModifyExam.css");
+        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(windowRequest);

@@ -17,49 +17,49 @@ public final class OpenWindowUtils {
     public <C> void openNewWindow(WindowRequest<C> windowRequest) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    Objects.requireNonNull(getClass().getResource(windowRequest.windowPath),
-                            "FXML non trovato: " + windowRequest.windowPath)
+                    Objects.requireNonNull(getClass().getResource(windowRequest.getWindowPath()),
+                            "FXML non trovato: " + windowRequest.getWindowPath())
             );
             Parent root = loader.load();
 
-            if (windowRequest.controllerInitializer != null) {
+            if (windowRequest.getControllerInitializer() != null) {
                 C controller = loader.getController();
-                windowRequest.controllerInitializer.accept(controller);
+                windowRequest.getControllerInitializer().accept(controller);
             }
 
-            Scene scene = new Scene(root, windowRequest.width, windowRequest.height);
+            Scene scene = new Scene(root, windowRequest.getWidth(), windowRequest.getHeight());
 
             addStylesheet(scene, "/styles/generalStyleSheet.css");
-            if (windowRequest.specificCssPath != null && !windowRequest.specificCssPath.isBlank()) {
-                addStylesheet(scene, windowRequest.specificCssPath);
+            if (windowRequest.getSpecificCssPath() != null) {
+                addStylesheet(scene, windowRequest.getSpecificCssPath());
             }
 
-            Stage stage = windowRequest.stage;
+            Stage stage = windowRequest.getStage();
             if (stage == null) {
                 stage = new Stage();
             }
 
-            stage.setTitle(windowRequest.windowName);
+            stage.setTitle(windowRequest.getWindowName());
             stage.setScene(scene);
 
-            stage.setResizable(windowRequest.resizable);
+            stage.setResizable(windowRequest.isResizable());
 
-            if (windowRequest.modal) {
+            if (windowRequest.isModal()) {
                 stage.initModality(Modality.APPLICATION_MODAL);
             }
 
-            if (windowRequest.mainPane != null) {
-                stage.initOwner(windowRequest.mainPane.getScene().getWindow());
+            if (windowRequest.getMainPane() != null) {
+                stage.initOwner(windowRequest.getMainPane().getScene().getWindow());
             }
 
-            if (windowRequest.onClose != null) {
-                stage.setOnHidden(e -> windowRequest.onClose.run());
+            if (windowRequest.getOnClose() != null) {
+                stage.setOnHidden(e -> windowRequest.getOnClose().run());
             }
 
             stage.show();
 
         } catch (IOException e) {
-            throw new EncapsulateIOException(windowRequest.windowPath, e);
+            throw new EncapsulateIOException(windowRequest.getWindowPath(), e);
         }
     }
 

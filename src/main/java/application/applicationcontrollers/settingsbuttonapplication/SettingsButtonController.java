@@ -72,10 +72,10 @@ public class SettingsButtonController {
                 "Modifica impostazioni",
                 "/stages/settingsstages/ModifyChosenSettingStage.fxml"
         );
-        windowRequest.overrideCss("/styles/specificSettingStage.css");
-        windowRequest.owner(mainPane);
-        windowRequest.controllerInitializer((ChosenSettingController c) -> c.initSetting(selected));
-        windowRequest.onClose(this::updateSettings);
+        windowRequest.withOverrideCss("/styles/specificSettingStage.css");
+        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withControllerInitializer((ChosenSettingController c) -> c.initSetting(selected));
+        windowRequest.withOnClose(this::updateSettings);
 
         OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(windowRequest);

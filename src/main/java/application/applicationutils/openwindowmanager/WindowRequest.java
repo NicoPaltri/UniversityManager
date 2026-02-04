@@ -3,67 +3,114 @@ package application.applicationutils.openwindowmanager;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.function.Consumer;
+
 public final class WindowRequest<C> {
-    public final String windowName;
-    public final String windowPath;
-    public String specificCssPath;
-    public Pane mainPane;
+    private final String windowName;
+    private final String windowPath;
+    private String specificCssPath;
+    private Pane mainPane;
 
-    public double width = 750;
-    public double height = 500;
+    private double width = 750;
+    private double height = 500;
 
-    public Stage stage = null;
+    private Stage stage = null;
 
-    public boolean modal = true;
-    public boolean resizable = true;
+    private boolean modal = true;
+    private boolean resizable = true;
 
-    public java.util.function.Consumer<C> controllerInitializer;
-    public Runnable onClose;
+    private java.util.function.Consumer<C> controllerInitializer;
+    private Runnable onClose;
 
     public WindowRequest(String windowName, String fxmlPath) {
         this.windowName = windowName;
         this.windowPath = fxmlPath;
     }
 
-    public WindowRequest<C> size(double width, double height) {
+    public WindowRequest<C> withSize(double width, double height) {
         this.width = width;
         this.height = height;
         return this;
     }
 
-    public WindowRequest<C> overrideCss(String specificCssPath) {
+    public WindowRequest<C> withOverrideCss(String specificCssPath) {
         this.specificCssPath = specificCssPath;
         return this;
     }
 
-    public WindowRequest<C> owner(Pane mainPane) {
+    public WindowRequest<C> withOwnerPan(Pane mainPane) {
         this.mainPane = mainPane;
         return this;
     }
 
-    public WindowRequest<C> modal(boolean modal) {
+    public WindowRequest<C> withModal(boolean modal) {
         this.modal = modal;
         return this;
     }
 
-    public WindowRequest<C> resizable(boolean resizable) {
+    public WindowRequest<C> withResizable(boolean resizable) {
         this.resizable = resizable;
         return this;
     }
 
-    public WindowRequest<C> controllerInitializer(java.util.function.Consumer<C> controllerInitializer) {
+    public WindowRequest<C> withControllerInitializer(java.util.function.Consumer<C> controllerInitializer) {
         this.controllerInitializer = controllerInitializer;
         return this;
     }
 
-    public WindowRequest<C> onClose(Runnable runnable) {
+    public WindowRequest<C> withOnClose(Runnable runnable) {
         this.onClose = runnable;
         return this;
     }
 
-    public WindowRequest<C> useStage(Stage stage) {
+    public WindowRequest<C> withStage(Stage stage) {
         this.stage = stage;
         return this;
+    }
+
+
+    public String getWindowName() {
+        return windowName;
+    }
+
+    public String getWindowPath() {
+        return windowPath;
+    }
+
+    public String getSpecificCssPath() {
+        return specificCssPath;
+    }
+
+    public Pane getMainPane() {
+        return mainPane;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public boolean isModal() {
+        return modal;
+    }
+
+    public boolean isResizable() {
+        return resizable;
+    }
+
+    public Consumer<C> getControllerInitializer() {
+        return controllerInitializer;
+    }
+
+    public Runnable getOnClose() {
+        return onClose;
     }
 }
 

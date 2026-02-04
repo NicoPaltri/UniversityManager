@@ -60,10 +60,10 @@ public class ModifyExamButtonController {
                 "Modifica esame",
                 "/stages/modifystages/ModifyChosenExamStage.fxml"
         );
-        windowRequest.overrideCss("/styles/specificModifyExam.css");
-        windowRequest.owner(mainPane);
-        windowRequest.controllerInitializer((ChosenExamController c) -> c.initExam(selectedExam));
-        windowRequest.onClose(this::updateDatas);
+        windowRequest.withOverrideCss("/styles/specificModifyExam.css");
+        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withControllerInitializer((ChosenExamController c) -> c.initExam(selectedExam));
+        windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();
         utils.openNewWindow(windowRequest);
