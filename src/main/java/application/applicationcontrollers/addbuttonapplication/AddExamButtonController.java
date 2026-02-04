@@ -5,6 +5,7 @@ import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBManageExams;
+import examsmanager.examfactories.ExamCreationData;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -47,15 +48,18 @@ public class AddExamButtonController {
             String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
             String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
 
-            LocalDate completeDate = ExamUtils.buildLocalDate(year,month,day);
+            LocalDate completeDate = ExamUtils.buildLocalDate(year, month, day);
 
             Exam exam;
+            ExamCreationData data = new ExamCreationData(name, weight, completeDate);
 
             if (idoneitaCheckBox.isSelected()) {
-                exam = idoneitaFactory.createExam(name, weight, completeDate);
+                exam = idoneitaFactory.createExam(data);
             } else {
                 int grade = InputFieldsUtils.getIntParameterFromInputField(gradeInputField, "grade");
-                exam = gradedExamFactory.createExam(name, weight, grade, completeDate);
+                data.withGrade(grade);
+
+                exam = gradedExamFactory.createExam(data);
             }
 
             DBManageExams.insertExam(exam);

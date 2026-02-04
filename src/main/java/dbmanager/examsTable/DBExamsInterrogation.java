@@ -5,6 +5,7 @@ import customexceptions.accessdatasexception.DataAccessException;
 import customexceptions.examformatexception.NullGradeForGradedExamException;
 import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
+import examsmanager.examfactories.ExamCreationData;
 import examsmanager.examfactories.GradedExamFactory;
 import examsmanager.examfactories.IdoneitaFactory;
 import examsmanager.examtypes.Exam;
@@ -45,15 +46,15 @@ public class DBExamsInterrogation {
                 String type = rs.getString("type");
 
                 Exam exam;
+                ExamCreationData data = new ExamCreationData(name, weight, date);
 
                 if (ExamTypologies.GradedExam.getExamTypology().equals(type)) {
-                    if (grade == null) {
-                        throw new NullGradeForGradedExamException(name);
-                    }
-                    exam = gradedExamFactory.createExam(name, weight, grade, date);
+                    data.withGrade(grade);
+
+                    exam = gradedExamFactory.createExam(data);
 
                 } else if (ExamTypologies.Idoneita.getExamTypology().equals(type)) {
-                    exam = idoneitaFactory.createExam(name, weight, date);
+                    exam = idoneitaFactory.createExam(data);
 
                 } else {
                     throw new UnknownExamTypeException(name, type);
