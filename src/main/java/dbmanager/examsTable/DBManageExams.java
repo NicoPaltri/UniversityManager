@@ -1,6 +1,6 @@
 package dbmanager.examsTable;
 
-import customexceptions.accessdatasexception.AlreadyExistingExamException;
+import customexceptions.accessdatasexception.ConstraintViolationException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
 import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
@@ -40,7 +40,7 @@ public class DBManageExams {
             System.out.println("Esame inserito con successo: " + exam.toString());
         } catch (SQLException e) {
             if (e.getErrorCode() == 19) {
-                throw new AlreadyExistingExamException(exam.getName(), e);
+                throw new ConstraintViolationException(exam.getName(), e);
             } else {
                 throw new DBInternalErrorException(sql, e);
             }

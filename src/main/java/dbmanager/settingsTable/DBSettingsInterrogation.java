@@ -1,7 +1,7 @@
 package dbmanager.settingsTable;
 
-import customexceptions.accessdatasexception.AlreadyExistingSettingException;
-import customexceptions.accessdatasexception.DataAccessException;
+import customexceptions.accessdatasexception.ConstraintViolationException;
+import customexceptions.accessdatasexception.DBInternalErrorException;
 import dbmanager.DBConnection;
 import settingsmanager.ApplicationSettings;
 import settingsmanager.Setting;
@@ -30,7 +30,7 @@ public class DBSettingsInterrogation {
             return dbRows == ApplicationSettings.values().length;
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
     }
 
@@ -55,7 +55,7 @@ public class DBSettingsInterrogation {
             }
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
     }
 
@@ -71,9 +71,9 @@ public class DBSettingsInterrogation {
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 19) {
-                throw new AlreadyExistingSettingException(applicationSettings.getName(), e);
+                throw new ConstraintViolationException(applicationSettings.getName(), e);
             } else {
-                throw new DataAccessException(sql, e);
+                throw new DBInternalErrorException(sql, e);
             }
         }
 
@@ -98,7 +98,7 @@ public class DBSettingsInterrogation {
             }
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
 
         return settings;
@@ -117,7 +117,7 @@ public class DBSettingsInterrogation {
             return rs.getInt("value");
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
     }
 
@@ -139,7 +139,7 @@ public class DBSettingsInterrogation {
 
             System.out.println("Modifica avvenuta con successo: " + sql);
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
     }
 

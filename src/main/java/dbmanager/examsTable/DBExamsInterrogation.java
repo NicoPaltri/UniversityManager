@@ -1,8 +1,7 @@
 package dbmanager.examsTable;
 
 import application.applicationutils.ExamUtils;
-import customexceptions.accessdatasexception.DataAccessException;
-import customexceptions.examformatexception.NullGradeForGradedExamException;
+import customexceptions.accessdatasexception.DBInternalErrorException;
 import customexceptions.examformatexception.UnknownExamTypeException;
 import dbmanager.DBConnection;
 import examsmanager.examfactories.ExamCreationData;
@@ -66,7 +65,7 @@ public class DBExamsInterrogation {
             return examList;
 
         } catch (SQLException e) {
-            throw new DataAccessException(sql, e);
+            throw new DBInternalErrorException(sql, e);
         }
     }
 }
