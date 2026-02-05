@@ -29,7 +29,7 @@ public class RemoveExamButtonController {
 
         // Collego tabella e lista
         FXMLUtils.linkTableViewAndObservableList(exams,
-                examTable,colName,colWeight,colGrade,colDate);
+                examTable, colName, colWeight, colGrade, colDate);
 
         // Disable del bottone quando nulla è selezionato
         deleteButton.disableProperty().bind(
@@ -40,6 +40,7 @@ public class RemoveExamButtonController {
     }
 
     public void removeButtonOnAction(ActionEvent actionEvent) {
+        DBManageExams dbManager = new DBManageExams();
 
         Exam exam = examTable.getSelectionModel().getSelectedItem();
 
@@ -48,13 +49,13 @@ public class RemoveExamButtonController {
             return;
         }
 
-        DBManageExams.deleteExamByName(exam.getName());
+        dbManager.deleteExamByName(exam.getName());
 
         updateDatas();
     }
 
     private void updateDatas() {
-        FXMLUtils.commonUpdateDatas(exams,examTable);
+        FXMLUtils.commonUpdateDatas(exams, examTable);
 
         //CONTROLLER SPECIFIC UPDATES
     }

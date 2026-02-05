@@ -74,11 +74,13 @@ public class ChosenExamController {
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
+        DBManageExams dbManager = new DBManageExams();
+
         try {
             Exam modifiedExam = getExamFromFields();
 
-            DBManageExams.deleteExamByName(selectedExam.getName());
-            DBManageExams.insertExam(modifiedExam);
+            dbManager.deleteExamByName(selectedExam.getName());
+            dbManager.insertExam(modifiedExam);
 
             Stage thisStage = (Stage) modifyButton.getScene().getWindow();
             thisStage.close();

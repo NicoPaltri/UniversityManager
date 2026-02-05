@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 public class DBManageExams {
-    public static void insertExam(Exam exam) {
+    public void insertExam(Exam exam) {
         String sql = "INSERT INTO exams (name, weight, grade, exam_date, type) VALUES (?, ?, ?, ?, ?);";
 
         try (Connection conn = DBConnection.getConnectionFromDB();
@@ -46,7 +46,7 @@ public class DBManageExams {
         }
     }
 
-    public static void deleteExamByName(String name) {
+    public void deleteExamByName(String name) {
         String sql = "DELETE FROM exams WHERE name = ?;";
 
         try (Connection conn = DBConnection.getConnectionFromDB();

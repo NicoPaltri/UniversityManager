@@ -41,6 +41,8 @@ public class AddExamButtonController {
             GradedExamFactory gradedExamFactory = new GradedExamFactory();
             IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
 
+            DBManageExams dbManager = new DBManageExams();
+
             String name = InputFieldsUtils.getStringParameterFromInputField(nameInputField);
             int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
 
@@ -62,7 +64,7 @@ public class AddExamButtonController {
                 exam = gradedExamFactory.createExam(data);
             }
 
-            DBManageExams.insertExam(exam);
+            dbManager.insertExam(exam);
 
             setEveryFieldToBlank();
 
