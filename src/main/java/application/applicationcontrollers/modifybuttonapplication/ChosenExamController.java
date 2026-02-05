@@ -6,6 +6,7 @@ import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
+import examsmanager.examtypes.ExamTypologies;
 import examsmanager.examtypes.Idoneita;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -90,10 +91,7 @@ public class ChosenExamController {
     }
 
     private Exam getExamFromFields() {
-        GradedExamFactory gradedExamFactory = new GradedExamFactory();
-        IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
-
-        String name = nameInputField.getText().trim();
+        String name = InputFieldsUtils.getStringParameterFromInputField(nameInputField);
         int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
 
         String day = InputFieldsUtils.getStringParameterFromInputField(dayInputField);
@@ -102,19 +100,18 @@ public class ChosenExamController {
 
         LocalDate completeDate = ExamUtils.buildLocalDate(year, month, day);
 
-        Exam exam;
+        ExamTypologies typology;
         ExamCreationData data = new ExamCreationData(name, weight, completeDate);
 
         if (idoneitaCheckBox.isSelected()) {
-            exam = idoneitaFactory.createExam(data);
+            typology = ExamTypologies.Idoneita;
         } else {
+            typology = ExamTypologies.GradedExam;
             int grade = InputFieldsUtils.getIntParameterFromInputField(gradeInputField, "grade");
             data.withGrade(grade);
-
-            exam = gradedExamFactory.createExam(data);
         }
 
-        return exam;
+        return typology.create(data);
     }
 
 }

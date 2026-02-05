@@ -6,11 +6,10 @@ import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
+import examsmanager.examtypes.ExamTypologies;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import examsmanager.examfactories.GradedExamFactory;
-import examsmanager.examfactories.IdoneitaFactory;
 import examsmanager.examtypes.Exam;
 
 import java.time.LocalDate;
@@ -38,39 +37,40 @@ public class AddExamButtonController {
 
     public void confirmButtonOnAction(ActionEvent actionEvent) {
         try {
-            GradedExamFactory gradedExamFactory = new GradedExamFactory();
-            IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
-
             DBExamRepository dbManager = new DBExamRepository();
 
-            String name = InputFieldsUtils.getStringParameterFromInputField(nameInputField);
-            int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
-
-            String day = InputFieldsUtils.getStringParameterFromInputField(dayInputField);
-            String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
-            String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
-
-            LocalDate completeDate = ExamUtils.buildLocalDate(year, month, day);
-
-            Exam exam;
-            ExamCreationData data = new ExamCreationData(name, weight, completeDate);
-
-            if (idoneitaCheckBox.isSelected()) {
-                exam = idoneitaFactory.createExam(data);
-            } else {
-                int grade = InputFieldsUtils.getIntParameterFromInputField(gradeInputField, "grade");
-                data.withGrade(grade);
-
-                exam = gradedExamFactory.createExam(data);
-            }
+            Exam exam = getExamFromFields();
 
             dbManager.insert(exam);
-
             setEveryFieldToBlank();
 
         } catch (ApplicationException e) {
             OpenWindowUtils.errorAlert(e.getMessage());
         }
+    }
+
+    private Exam getExamFromFields() {
+        String name = InputFieldsUtils.getStringParameterFromInputField(nameInputField);
+        int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
+
+        String day = InputFieldsUtils.getStringParameterFromInputField(dayInputField);
+        String month = InputFieldsUtils.getStringParameterFromInputField(monthInputField);
+        String year = InputFieldsUtils.getStringParameterFromInputField(yearInputField);
+
+        LocalDate completeDate = ExamUtils.buildLocalDate(year, month, day);
+
+        ExamTypologies typology;
+        ExamCreationData data = new ExamCreationData(name, weight, completeDate);
+
+        if (idoneitaCheckBox.isSelected()) {
+            typology = ExamTypologies.Idoneita;
+        } else {
+            typology = ExamTypologies.GradedExam;
+            int grade = InputFieldsUtils.getIntParameterFromInputField(gradeInputField, "grade");
+            data.withGrade(grade);
+        }
+
+        return typology.create(data);
     }
 
     private void setEveryFieldToBlank() {
