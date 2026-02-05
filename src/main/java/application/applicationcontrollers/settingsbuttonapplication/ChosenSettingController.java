@@ -4,7 +4,6 @@ import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.settingsTable.DBSettingsRepository;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,7 +26,7 @@ public class ChosenSettingController {
         nameLabel.setText(chosenSetting.getName());
     }
 
-    public void modifyButtonOnAction(ActionEvent actionEvent) {
+    public void modifyButtonOnAction() {
         try {
             int newValue = InputFieldsUtils.getIntParameterFromInputField(valueInputField, "newValue");
 

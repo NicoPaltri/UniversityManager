@@ -7,16 +7,11 @@ import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
 import examsmanager.examtypes.ExamTypologies;
-import examsmanager.examtypes.Idoneita;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import examsmanager.examfactories.GradedExamFactory;
-import examsmanager.examfactories.IdoneitaFactory;
 import examsmanager.examtypes.Exam;
-import examsmanager.examtypes.GradedExam;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -73,7 +68,7 @@ public class ChosenExamController {
         yearInputField.setText(ExamUtils.getYearFromDate(selectedExam.getDate()));
     }
 
-    public void modifyButtonOnAction(ActionEvent actionEvent) {
+    public void modifyButtonOnAction() {
         DBExamRepository dbManager = new DBExamRepository();
 
         try {

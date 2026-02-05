@@ -5,7 +5,6 @@ import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import application.applicationutils.openwindowmanager.WindowRequest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,7 +48,7 @@ public class ModifyExamButtonController {
         //CONTROLLER SPECIFIC UPDATES
     }
 
-    public void selectButtonOnAction(ActionEvent actionEvent) {
+    public void selectButtonOnAction() {
         Exam selectedExam = examTable.getSelectionModel().getSelectedItem();
         if (selectedExam == null) {
             OpenWindowUtils.errorAlert("Seleziona una riga prima di continuare.");

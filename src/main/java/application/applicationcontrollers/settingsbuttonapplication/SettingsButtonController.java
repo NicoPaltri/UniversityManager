@@ -6,7 +6,6 @@ import application.applicationutils.openwindowmanager.WindowRequest;
 import dbmanager.settingsTable.DBSettingsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,7 +60,7 @@ public class SettingsButtonController {
         settingsTable.setSortPolicy(tv -> false);
     }
 
-    public void selectButtonOnAction(ActionEvent actionEvent) {
+    public void selectButtonOnAction() {
         Setting selected = settingsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             OpenWindowUtils.errorAlert("Seleziona una riga prima di continuare.");

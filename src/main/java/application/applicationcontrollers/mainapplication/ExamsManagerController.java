@@ -10,7 +10,6 @@ import dbmanager.settingsTable.DBSettingsRepository;
 import dbmanager.settingsTable.DBSettingsStartTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -267,7 +266,7 @@ public class ExamsManagerController {
     }
 
     //buttons
-    public void addExamButtonOnAction(ActionEvent actionEvent) {
+    public void addExamButtonOnAction() {
         WindowRequest<Object> windowRequest = new WindowRequest<>(
                 "Aggiungi esame",
                 "/stages/AddExamStage.fxml"
@@ -280,7 +279,7 @@ public class ExamsManagerController {
         utils.openNewWindow(windowRequest);
     }
 
-    public void removeButtonOnAction(ActionEvent actionEvent) {
+    public void removeButtonOnAction() {
         WindowRequest<Object> windowRequest = new WindowRequest<>(
                 "Rimuovi esame",
                 "/stages/RemoveExamStage.fxml"
@@ -293,7 +292,7 @@ public class ExamsManagerController {
         utils.openNewWindow(windowRequest);
     }
 
-    public void settingButtonOnAction(ActionEvent actionEvent) {
+    public void settingButtonOnAction() {
         WindowRequest<Object> windowRequest = new WindowRequest<>(
                 "Impostazioni",
                 "/stages/settingsstages/SettingsStage.fxml"
@@ -306,7 +305,7 @@ public class ExamsManagerController {
         utils.openNewWindow(windowRequest);
     }
 
-    public void modifyButtonOnAction(ActionEvent actionEvent) {
+    public void modifyButtonOnAction() {
         WindowRequest<Object> windowRequest = new WindowRequest<>(
                 "Modifica",
                 "/stages/modifystages/ModifyExamStage.fxml"

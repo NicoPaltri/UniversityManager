@@ -7,7 +7,6 @@ import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
 import examsmanager.examtypes.ExamTypologies;
-import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import examsmanager.examtypes.Exam;
@@ -35,7 +34,7 @@ public class AddExamButtonController {
                 .bind(gradeInputField.visibleProperty());
     }
 
-    public void confirmButtonOnAction(ActionEvent actionEvent) {
+    public void confirmButtonOnAction() {
         try {
             DBExamRepository dbManager = new DBExamRepository();
 

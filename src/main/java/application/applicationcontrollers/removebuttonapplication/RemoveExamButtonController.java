@@ -4,7 +4,6 @@ import application.applicationutils.FXMLUtils;
 import dbmanager.examsTable.DBExamRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,7 +38,7 @@ public class RemoveExamButtonController {
         updateDatas();
     }
 
-    public void removeButtonOnAction(ActionEvent actionEvent) {
+    public void removeButtonOnAction() {
         DBExamRepository dbManager = new DBExamRepository();
 
         Exam exam = examTable.getSelectionModel().getSelectedItem();
