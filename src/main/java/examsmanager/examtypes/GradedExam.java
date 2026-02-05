@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class GradedExam extends Exam {
     private final int grade;
@@ -13,13 +14,18 @@ public class GradedExam extends Exam {
         this.grade = grade;
     }
 
-    public int getGrade() {
+    public int getGradeValue() {
         return grade;
     }
 
     @Override
     public String getType() {
         return ExamTypologies.GradedExam.getExamTypology();
+    }
+
+    @Override
+    public Optional<Integer> getGrade() {
+        return Optional.of(grade);
     }
 
     //UI

@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Exam {
     private final String name;
@@ -38,7 +39,9 @@ public abstract class Exam {
     }
 
 
-    public abstract String getType(); //a way to "know" the class without instanceof
+    public abstract String getType();
+
+    public abstract Optional<Integer> getGrade();
 
 
     @Override

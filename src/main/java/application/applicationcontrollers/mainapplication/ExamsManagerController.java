@@ -128,7 +128,7 @@ public class ExamsManagerController {
 
         for (GradedExam exam : gradedExamList) {
             gradesSeries.getData().add(
-                    new XYChart.Data<>(exam.getDate().toString(), exam.getGrade())
+                    new XYChart.Data<>(exam.getDate().toString(), exam.getGradeValue())
             );
         }
 
@@ -143,7 +143,7 @@ public class ExamsManagerController {
         double denominator = 0;
 
         for (GradedExam exam : gradedExams) {
-            numerator += exam.getWeight() * exam.getGrade();
+            numerator += exam.getWeight() * exam.getGradeValue();
             denominator += exam.getWeight();
 
             weightedAverageSeries.getData().add(

@@ -15,7 +15,7 @@ public class StatisticUtils {
 
     public static double getArithmeticMeanFromGradedExamList(List<GradedExam> exams) {
         return exams.stream()
-                .mapToDouble(GradedExam::getGrade)
+                .mapToDouble(GradedExam::getGradeValue)
                 .average()
                 .orElse(0.0);
     }
@@ -26,7 +26,7 @@ public class StatisticUtils {
         double weights = 0;
 
         for (GradedExam e : exams) {
-            num += e.getGrade() * e.getWeight();
+            num += e.getGradeValue() * e.getWeight();
             weights += e.getWeight();
         }
 
@@ -52,7 +52,7 @@ public class StatisticUtils {
             return 0;
         }
 
-        List<Integer> gradesList = exams.stream().map(GradedExam::getGrade).toList();
+        List<Integer> gradesList = exams.stream().map(GradedExam::getGradeValue).toList();
         List<Integer> orderedGrades = new ArrayList<>(gradesList);
         orderedGrades.sort(null);
 
@@ -86,10 +86,10 @@ public class StatisticUtils {
 
         Map<Integer, Integer> mapGradeFrequency = new HashMap<>();
         for (GradedExam e : exams) {
-            if (mapGradeFrequency.containsKey(e.getGrade())) {
-                mapGradeFrequency.replace(e.getGrade(), mapGradeFrequency.get(e.getGrade()) + 1);
+            if (mapGradeFrequency.containsKey(e.getGradeValue())) {
+                mapGradeFrequency.replace(e.getGradeValue(), mapGradeFrequency.get(e.getGradeValue()) + 1);
             } else {
-                mapGradeFrequency.put(e.getGrade(), 1);
+                mapGradeFrequency.put(e.getGradeValue(), 1);
             }
         }
 
@@ -121,7 +121,7 @@ public class StatisticUtils {
             return 0;
         }
 
-        List<Double> grades = exams.stream().map(GradedExam::getGrade).map(Integer::doubleValue).toList();
+        List<Double> grades = exams.stream().map(GradedExam::getGradeValue).map(Integer::doubleValue).toList();
 
         double mean = getArithmeticMeanFromGradedExamList(exams);
 
@@ -137,7 +137,7 @@ public class StatisticUtils {
         }
 
         List<Integer> sorted = exams.stream()
-                .map(GradedExam::getGrade)
+                .map(GradedExam::getGradeValue)
                 .sorted()
                 .toList();
 

@@ -3,28 +3,22 @@ package dbmanager.examsTable;
 import application.applicationutils.ExamUtils;
 import customexceptions.accessdatasexception.ConstraintViolationException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
-import customexceptions.examexceptions.UnknownExamTypeException;
 import dbmanager.DBConnection;
 import examsmanager.examfactories.ExamCreationData;
-import examsmanager.examfactories.GradedExamFactory;
 import examsmanager.examfactories.IdoneitaFactory;
 import examsmanager.examtypes.Exam;
 import examsmanager.examtypes.ExamTypologies;
-import examsmanager.examtypes.GradedExam;
-import examsmanager.examtypes.Idoneita;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DBExamRepository {
     public List<Exam> getAll() {
         List<Exam> examList = new ArrayList<>();
         String sql = "SELECT name, weight, grade, exam_date, type FROM exams";
-
-        GradedExamFactory gradedExamFactory = new GradedExamFactory();
-        IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -42,22 +36,10 @@ public class DBExamRepository {
                 String type = rs.getString("type");
                 ExamTypologies typology = ExamTypologies.fromType(name, type);
 
-                Exam exam;
                 ExamCreationData data = new ExamCreationData(name, weight, date);
+                data.withGrade(grade);
 
-                switch (typology) {
-                    case GradedExam -> {
-                        data.withGrade(grade);
-                        exam = gradedExamFactory.createExam(data);
-                    }
-
-                    case Idoneita -> {
-                        exam = idoneitaFactory.createExam(data);
-                    }
-
-                    default -> throw new UnknownExamTypeException(name, type);
-
-                }
+                Exam exam = typology.create(data);
 
                 examList.add(exam);
             }
@@ -78,13 +60,11 @@ public class DBExamRepository {
             ps.setString(1, exam.getName());
             ps.setInt(2, exam.getWeight());
 
-            //DB CONOSCE DOMINIO: PROBLEMA
-            if (exam instanceof GradedExam gradedExam) {
-                ps.setInt(3, gradedExam.getGrade());
-            } else if (exam instanceof Idoneita) {
-                ps.setNull(3, Types.INTEGER);
+            Optional<Integer> grade = exam.getGrade();
+            if (grade.isEmpty()) {
+                ps.setInt(3, Types.NULL);
             } else {
-                throw new UnknownExamTypeException(exam.getName(), exam.getType());
+                ps.setInt(3, grade.get());
             }
 
             ps.setString(4, exam.getDate().toString());

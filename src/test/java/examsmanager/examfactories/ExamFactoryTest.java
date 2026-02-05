@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 class TestExam extends Exam {
     private int grade;
@@ -16,6 +17,11 @@ class TestExam extends Exam {
     public TestExam(String name, int weight, int grade, LocalDate date) {
         super(name, weight, date);
         this.grade = grade;
+    }
+
+    @Override
+    public Optional<Integer> getGrade() {
+        return Optional.of(grade);
     }
 
     @Override

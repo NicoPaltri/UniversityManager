@@ -18,6 +18,7 @@ import examsmanager.examtypes.Exam;
 import examsmanager.examtypes.GradedExam;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class ChosenExamController {
 
@@ -57,14 +58,13 @@ public class ChosenExamController {
         nameInputField.setText(selectedExam.getName());
         weightInputField.setText(String.valueOf(selectedExam.getWeight()));
 
-        if (selectedExam instanceof Idoneita) {
+        Optional<Integer> grade = selectedExam.getGrade();
+        if (grade.isEmpty()) {
             idoneitaCheckBox.setSelected(true);
             gradeInputField.setText("0");
-        }
-
-        if (selectedExam instanceof GradedExam gradedExam) {
+        } else {
             idoneitaCheckBox.setSelected(false);
-            gradeInputField.setText(String.valueOf(gradedExam.getGrade()));
+            gradeInputField.setText(String.valueOf(grade.get()));
         }
 
         dayInputField.setText(ExamUtils.getDayFromDate(selectedExam.getDate()));
