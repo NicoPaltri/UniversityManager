@@ -13,9 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBSettingsInterrogation {
-    public DBSettingsInterrogation() {
-    }
+public class DBSettingsRepository {
 
     public boolean settingsTableIsFull() {
         String sql = "SELECT COUNT(*) FROM settings";
@@ -34,7 +32,7 @@ public class DBSettingsInterrogation {
         }
     }
 
-    public void fillSettingsTable() {
+    public void ensureSettingsInitialized() {
         String sql = "SELECT COUNT(*) FROM settings WHERE name = ?";
         List<ApplicationSettings> defaultSettings = List.of(ApplicationSettings.values());
 
@@ -80,7 +78,7 @@ public class DBSettingsInterrogation {
     }
 
 
-    public List<Setting> getAllPersonalizedSettings() {
+    public List<Setting> getAll() {
         List<Setting> settings = new ArrayList<>();
 
         String sql = "SELECT name, value FROM settings";
@@ -127,22 +125,20 @@ public class DBSettingsInterrogation {
     }
 
 
-    public void changeSetting(Setting setting, int newValue) {
+    public void changeSetting(String settingName, int newValue) {
         String sql = "UPDATE settings SET value = ? WHERE name = ?";
 
         try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, newValue);
-            ps.setString(2, setting.getName());
+            ps.setString(2, settingName);
 
             ps.executeUpdate();
 
-            System.out.println("Modifica avvenuta con successo: " + sql);
         } catch (SQLException e) {
             throw new DBInternalErrorException(sql, e);
         }
     }
-
 
 }

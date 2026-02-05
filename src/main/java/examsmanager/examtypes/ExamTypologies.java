@@ -1,6 +1,6 @@
 package examsmanager.examtypes;
 
-import customexceptions.examformatexception.UnknownExamTypeException;
+import customexceptions.examexceptions.UnknownExamTypeException;
 
 public enum ExamTypologies {
     GradedExam("GRADED"),

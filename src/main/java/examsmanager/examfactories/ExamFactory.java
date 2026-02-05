@@ -1,8 +1,8 @@
 package examsmanager.examfactories;
 
 import customexceptions.dateexception.FutureDateException;
-import customexceptions.examformatexception.GradeFormatException;
-import customexceptions.examformatexception.WeightFormatException;
+import customexceptions.examexceptions.GradeFormatException;
+import customexceptions.examexceptions.WeightFormatException;
 import examsmanager.examtypes.Exam;
 
 import java.time.LocalDate;

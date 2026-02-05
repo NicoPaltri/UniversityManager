@@ -1,6 +1,6 @@
 package examsmanager.examfactories;
 
-import customexceptions.examformatexception.NullGradeForGradedExamException;
+import customexceptions.examexceptions.NullGradeForGradedExamException;
 import examsmanager.examtypes.GradedExam;
 
 public class GradedExamFactory extends ExamFactory<GradedExam> {

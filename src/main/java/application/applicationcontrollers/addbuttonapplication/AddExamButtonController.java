@@ -4,7 +4,7 @@ import application.applicationutils.ExamUtils;
 import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
-import dbmanager.examsTable.DBManageExams;
+import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
@@ -41,7 +41,7 @@ public class AddExamButtonController {
             GradedExamFactory gradedExamFactory = new GradedExamFactory();
             IdoneitaFactory idoneitaFactory = new IdoneitaFactory();
 
-            DBManageExams dbManager = new DBManageExams();
+            DBExamRepository dbManager = new DBExamRepository();
 
             String name = InputFieldsUtils.getStringParameterFromInputField(nameInputField);
             int weight = InputFieldsUtils.getIntParameterFromInputField(weightInputField, "weight");
@@ -64,7 +64,7 @@ public class AddExamButtonController {
                 exam = gradedExamFactory.createExam(data);
             }
 
-            dbManager.insertExam(exam);
+            dbManager.insert(exam);
 
             setEveryFieldToBlank();
 

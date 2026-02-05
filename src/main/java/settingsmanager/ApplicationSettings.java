@@ -1,7 +1,7 @@
 package settingsmanager;
 
-import customexceptions.settingsexcpetions.InvalidCFUValueException;
-import customexceptions.settingsexcpetions.UnknownSettingException;
+import customexceptions.settingexcpetions.InvalidCFUValueException;
+import customexceptions.settingexcpetions.UnknownSettingException;
 
 public enum ApplicationSettings {
     TOTAL_CFU("totalCFU",

@@ -1,4 +1,4 @@
-package customexceptions.examformatexception;
+package customexceptions.examexceptions;
 
 import customexceptions.ApplicationException;
 

@@ -3,7 +3,7 @@ package application.applicationcontrollers.settingsbuttonapplication;
 import application.applicationutils.FXMLUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import application.applicationutils.openwindowmanager.WindowRequest;
-import dbmanager.settingsTable.DBSettingsInterrogation;
+import dbmanager.settingsTable.DBSettingsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,8 +38,8 @@ public class SettingsButtonController {
     }
 
     private void updateSettings() {
-        DBSettingsInterrogation settingsInterrogation = new DBSettingsInterrogation();
-        settings.setAll(settingsInterrogation.getAllPersonalizedSettings());
+        DBSettingsRepository settingsInterrogation = new DBSettingsRepository();
+        settings.setAll(settingsInterrogation.getAll());
 
         FXMLUtils.clearTableSelection(settingsTable);
     }

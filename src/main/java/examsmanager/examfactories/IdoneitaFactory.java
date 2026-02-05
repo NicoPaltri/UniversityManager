@@ -1,10 +1,7 @@
 package examsmanager.examfactories;
 
-import customexceptions.examformatexception.GradeNotNullForIdoneitaException;
-import examsmanager.examtypes.Exam;
+import customexceptions.examexceptions.GradeNotNullForIdoneitaException;
 import examsmanager.examtypes.Idoneita;
-
-import java.time.LocalDate;
 
 public class IdoneitaFactory extends ExamFactory<Idoneita> {
     @Override

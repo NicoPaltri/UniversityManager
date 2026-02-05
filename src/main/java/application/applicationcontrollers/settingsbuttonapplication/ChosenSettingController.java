@@ -3,7 +3,7 @@ package application.applicationcontrollers.settingsbuttonapplication;
 import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
-import dbmanager.settingsTable.DBSettingsInterrogation;
+import dbmanager.settingsTable.DBSettingsRepository;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,8 +34,8 @@ public class ChosenSettingController {
             ApplicationSettings applicationSettings = ApplicationSettings.fromName(chosenSetting.getName());
             applicationSettings.validate(newValue);
 
-            DBSettingsInterrogation dbSettingsInterrogation = new DBSettingsInterrogation();
-            dbSettingsInterrogation.changeSetting(chosenSetting, newValue);
+            DBSettingsRepository dbSettingsInterrogation = new DBSettingsRepository();
+            dbSettingsInterrogation.changeSetting(chosenSetting.getName(), newValue);
 
             Stage thisStage = (Stage) nameLabel.getScene().getWindow();
             thisStage.close();

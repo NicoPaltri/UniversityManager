@@ -4,7 +4,7 @@ import application.applicationutils.ExamUtils;
 import application.applicationutils.InputFieldsUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
-import dbmanager.examsTable.DBManageExams;
+import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
 import examsmanager.examtypes.Idoneita;
 import javafx.event.ActionEvent;
@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import examsmanager.examfactories.GradedExamFactory;
 import examsmanager.examfactories.IdoneitaFactory;
 import examsmanager.examtypes.Exam;
-import examsmanager.examtypes.ExamTypologies;
 import examsmanager.examtypes.GradedExam;
 
 import java.time.LocalDate;
@@ -74,13 +73,13 @@ public class ChosenExamController {
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
-        DBManageExams dbManager = new DBManageExams();
+        DBExamRepository dbManager = new DBExamRepository();
 
         try {
             Exam modifiedExam = getExamFromFields();
 
-            dbManager.deleteExamByName(selectedExam.getName());
-            dbManager.insertExam(modifiedExam);
+            dbManager.deleteByName(selectedExam.getName());
+            dbManager.insert(modifiedExam);
 
             Stage thisStage = (Stage) modifyButton.getScene().getWindow();
             thisStage.close();

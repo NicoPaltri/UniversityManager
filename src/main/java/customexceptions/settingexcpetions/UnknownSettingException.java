@@ -1,4 +1,4 @@
-package customexceptions.settingsexcpetions;
+package customexceptions.settingexcpetions;
 
 import customexceptions.ApplicationException;
 
