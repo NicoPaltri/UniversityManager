@@ -61,7 +61,7 @@ public class ModifyExamButtonController {
                 "/stages/modifystages/ModifyChosenExamStage.fxml"
         );
         windowRequest.withOverrideCss("/styles/specificModifyExam.css");
-        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOwnerPane(mainPane);
         windowRequest.withControllerInitializer((ChosenExamController c) -> c.initExam(selectedExam));
         windowRequest.withOnClose(this::updateDatas);
 

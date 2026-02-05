@@ -6,20 +6,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Setting {
-    StringProperty name;
-    IntegerProperty value;
+    String name;
+    int value;
 
     public Setting(String name, int value) {
-        this.name = new SimpleStringProperty(name);
-        this.value = new SimpleIntegerProperty(value);
+        this.name = name;
+        this.value = value;
     }
 
     public String getName() {
-        return name.get();
+        return name;
     }
 
     public int getValue() {
-        return value.get();
+        return value;
     }
 
     @Override
@@ -29,11 +29,11 @@ public class Setting {
 
     //UI
     public StringProperty getNameProperty() {
-        return name;
+        return new SimpleStringProperty(getName());
     }
 
     public IntegerProperty getValueProperty() {
-        return value;
+        return new SimpleIntegerProperty(getValue());
     }
 
 }

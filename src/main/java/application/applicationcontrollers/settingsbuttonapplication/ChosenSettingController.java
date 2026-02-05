@@ -28,22 +28,18 @@ public class ChosenSettingController {
     }
 
     public void modifyButtonOnAction(ActionEvent actionEvent) {
-        String stringNewValue = InputFieldsUtils.getStringParameterFromInputField(valueInputField);
-
         try {
-            int newValue = Integer.parseInt(stringNewValue);
+            int newValue = InputFieldsUtils.getIntParameterFromInputField(valueInputField, "newValue");
 
             ApplicationSettings applicationSettings = ApplicationSettings.fromName(chosenSetting.getName());
             applicationSettings.validate(newValue);
 
             DBSettingsInterrogation dbSettingsInterrogation = new DBSettingsInterrogation();
-            dbSettingsInterrogation.changeSetting(chosenSetting.getName(), newValue);
+            dbSettingsInterrogation.changeSetting(chosenSetting, newValue);
 
             Stage thisStage = (Stage) nameLabel.getScene().getWindow();
             thisStage.close();
 
-        } catch (NumberFormatException e) {
-            OpenWindowUtils.errorAlert("Il valore passato deve essere un numero intero; " + e.getMessage());
         } catch (ApplicationException e) {
             OpenWindowUtils.errorAlert(e.getMessage());
         }

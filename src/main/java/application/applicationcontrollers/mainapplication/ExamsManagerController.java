@@ -272,7 +272,7 @@ public class ExamsManagerController {
                 "Aggiungi esame",
                 "/stages/AddExamStage.fxml"
         );
-        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOwnerPane(mainPane);
         windowRequest.withOnClose(this::updateDatas);
 
 
@@ -286,7 +286,7 @@ public class ExamsManagerController {
                 "/stages/RemoveExamStage.fxml"
         );
         windowRequest.withOverrideCss("/styles/specificRemoveExam.css");
-        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOwnerPane(mainPane);
         windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();
@@ -299,7 +299,7 @@ public class ExamsManagerController {
                 "/stages/settingsstages/SettingsStage.fxml"
         );
         windowRequest.withOverrideCss("/styles/specificSettingStage.css");
-        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOwnerPane(mainPane);
         windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();
@@ -312,7 +312,7 @@ public class ExamsManagerController {
                 "/stages/modifystages/ModifyExamStage.fxml"
         );
         windowRequest.withOverrideCss("/styles/specificModifyExam.css");
-        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOwnerPane(mainPane);
         windowRequest.withOnClose(this::updateDatas);
 
         OpenWindowUtils utils = new OpenWindowUtils();

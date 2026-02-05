@@ -20,16 +20,16 @@ public enum ApplicationSettings {
         this.validator = validator;
     }
 
-    public void validate(int newValue) {
-        this.validator.validate(newValue);
-    }
-
     public String getName() {
         return name;
     }
 
     public int getDefaultValue() {
         return defaultValue;
+    }
+
+    public void validate(int newValue) {
+        this.validator.validate(newValue);
     }
 
     public static ApplicationSettings fromName(String name) {

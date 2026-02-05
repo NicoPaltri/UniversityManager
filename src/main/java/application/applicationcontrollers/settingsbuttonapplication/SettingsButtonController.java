@@ -73,7 +73,7 @@ public class SettingsButtonController {
                 "/stages/settingsstages/ModifyChosenSettingStage.fxml"
         );
         windowRequest.withOverrideCss("/styles/specificSettingStage.css");
-        windowRequest.withOwnerPan(mainPane);
+        windowRequest.withOwnerPane(mainPane);
         windowRequest.withControllerInitializer((ChosenSettingController c) -> c.initSetting(selected));
         windowRequest.withOnClose(this::updateSettings);
 

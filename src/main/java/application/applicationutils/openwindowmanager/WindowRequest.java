@@ -38,7 +38,7 @@ public final class WindowRequest<C> {
         return this;
     }
 
-    public WindowRequest<C> withOwnerPan(Pane mainPane) {
+    public WindowRequest<C> withOwnerPane(Pane mainPane) {
         this.mainPane = mainPane;
         return this;
     }

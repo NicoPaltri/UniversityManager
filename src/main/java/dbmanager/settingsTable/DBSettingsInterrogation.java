@@ -105,15 +105,16 @@ public class DBSettingsInterrogation {
     }
 
 
-    private int getValueFromSetting(String name) {
+    private int getValueFromSetting(ApplicationSettings applicationSettings) {
         String sql = "SELECT value FROM settings WHERE name = ?";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, name);
+            ps.setString(1, applicationSettings.getName());
             ResultSet rs = ps.executeQuery();
 
+            rs.next();
             return rs.getInt("value");
 
         } catch (SQLException e) {
@@ -122,18 +123,18 @@ public class DBSettingsInterrogation {
     }
 
     public int getTotalAmountCFU() {
-        return getValueFromSetting(ApplicationSettings.TOTAL_CFU.getName());
+        return getValueFromSetting(ApplicationSettings.TOTAL_CFU);
     }
 
 
-    public void changeSetting(String name, int newValue) {
+    public void changeSetting(Setting setting, int newValue) {
         String sql = "UPDATE settings SET value = ? WHERE name = ?";
 
         try (Connection conn = DBConnection.getConnectionFromDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, newValue);
-            ps.setString(2, name);
+            ps.setString(2, setting.getName());
 
             ps.executeUpdate();
 
