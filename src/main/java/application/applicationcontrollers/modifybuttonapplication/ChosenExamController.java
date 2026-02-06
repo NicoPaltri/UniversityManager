@@ -74,8 +74,7 @@ public class ChosenExamController {
         try {
             Exam modifiedExam = getExamFromFields();
 
-            dbManager.deleteByName(selectedExam.getName());
-            dbManager.insert(modifiedExam);
+            dbManager.insertOrUpdate(selectedExam, modifiedExam);
 
             Stage thisStage = (Stage) modifyButton.getScene().getWindow();
             thisStage.close();

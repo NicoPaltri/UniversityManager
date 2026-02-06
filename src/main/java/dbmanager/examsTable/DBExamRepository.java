@@ -64,7 +64,7 @@ public class DBExamRepository {
 
             Optional<Integer> grade = exam.getGrade();
             if (grade.isEmpty()) {
-                ps.setInt(3, Types.NULL);
+                ps.setNull(3, Types.NULL);
             } else {
                 ps.setInt(3, grade.get());
             }
@@ -77,6 +77,42 @@ public class DBExamRepository {
         } catch (SQLException e) {
             if (e.getErrorCode() == 19) {
                 throw new ConstraintViolationException(exam.getName(), e);
+            } else {
+                throw new DBInternalErrorException(sql, e);
+            }
+        }
+    }
+
+    public void insertOrUpdate(Exam oldExam, Exam newExam) {
+        String sql = """
+                UPDATE exams
+                SET name = ?, weight = ?, grade = ?, exam_date = ?, type = ?
+                WHERE name = ?;
+                """;
+
+        try (Connection conn = DBConnection.getConnectionFromDB();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newExam.getName());
+            ps.setInt(2, newExam.getWeight());
+
+            Optional<Integer> grade = newExam.getGrade();
+            if (grade.isEmpty()) {
+                ps.setNull(3, Types.NULL);
+            } else {
+                ps.setInt(3, grade.get());
+            }
+
+            ps.setString(4, newExam.getDate().toString());
+            ps.setString(5, newExam.getType());
+
+            ps.setString(6, oldExam.getName());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 19) {
+                throw new ConstraintViolationException(newExam.getName(), e);
             } else {
                 throw new DBInternalErrorException(sql, e);
             }
