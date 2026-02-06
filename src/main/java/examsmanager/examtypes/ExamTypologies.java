@@ -5,8 +5,6 @@ import examsmanager.examfactories.ExamCreationData;
 import examsmanager.examfactories.GradedExamFactory;
 import examsmanager.examfactories.IdoneitaFactory;
 
-import java.util.function.Function;
-
 public enum ExamTypologies {
 
     GradedExam(
@@ -20,9 +18,9 @@ public enum ExamTypologies {
     );
 
     private final String examTypology;
-    private final ExamCreator creator;
+    private final ExamCreator<? extends Exam> creator;
 
-    ExamTypologies(String examTypology, ExamCreator creator) {
+    ExamTypologies(String examTypology, ExamCreator<? extends Exam> creator) {
         this.examTypology = examTypology;
         this.creator = creator;
     }
