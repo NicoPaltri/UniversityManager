@@ -20,9 +20,9 @@ public enum ExamTypologies {
     );
 
     private final String examTypology;
-    private final Function<ExamCreationData, Exam> creator;
+    private final ExamCreator creator;
 
-    ExamTypologies(String examTypology, Function<ExamCreationData, Exam> creator) {
+    ExamTypologies(String examTypology, ExamCreator creator) {
         this.examTypology = examTypology;
         this.creator = creator;
     }
@@ -32,7 +32,7 @@ public enum ExamTypologies {
     }
 
     public Exam create(ExamCreationData data) {
-        return creator.apply(data);
+        return creator.create(data);
     }
 
     public static ExamTypologies fromType(String name, String type) {
