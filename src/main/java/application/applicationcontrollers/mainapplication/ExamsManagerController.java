@@ -102,7 +102,7 @@ public class ExamsManagerController {
     //updating datas
     private void updateDatas() {
         //common updates
-        FXMLUtils.commonUpdateDatas(exams, examTable);
+        FXMLUtils.updateList(exams);
 
         //controller specific updates
 
@@ -110,7 +110,7 @@ public class ExamsManagerController {
         updateLineChart();
 
         //pie chart updates
-        updatePieChartProgress();
+        updatePieChart();
 
         //labels updates
         updateLabels();
@@ -152,7 +152,7 @@ public class ExamsManagerController {
         }
     }
 
-    private void updatePieChartProgress() {
+    private void updatePieChart() {
         DBSettingRepository settingsInterrogation = new DBSettingRepository();
 
         double maxCFU = settingsInterrogation.getTotalAmountCFU();

@@ -1,13 +1,14 @@
 package application.applicationutils;
 
+import dbmanager.examsTable.DBExamRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import examsmanager.examtypes.Exam;
-import examsmanager.UniversityManager;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class FXMLUtils {
@@ -74,10 +75,13 @@ public class FXMLUtils {
         clearTableSelection(examTable);
     }
 
-    private static void updateList(ObservableList<Exam> exams) {
-        UniversityManager universityManager = new UniversityManager();
+    public static void updateList(ObservableList<Exam> exams) {
+        DBExamRepository examRepository = new DBExamRepository();
 
-        exams.setAll(universityManager.getExamOrderedObservableListFromDB());
+        List<Exam> updatedExams = examRepository.getAll();
+        updatedExams.sort(Comparator.comparing(Exam::getDate));
+
+        exams.setAll(updatedExams);
     }
 
     public static <T> void clearTableSelection(TableView<T> tableView) {

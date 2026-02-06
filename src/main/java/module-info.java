@@ -16,7 +16,6 @@ module examsmanager {
     exports application.applicationcontrollers.mainapplication to javafx.graphics;
 
     exports dbmanager.settingsTable;
-    exports examsmanager;
     exports settingsmanager;
 
     // FXML reflection access (controllers)
