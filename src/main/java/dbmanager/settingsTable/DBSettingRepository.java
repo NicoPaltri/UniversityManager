@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBSettingsRepository {
+public class DBSettingRepository {
 
     public boolean settingsTableIsFull() {
         String sql = "SELECT COUNT(*) FROM settings";
@@ -95,11 +95,11 @@ public class DBSettingsRepository {
                 settings.add(setting);
             }
 
+            return settings;
+
         } catch (SQLException e) {
             throw new DBInternalErrorException(sql, e);
         }
-
-        return settings;
     }
 
 

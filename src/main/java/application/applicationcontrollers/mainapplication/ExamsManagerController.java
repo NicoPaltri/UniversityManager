@@ -6,7 +6,7 @@ import application.applicationutils.StatisticUtils;
 import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import application.applicationutils.openwindowmanager.WindowRequest;
 import dbmanager.examsTable.DBExamsStartTable;
-import dbmanager.settingsTable.DBSettingsRepository;
+import dbmanager.settingsTable.DBSettingRepository;
 import dbmanager.settingsTable.DBSettingsStartTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -153,7 +153,7 @@ public class ExamsManagerController {
     }
 
     private void updatePieChartProgress() {
-        DBSettingsRepository settingsInterrogation = new DBSettingsRepository();
+        DBSettingRepository settingsInterrogation = new DBSettingRepository();
 
         double maxCFU = settingsInterrogation.getTotalAmountCFU();
         double filled = StatisticUtils.getTotalExamsWeight(exams);
@@ -252,7 +252,7 @@ public class ExamsManagerController {
         DBExamsStartTable.ensureCreated();
 
         DBSettingsStartTable.ensureCreated();
-        DBSettingsRepository settingsInterrogator = new DBSettingsRepository();
+        DBSettingRepository settingsInterrogator = new DBSettingRepository();
         if (!settingsInterrogator.settingsTableIsFull()) {
             settingsInterrogator.ensureSettingsInitialized();
         }
