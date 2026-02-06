@@ -64,7 +64,7 @@ public class DBExamRepository {
 
             Optional<Integer> grade = exam.getGrade();
             if (grade.isEmpty()) {
-                ps.setNull(3, Types.NULL);
+                ps.setNull(3, Types.INTEGER);
             } else {
                 ps.setInt(3, grade.get());
             }
@@ -98,7 +98,7 @@ public class DBExamRepository {
 
             Optional<Integer> grade = newExam.getGrade();
             if (grade.isEmpty()) {
-                ps.setNull(3, Types.NULL);
+                ps.setNull(3, Types.INTEGER);
             } else {
                 ps.setInt(3, grade.get());
             }
