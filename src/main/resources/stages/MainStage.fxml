@@ -159,7 +159,7 @@
                 <HBox spacing="20">
                     <VBox fx:id="meanBox" HBox.hgrow="ALWAYS" styleClass="stat-box">
                         <children>
-                            <Label fx:id="aritmethicMeanLabel" styleClass="stat-value"/>
+                            <Label fx:id="arithmeticMeanLabel" styleClass="stat-value"/>
                             <Label text="Media" styleClass="stat-title"/>
                         </children>
                     </VBox>

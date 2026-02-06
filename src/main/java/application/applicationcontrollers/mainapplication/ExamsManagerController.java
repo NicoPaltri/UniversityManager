@@ -53,7 +53,7 @@ public class ExamsManagerController {
     public Button settingsButton;
     public Button modifyButton;
 
-    public Label aritmethicMeanLabel;
+    public Label arithmeticMeanLabel;
     public Label weightedMeanLabel;
     public Label medianLabel;
     public Label modeLabel;
@@ -65,7 +65,8 @@ public class ExamsManagerController {
     private final XYChart.Series<String, Number> weightedAverageSeries = new XYChart.Series<>();
     private final ObservableList<Exam> exams = FXMLUtils.getEmptyObservableList();
 
-    private static final DecimalFormat formatter = new DecimalFormat("0.00");
+    private static final DecimalFormat TwoDecimalFormatter = new DecimalFormat("0.00");
+    private static final DecimalFormat ThreeDecimalFormatter = new DecimalFormat("0.000");
 
 
     public void initialize() {
@@ -162,14 +163,14 @@ public class ExamsManagerController {
 
         double filledPercentage = (displayedFilled / maxCFU) * 100;
 
-        pieChartLabel.setText(formatter.format(filledPercentage) + "%" + " (" + (int) displayedFilled + "/" + (int) maxCFU + ")");
+        pieChartLabel.setText(TwoDecimalFormatter.format(filledPercentage) + "%" + " (" + (int) displayedFilled + "/" + (int) maxCFU + ")");
 
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
                 new PieChart.Data(
-                        "Filled (" + formatter.format(filledPercentage) + "%)", displayedFilled
+                        "Filled (" + TwoDecimalFormatter.format(filledPercentage) + "%)", displayedFilled
                 ),
                 new PieChart.Data(
-                        "Remaining (" + formatter.format(100 - filledPercentage) + "%)", displayedRemaining
+                        "Remaining (" + TwoDecimalFormatter.format(100 - filledPercentage) + "%)", displayedRemaining
                 )
         );
 
@@ -180,25 +181,25 @@ public class ExamsManagerController {
         List<GradedExam> gradedExams = ExamUtils.filterGradedExamsFromExamList(exams);
 
         double arithmeticMean = StatisticUtils.getArithmeticMeanFromGradedExamList(gradedExams);
-        aritmethicMeanLabel.setText(formatter.format(arithmeticMean));
+        arithmeticMeanLabel.setText(ThreeDecimalFormatter.format(arithmeticMean));
 
         double weightedMean = StatisticUtils.getWeightedMeanFromGradedExamList(gradedExams);
-        weightedMeanLabel.setText(formatter.format(weightedMean));
+        weightedMeanLabel.setText(ThreeDecimalFormatter.format(weightedMean));
 
         double median = StatisticUtils.getMedianFromGradedExamList(gradedExams);
-        medianLabel.setText(formatter.format(median));
+        medianLabel.setText(TwoDecimalFormatter.format(median));
 
         int mode = StatisticUtils.getModeFromGradedExamList(gradedExams);
         modeLabel.setText(String.valueOf(mode));
 
         double standardDeviation = StatisticUtils.getStandardDeviationFromGradedExamList(gradedExams);
-        standardDeviationLabel.setText(formatter.format(standardDeviation));
+        standardDeviationLabel.setText(TwoDecimalFormatter.format(standardDeviation));
 
         double interQuartileRange = StatisticUtils.getInterQuartileRangeFromGradedExamList(gradedExams);
-        interQuartileLabel.setText(formatter.format(interQuartileRange));
+        interQuartileLabel.setText(TwoDecimalFormatter.format(interQuartileRange));
 
         double weightedMeanLastFiveExams = StatisticUtils.getWeightedMeanOfLastFiveGradedExamsFromList(gradedExams);
-        weightedMeanLastFiveExamsLabel.setText(formatter.format(weightedMeanLastFiveExams));
+        weightedMeanLastFiveExamsLabel.setText(TwoDecimalFormatter.format(weightedMeanLastFiveExams));
     }
 
     //FXML arranging
@@ -237,7 +238,7 @@ public class ExamsManagerController {
     }
 
     private void arrangeFXMLLabels() {
-        aritmethicMeanLabel.setWrapText(true);
+        arithmeticMeanLabel.setWrapText(true);
         weightedMeanLabel.setWrapText(true);
         medianLabel.setWrapText(true);
         modeLabel.setWrapText(true);
