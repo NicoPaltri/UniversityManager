@@ -12,7 +12,7 @@ import java.util.Optional;
 public abstract class Exam {
     private final String name;
     private final int weight;
-    private LocalDate date;
+    private final LocalDate date;
 
     public Exam(String name, int weight, LocalDate date) {
         this.name = name;
@@ -34,11 +34,6 @@ public abstract class Exam {
     }
 
 
-    public void setDate(LocalDate newDate) {
-        this.date = newDate;
-    }
-
-
     public abstract String getType();
 
     public abstract Optional<Integer> getGrade();
@@ -46,12 +41,11 @@ public abstract class Exam {
 
     @Override
     public String toString() {
-        return this.getType() + "[" +
-                " name=" + this.getName() +
+        return this.getName() + "[" +
+                " type=" + this.getType() +
                 ", weight=" + this.getWeight() +
                 ", grade=" + this.gradeProperty().get() +
                 ", date=" + this.getDate() +
-                ", type=" + this.getType() +
                 "]";
     }
 
