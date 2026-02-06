@@ -44,7 +44,6 @@ public class RemoveExamButtonController {
         Exam exam = examTable.getSelectionModel().getSelectedItem();
 
         if (exam == null) {
-            System.out.println("Nessun esame selezionato.");
             return;
         }
 
