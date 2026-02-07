@@ -21,12 +21,6 @@ public abstract class ExamFactory<E extends Exam> {
     protected void checkData(ExamCreationData data) {
         validateWeight(data.getName(), data.getWeight());
         validateDate(data.getName(), data.getDate());
-
-        if (data.hasGrade()) {
-            validateGrade(data.getName(), data.getGrade());
-
-            data.withGrade(normalizeGrade(data.getGrade()));
-        }
     }
 
 
@@ -46,14 +40,5 @@ public abstract class ExamFactory<E extends Exam> {
         }
     }
 
-    private void validateGrade(String name, int grade) {
-        if (grade < 18 || grade > 33) {
-            throw new GradeFormatException(name);
-        }
-    }
-
-    private int normalizeGrade(int grade) {
-        return grade > 30 ? 30 : grade;
-    }
 }
 

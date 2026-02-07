@@ -114,48 +114,6 @@ class ExamFactoryTest {
         });
     }
 
-    // ---- GRADE TESTS ----
-
-    @Test
-    void grade_tooLow_throwsException() {
-        assertThrows(ApplicationException.class, () -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
-            data.withGrade(17);
-
-            TestExam exam = testExamFactory.createExam(data);
-        });
-    }
-
-    @Test
-    void grade_limitLow_doesNotThrow() {
-        assertDoesNotThrow(() -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
-            data.withGrade(18);
-
-            TestExam exam = testExamFactory.createExam(data);
-        });
-    }
-
-    @Test
-    void grade_limitHigh_doesNotThrow() {
-        assertDoesNotThrow(() -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
-            data.withGrade(33);
-
-            TestExam exam = testExamFactory.createExam(data);
-        });
-    }
-
-    @Test
-    void grade_tooHigh_throwsException() {
-        assertThrows(ApplicationException.class, () -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
-            data.withGrade(34);
-
-            TestExam exam = testExamFactory.createExam(data);
-        });
-    }
-
     // ---- ALL OK ----
 
     @Test

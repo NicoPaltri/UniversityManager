@@ -18,6 +18,46 @@ class GradedExamFactoryTest {
     GradedExamFactory gradedExamFactory = new GradedExamFactory();
 
     @Test
+    void grade_tooLow_throwsException() {
+        assertThrows(ApplicationException.class, () -> {
+            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+            data.withGrade(17);
+
+            GradedExam exam = gradedExamFactory.createExam(data);
+        });
+    }
+
+    @Test
+    void grade_limitLow_doesNotThrow() {
+        assertDoesNotThrow(() -> {
+            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+            data.withGrade(18);
+
+            GradedExam exam = gradedExamFactory.createExam(data);
+        });
+    }
+
+    @Test
+    void grade_limitHigh_doesNotThrow() {
+        assertDoesNotThrow(() -> {
+            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+            data.withGrade(33);
+
+            GradedExam exam = gradedExamFactory.createExam(data);
+        });
+    }
+
+    @Test
+    void grade_tooHigh_throwsException() {
+        assertThrows(ApplicationException.class, () -> {
+            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+            data.withGrade(34);
+
+            GradedExam exam = gradedExamFactory.createExam(data);
+        });
+    }
+    
+    @Test
     public void grade_notNull_doesNotThrow() {
         ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
         data.withGrade(gradeOK);
