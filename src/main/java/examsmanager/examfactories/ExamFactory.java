@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public abstract class ExamFactory<E extends Exam> {
 
     public final E createExam(ExamCreationData data) {
-        checkExam(data);
+        checkData(data);
         validateSpecific(data);
 
         return doCreate(data);
@@ -18,7 +18,7 @@ public abstract class ExamFactory<E extends Exam> {
 
     protected abstract E doCreate(ExamCreationData data);
 
-    protected void checkExam(ExamCreationData data) {
+    protected void checkData(ExamCreationData data) {
         validateWeight(data.getName(), data.getWeight());
         validateDate(data.getName(), data.getDate());
 

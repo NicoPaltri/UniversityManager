@@ -20,8 +20,8 @@ public enum ExamTypologies {
     private final String examTypology;
     private final ExamCreator<? extends Exam> creator;
 
-    ExamTypologies(String examTypology, ExamCreator<? extends Exam> creator) {
-        this.examTypology = examTypology;
+    ExamTypologies(String name, ExamCreator<? extends Exam> creator) {
+        this.examTypology = name;
         this.creator = creator;
     }
 
