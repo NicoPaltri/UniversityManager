@@ -21,6 +21,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import examsmanager.examtypes.Exam;
 import examsmanager.examtypes.GradedExam;
+import settingsmanager.ApplicationSettings;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -155,7 +156,7 @@ public class ExamsManagerController {
     private void updatePieChart() {
         DBSettingRepository settingsInterrogation = new DBSettingRepository();
 
-        double maxCFU = settingsInterrogation.getTotalAmountCFU();
+        double maxCFU = settingsInterrogation.getValueFromSetting(ApplicationSettings.TOTAL_CFU);
         double filled = StatisticUtils.getTotalExamsWeight(exams);
 
         double displayedFilled = Math.min(filled, maxCFU);

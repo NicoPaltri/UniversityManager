@@ -6,7 +6,7 @@ import examsmanager.examtypes.GradedExam;
 
 public class GradedExamFactory extends ExamFactory<GradedExam> {
     @Override
-    protected GradedExam doCreate(ExamCreationData data) {
+    protected GradedExam doCreate(ExamCreationRequest data) {
         return new GradedExam(
                 data.getName(),
                 data.getWeight(),
@@ -15,11 +15,11 @@ public class GradedExamFactory extends ExamFactory<GradedExam> {
     }
 
     @Override
-    protected void validateSpecific(ExamCreationData data) {
+    protected void validateSpecific(ExamCreationRequest data) {
         validateGrade(data);
     }
 
-    private void validateGrade(ExamCreationData data) {
+    private void validateGrade(ExamCreationRequest data) {
         if (!data.hasGrade()) {
             throw new NullGradeForGradedExamException(data.getName());
         }

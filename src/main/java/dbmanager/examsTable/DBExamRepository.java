@@ -5,6 +5,7 @@ import customexceptions.accessdatasexception.ConstraintViolationException;
 import customexceptions.accessdatasexception.DBInternalErrorException;
 import dbmanager.DBConnection;
 import examsmanager.examfactories.ExamCreationData;
+import examsmanager.examfactories.ExamCreationRequest;
 import examsmanager.examtypes.Exam;
 import examsmanager.examtypes.ExamTypologies;
 
@@ -36,12 +37,12 @@ public class DBExamRepository {
                 String type = rs.getString("type");
                 ExamTypologies typology = ExamTypologies.fromType(name, type);
 
-                ExamCreationData data = new ExamCreationData(name, weight, date);
+                ExamCreationRequest data = new ExamCreationData(name, weight, date);
                 if (grade.isPresent()) {
                     data.withGrade(grade.get());
                 }
 
-                Exam exam = typology.create(data);
+                Exam exam = typology.createExam(data);
 
                 examList.add(exam);
             }

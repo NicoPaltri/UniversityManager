@@ -19,7 +19,7 @@ class IdoneitaFactoryTest {
     @Test
     void grade_null_doesNotThrow() {
         assertDoesNotThrow(() -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+            ExamCreationRequest data = new ExamCreationData(nameOK, weightOK, dateOk);
 
             Idoneita exam = idoneitaFactory.createExam(data);
         });
@@ -28,7 +28,7 @@ class IdoneitaFactoryTest {
     @Test
     void grade_notNull_throwsException() {
         assertThrows(ApplicationException.class, () -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+            ExamCreationRequest data = new ExamCreationData(nameOK, weightOK, dateOk);
             data.withGrade(gradeOK);
 
             Idoneita exam = idoneitaFactory.createExam(data);

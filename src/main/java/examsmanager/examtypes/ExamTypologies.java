@@ -1,7 +1,8 @@
 package examsmanager.examtypes;
 
 import customexceptions.examexceptions.UnknownExamTypeException;
-import examsmanager.examfactories.ExamCreationData;
+import examsmanager.examfactories.ExamCreationRequest;
+import examsmanager.examfactories.ExamFactory;
 import examsmanager.examfactories.GradedExamFactory;
 import examsmanager.examfactories.IdoneitaFactory;
 
@@ -29,8 +30,8 @@ public enum ExamTypologies {
         return examTypology;
     }
 
-    public Exam create(ExamCreationData data) {
-        return creator.create(data);
+    public Exam createExam(ExamCreationRequest data) {
+        return creator.createExam(data);
     }
 
     public static ExamTypologies fromType(String name, String type) {

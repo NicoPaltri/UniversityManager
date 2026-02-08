@@ -13,7 +13,7 @@ import examsmanager.examtypes.Exam;
 
 import java.time.LocalDate;
 
-public class AddExamButtonController {
+public class AddExamController {
 
     public TextField nameInputField;
     public TextField weightInputField;
@@ -58,9 +58,9 @@ public class AddExamButtonController {
 
         LocalDate completeDate = ExamUtils.buildLocalDate(year, month, day);
 
-        ExamTypologies typology;
         ExamCreationData data = new ExamCreationData(name, weight, completeDate);
 
+        ExamTypologies typology;
         if (idoneitaCheckBox.isSelected()) {
             typology = ExamTypologies.Idoneita;
         } else {
@@ -69,7 +69,7 @@ public class AddExamButtonController {
             data.withGrade(grade);
         }
 
-        return typology.create(data);
+        return typology.createExam(data);
     }
 
     private void setEveryFieldToBlank() {

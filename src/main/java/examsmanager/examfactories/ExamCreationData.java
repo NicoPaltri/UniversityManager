@@ -2,7 +2,7 @@ package examsmanager.examfactories;
 
 import java.time.LocalDate;
 
-public class ExamCreationData {
+public class ExamCreationData implements ExamCreationRequest {
 
     private final String name;
     private final int weight;
@@ -16,15 +16,6 @@ public class ExamCreationData {
         this.date = date;
     }
 
-    public ExamCreationData withGrade(int grade) {
-        this.grade = grade;
-        return this;
-    }
-
-    public boolean hasGrade() {
-        return grade != null;
-    }
-
     public String getName() {
         return name;
     }
@@ -35,6 +26,16 @@ public class ExamCreationData {
 
     public LocalDate getDate() {
         return date;
+    }
+
+
+    public ExamCreationRequest withGrade(int grade) {
+        this.grade = grade;
+        return this;
+    }
+
+    public boolean hasGrade() {
+        return grade != null;
     }
 
     public Integer getGrade() {

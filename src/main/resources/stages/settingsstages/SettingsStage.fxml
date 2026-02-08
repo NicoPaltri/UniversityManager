@@ -9,7 +9,7 @@
 <BorderPane fx:id="mainPane"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="application.applicationcontrollers.settingsbuttonapplication.SettingsButtonController"
+            fx:controller="application.applicationcontrollers.settingsbuttonapplication.SettingsController"
             prefWidth="650" prefHeight="450">
 
     <!--- TOP -->

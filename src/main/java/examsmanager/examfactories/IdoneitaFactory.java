@@ -5,7 +5,7 @@ import examsmanager.examtypes.Idoneita;
 
 public class IdoneitaFactory extends ExamFactory<Idoneita> {
     @Override
-    protected Idoneita doCreate(ExamCreationData data) {
+    protected Idoneita doCreate(ExamCreationRequest data) {
         return new Idoneita(
                 data.getName(),
                 data.getWeight(),
@@ -13,7 +13,7 @@ public class IdoneitaFactory extends ExamFactory<Idoneita> {
     }
 
     @Override
-    protected void validateSpecific(ExamCreationData data) {
+    protected void validateSpecific(ExamCreationRequest data) {
         if (data.hasGrade()) {
             throw new GradeNotNullForIdoneitaException(data.getName());
         }

@@ -1,8 +1,8 @@
 package examsmanager.examtypes;
 
-import examsmanager.examfactories.ExamCreationData;
+import examsmanager.examfactories.ExamCreationRequest;
 
 @FunctionalInterface
 public interface ExamCreator<T extends Exam> {
-    T create(ExamCreationData data);
+    T createExam(ExamCreationRequest data);
 }

@@ -4,27 +4,28 @@ import customexceptions.dateexception.FutureDateException;
 import customexceptions.examexceptions.GradeFormatException;
 import customexceptions.examexceptions.WeightFormatException;
 import examsmanager.examtypes.Exam;
+import examsmanager.examtypes.ExamCreator;
 
 import java.time.LocalDate;
 
-public abstract class ExamFactory<E extends Exam> {
+public abstract class ExamFactory<T extends Exam> implements ExamCreator<T> {
 
-    public final E createExam(ExamCreationData data) {
+    public final T createExam(ExamCreationRequest data) {
         checkData(data);
         validateSpecific(data);
 
         return doCreate(data);
     }
 
-    protected abstract E doCreate(ExamCreationData data);
+    protected abstract T doCreate(ExamCreationRequest data);
 
-    protected void checkData(ExamCreationData data) {
+    protected void checkData(ExamCreationRequest data) {
         validateWeight(data.getName(), data.getWeight());
         validateDate(data.getName(), data.getDate());
     }
 
 
-    protected void validateSpecific(ExamCreationData data) {
+    protected void validateSpecific(ExamCreationRequest data) {
     }
 
 

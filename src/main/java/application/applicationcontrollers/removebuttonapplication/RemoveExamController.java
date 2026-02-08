@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import examsmanager.examtypes.Exam;
 
-public class RemoveExamButtonController {
+public class RemoveExamController {
 
     public TableView<Exam> examTable;
     public TableColumn<Exam, String> colName;

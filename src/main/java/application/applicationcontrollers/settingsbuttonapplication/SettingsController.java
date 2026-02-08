@@ -12,7 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import settingsmanager.Setting;
 
-public class SettingsButtonController {
+public class SettingsController {
     public BorderPane mainPane;
 
     public TableView<Setting> settingsTable;

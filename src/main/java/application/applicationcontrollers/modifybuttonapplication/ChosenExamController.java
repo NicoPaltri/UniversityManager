@@ -6,6 +6,7 @@ import application.applicationutils.openwindowmanager.OpenWindowUtils;
 import customexceptions.ApplicationException;
 import dbmanager.examsTable.DBExamRepository;
 import examsmanager.examfactories.ExamCreationData;
+import examsmanager.examfactories.ExamCreationRequest;
 import examsmanager.examtypes.ExamTypologies;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -95,7 +96,7 @@ public class ChosenExamController {
         LocalDate completeDate = ExamUtils.buildLocalDate(year, month, day);
 
         ExamTypologies typology;
-        ExamCreationData data = new ExamCreationData(name, weight, completeDate);
+        ExamCreationRequest data = new ExamCreationData(name, weight, completeDate);
 
         if (idoneitaCheckBox.isSelected()) {
             typology = ExamTypologies.Idoneita;
@@ -105,7 +106,7 @@ public class ChosenExamController {
             data.withGrade(grade);
         }
 
-        return typology.create(data);
+        return typology.createExam(data);
     }
 
 }

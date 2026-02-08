@@ -103,7 +103,7 @@ public class DBSettingRepository {
     }
 
 
-    private int getValueFromSetting(ApplicationSettings applicationSettings) {
+    public int getValueFromSetting(ApplicationSettings applicationSettings) {
         String sql = "SELECT value FROM settings WHERE name = ?";
 
         try (Connection connection = DBConnection.getConnectionFromDB();
@@ -119,11 +119,6 @@ public class DBSettingRepository {
             throw new DBInternalErrorException(sql, e);
         }
     }
-
-    public int getTotalAmountCFU() {
-        return getValueFromSetting(ApplicationSettings.TOTAL_CFU);
-    }
-
 
     public void changeSetting(String settingName, int newValue) {
         String sql = "UPDATE settings SET value = ? WHERE name = ?";

@@ -37,7 +37,7 @@ class TestExam extends Exam {
 
 class TestExamFactory extends ExamFactory<TestExam> {
     @Override
-    protected TestExam doCreate(ExamCreationData data) {
+    protected TestExam doCreate(ExamCreationRequest data) {
         return new TestExam(data.getName(), data.getWeight(), data.getGrade(), data.getDate());
     }
 }
@@ -55,7 +55,7 @@ class ExamFactoryTest {
     @Test
     void weight_tooLow_throwsException() {
         assertThrows(ApplicationException.class, () -> {
-            ExamCreationData data = new ExamCreationData(nameOK, 2, dateOk);
+            ExamCreationRequest data = new ExamCreationData(nameOK, 2, dateOk);
             data.withGrade(gradeOK);
 
             TestExam exam = testExamFactory.createExam(data);
@@ -65,7 +65,7 @@ class ExamFactoryTest {
     @Test
     void weight_limitLow_doesNotThrow() {
         assertDoesNotThrow(() -> {
-            ExamCreationData data = new ExamCreationData(nameOK, 3, dateOk);
+            ExamCreationRequest data = new ExamCreationData(nameOK, 3, dateOk);
             data.withGrade(gradeOK);
 
             TestExam exam = testExamFactory.createExam(data);
@@ -75,7 +75,7 @@ class ExamFactoryTest {
     @Test
     void weight_limitHigh_doesNotThrow() {
         assertDoesNotThrow(() -> {
-            ExamCreationData data = new ExamCreationData(nameOK, 15, dateOk);
+            ExamCreationRequest data = new ExamCreationData(nameOK, 15, dateOk);
             data.withGrade(gradeOK);
 
             TestExam exam = testExamFactory.createExam(data);
@@ -85,7 +85,7 @@ class ExamFactoryTest {
     @Test
     void weight_tooHigh_throwsException() {
         assertThrows(ApplicationException.class, () -> {
-            ExamCreationData data = new ExamCreationData(nameOK, 16, dateOk);
+            ExamCreationRequest data = new ExamCreationData(nameOK, 16, dateOk);
             data.withGrade(gradeOK);
 
             TestExam exam = testExamFactory.createExam(data);
@@ -97,7 +97,7 @@ class ExamFactoryTest {
     @Test
     void date_today_doesNotThrow() {
         assertDoesNotThrow(() -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, LocalDate.now());
+            ExamCreationRequest data = new ExamCreationData(nameOK, weightOK, LocalDate.now());
             data.withGrade(gradeOK);
 
             TestExam exam = testExamFactory.createExam(data);
@@ -107,7 +107,7 @@ class ExamFactoryTest {
     @Test
     void date_tomorrow_throwsException() {
         assertThrows(ApplicationException.class, () -> {
-            ExamCreationData data = new ExamCreationData(nameOK, weightOK, LocalDate.now().plusDays(1));
+            ExamCreationRequest data = new ExamCreationData(nameOK, weightOK, LocalDate.now().plusDays(1));
             data.withGrade(gradeOK);
 
             TestExam exam = testExamFactory.createExam(data);
@@ -120,7 +120,7 @@ class ExamFactoryTest {
     void allOk_doesNotThrow() {
         assertDoesNotThrow(() -> {
             assertDoesNotThrow(() -> {
-                ExamCreationData data = new ExamCreationData(nameOK, weightOK, dateOk);
+                ExamCreationRequest data = new ExamCreationData(nameOK, weightOK, dateOk);
                 data.withGrade(gradeOK);
 
                 TestExam exam = testExamFactory.createExam(data);

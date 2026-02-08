@@ -11,7 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import examsmanager.examtypes.Exam;
 
-public class ModifyExamButtonController {
+public class ModifyExamController {
 
     public BorderPane mainPane;
 
